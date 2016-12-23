@@ -1,0 +1,42 @@
+<h1>
+  New Search
+</h1>
+
+<%= form_for @search do |f| %>
+  <%= hidden_field(:search, :user_id, value: current_user.id) %>
+
+  <%= f.label :name, 'Search Name' %>
+  <%= f.text_field :name %>
+  <br />
+
+  <%= f.label :locations, 'Locations' %>
+  <%= f.text_field :locations %>
+  <br />
+
+  <%= f.label :includes, 'Includes' %>
+  <%= f.text_field :includes %>
+  <br />
+
+  <%= f.label :excludes, 'Excludes' %>
+  <%= f.text_field :excludes %>
+  <br />
+
+  <%= f.label :price_min, 'Minimum Price' %>
+  <%= f.number_field :price_min %>
+  <br />
+
+  <%= f.label :price_max, 'Maximum Price' %>
+  <%= f.number_field :price_max %>
+  <br />
+
+  <%= f.radio_button(:refresh_interval, "hourly") %>
+  <%= f.label(:refresh_interval_hourly, "Check every hour") %>
+  <br />
+
+  <%= f.radio_button(:refresh_interval, "daily") %>
+  <%= f.label(:refresh_interval_daily, "Check every day") %>
+  <br />
+
+  <%= f.submit 'Create Search' %>
+
+<% end %>
