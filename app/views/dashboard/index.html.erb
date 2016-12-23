@@ -2,4 +2,10 @@
   <%= @user.username %>'s Dashboard
 </h1>
 
-<%= button_to "Edit Account", edit_registration_path(@user), method: :get %>
+<p>
+<%= button_to 'Edit Account', edit_registration_path(@user), method: :get %>
+</p>
+
+<p>
+<%= button_to 'Create New Search', new_search_path, method: :get %>
+</p>
