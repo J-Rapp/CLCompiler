@@ -3,6 +3,7 @@
 </h1>
 
 <%= form_for @search do |f| %>
+  <%= hidden_field(:search, :user_id, value: current_user.id) %>
 
   <%= f.label :name, 'Search Name' %>
   <%= f.text_field :name %>
