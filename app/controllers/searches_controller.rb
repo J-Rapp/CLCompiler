@@ -8,6 +8,7 @@ class SearchesController < ApplicationController
     if @search.id
       redirect_to search_path(@search)
     else
+      # TODO: Build this out more
       flash[:error] = 'Oops, please try again.'
       render :new
     end
