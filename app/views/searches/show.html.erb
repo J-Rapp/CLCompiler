@@ -1,1 +1,13 @@
-<%= @search %>
+<h1>
+  <%= @search.name %>
+</h1>
+
+<hr />
+
+<ul>
+  <% @listings.each do |listing| %>
+    <li>
+      <%= listing.title %>
+    </li>
+  <% end %>
+</ul>
