@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root 'welcome#index'
 
-  devise_for :users, skip: [:sessions]
+  devise_for :users
   as :user do
     get 'login', to: 'devise/sessions#new'
     post 'login', to: 'devise/sessions#create'
