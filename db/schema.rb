@@ -10,26 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161224235345) do
+ActiveRecord::Schema.define(version: 20161224235514) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "cities", force: :cascade do |t|
+  create_table "areas", force: :cascade do |t|
     t.string   "name",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "url"
   end
 
-  create_table "cities_searches", force: :cascade do |t|
+  create_table "areas_searches", force: :cascade do |t|
     t.integer  "search_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["search_id"], name: "index_cities_searches_on_search_id", using: :btree
+    t.index ["search_id"], name: "index_areas_searches_on_search_id", using: :btree
   end
 
-  create_table "countries", force: :cascade do |t|
+  create_table "districts", force: :cascade do |t|
     t.string   "name",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -47,6 +47,12 @@ ActiveRecord::Schema.define(version: 20161224235345) do
     t.index ["search_id"], name: "index_listings_on_search_id", using: :btree
   end
 
+  create_table "regions", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "searches", force: :cascade do |t|
     t.string   "name",             null: false
     t.text     "locations",        null: false
@@ -59,12 +65,6 @@ ActiveRecord::Schema.define(version: 20161224235345) do
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.index ["user_id"], name: "index_searches_on_user_id", using: :btree
-  end
-
-  create_table "states", force: :cascade do |t|
-    t.string   "name",       null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
