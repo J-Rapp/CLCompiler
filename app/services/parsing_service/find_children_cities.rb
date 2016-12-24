@@ -1,9 +1,7 @@
 module ParsingService
   class FindChildrenCities
-    attr_reader :cities
-
-    def initialize(state_node)
-      @cities = parse_cities(state_node)
+    def call(state_node)
+      parse_cities(state_node)
     end
 
     private

@@ -1,9 +1,7 @@
 module ParsingService
   class FindChildrenStates
-    attr_reader :state_nodes
-
-    def initialize(country_node)
-      @state_nodes = parse_states(country_node)
+    def call(country_node)
+      parse_states(country_node)
     end
 
     private
