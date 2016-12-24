@@ -17,6 +17,8 @@ gem 'jquery-rails'
 gem 'jbuilder', '~> 2.5'
 
 gem 'devise', '4.2.0'
+gem 'rest-client', '2.0.0'
+gem 'nokogiri', '1.6.8.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
