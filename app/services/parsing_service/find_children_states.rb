@@ -9,9 +9,9 @@ module ParsingService
     private
 
     def parse_states(country_node)
-      # A div holding them
+      # Group of states under a country header
       collection_of_states_node = country_node.next_element
-      # The individual headers within
+      # The individual state headers within
       collection_of_states_node.xpath('.//h4')
     end
   end

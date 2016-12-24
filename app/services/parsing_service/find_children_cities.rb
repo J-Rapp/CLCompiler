@@ -1,22 +1,22 @@
 module ParsingService
   class FindChildrenCities
-    attr_reader :city_pairs
+    attr_reader :cities
 
     def initialize(state_node)
-      @city_pairs = parse_cities(state_node)
+      @cities = parse_cities(state_node)
     end
 
     private
 
     def parse_cities(state_node)
-      # A group of cities
+      # Group of cities under a state header
       collection_of_cities_node = state_node.next_element
       cities = []
-      # Each city's link and title
+      # Each city's header title and link
       collection_of_cities_node.xpath('.//li').each do |list_node|
         cities << {
-          url: list_node.xpath('.//a/@href').first.value,
-          name: list_node.text
+          name: list_node.text,
+          url: list_node.xpath('.//a/@href').first.value
         }
       end
       cities
