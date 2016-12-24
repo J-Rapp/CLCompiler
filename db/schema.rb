@@ -10,28 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161224002701) do
+ActiveRecord::Schema.define(version: 20161224235345) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "cities", force: :cascade do |t|
-    t.string   "name",               null: false
-    t.integer  "state_id"
-    t.integer  "cities_searches_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.string   "name",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string   "url"
-    t.index ["cities_searches_id"], name: "index_cities_on_cities_searches_id", using: :btree
-    t.index ["state_id"], name: "index_cities_on_state_id", using: :btree
   end
 
   create_table "cities_searches", force: :cascade do |t|
-    t.integer  "city_id"
     t.integer  "search_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["city_id"], name: "index_cities_searches_on_city_id", using: :btree
     t.index ["search_id"], name: "index_cities_searches_on_search_id", using: :btree
   end
 
@@ -54,27 +48,23 @@ ActiveRecord::Schema.define(version: 20161224002701) do
   end
 
   create_table "searches", force: :cascade do |t|
-    t.string   "name",               null: false
-    t.text     "locations",          null: false
-    t.string   "includes",           null: false
+    t.string   "name",             null: false
+    t.text     "locations",        null: false
+    t.string   "includes",         null: false
     t.string   "excludes"
     t.integer  "price_min"
     t.integer  "price_max"
-    t.integer  "refresh_interval",   null: false
+    t.integer  "refresh_interval", null: false
     t.integer  "user_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-    t.integer  "cities_searches_id"
-    t.index ["cities_searches_id"], name: "index_searches_on_cities_searches_id", using: :btree
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.index ["user_id"], name: "index_searches_on_user_id", using: :btree
   end
 
   create_table "states", force: :cascade do |t|
     t.string   "name",       null: false
-    t.integer  "country_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["country_id"], name: "index_states_on_country_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
