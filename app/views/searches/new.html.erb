@@ -9,8 +9,7 @@
   <%= f.text_field :name %>
   <br />
 
-  <%= f.label :locations, 'Locations' %>
-  <%= f.text_field :locations %>
+  <%= f.collection_select :areas_searches_id, @areas, :id, :name, {}, { multiple: true } %>
   <br />
 
   <%= f.label :includes, 'Includes' %>

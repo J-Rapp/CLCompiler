@@ -1,6 +1,7 @@
 class SearchesController < ApplicationController
   def new
     @search = Search.new(user_id: current_user.id)
+    @areas = Area.all
   end
 
   def create
@@ -24,7 +25,6 @@ class SearchesController < ApplicationController
   def search_params
     params.require(:search).permit :user_id,
                                    :name,
-                                   :locations,
                                    :includes,
                                    :excludes,
                                    :price_min,
