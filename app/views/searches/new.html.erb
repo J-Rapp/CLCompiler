@@ -9,7 +9,10 @@
   <%= f.text_field :name %>
   <br />
 
-  <%= f.collection_select :areas_searches_id, @areas, :id, :name, {}, { multiple: true } %>
+  <%= f.label :area_ids, "Areas" %><br />
+  <%= f.collection_check_boxes :area_ids, @areas, :id, :name, include_hidden: false, multiple: true do |b| %>
+    <%= b.check_box %><%= b.label %><br />
+  <% end %>
   <br />
 
   <%= f.label :includes, 'Includes' %>

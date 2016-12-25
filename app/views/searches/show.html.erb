@@ -4,6 +4,19 @@
 
 <hr />
 
+<h2>
+  Areas
+</h2>
+<ul>
+  <% @areas.each do |area| %>
+    <li>
+      <%= area.name %>
+    </li>
+  <% end %>
+</ul>
+
+<hr />
+
 <ul>
   <% @listings.each do |listing| %>
     <li>

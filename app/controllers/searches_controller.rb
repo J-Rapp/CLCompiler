@@ -17,6 +17,7 @@ class SearchesController < ApplicationController
 
   def show
     @search = Search.find(params[:id])
+    @areas = @search.areas
     @listings = @search.listings
   end
 
@@ -29,6 +30,7 @@ class SearchesController < ApplicationController
                                    :excludes,
                                    :price_min,
                                    :price_max,
-                                   :refresh_interval
+                                   :refresh_interval,
+                                   area_ids: []
   end
 end
