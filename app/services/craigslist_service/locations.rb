@@ -25,60 +25,60 @@ module CraigslistService
       response = RestClient.get(LIST_OF_CL_SUBDOMAINS_URL)
       clean_html = ParsingService::HTMLCleaner.clean(response.body)
       nokogori_object = Nokogiri::HTML(clean_html)
-      parse_countries(nokogori_object)
+      parse_regions(nokogori_object)
     end
 
-    def parse_countries(nokogiri_object)
-      country_nodes = ParsingService::FindAllCountries.new.call(nokogiri_object)
-      country_nodes.each do |country_node|
-        @locations[country_node.text] = {}
-        parse_states(country_node)
+    def parse_regions(nokogiri_object)
+      region_nodes = ParsingService::FindAllRegions.new.call(nokogiri_object)
+      region_nodes.each do |region_node|
+        @locations[region_node.text] = {}
+        parse_districts(region_node)
       end
     end
 
-    def parse_states(country_node)
-      state_nodes = ParsingService::FindChildrenStates.new.call(country_node)
-      state_nodes.each do |state_node|
-        @locations[country_node.text][state_node.text] = {}
-        parse_cities(country_node, state_node)
+    def parse_districts(region_node)
+      district_nodes = ParsingService::FindChildrenDistricts.new.call(region_node)
+      district_nodes.each do |district_node|
+        @locations[region_node.text][district_node.text] = {}
+        parse_areas(region_node, district_node)
       end
     end
 
-    def parse_cities(country_node, state_node)
-      cities = ParsingService::FindChildrenCities.new.call(state_node)
-      cities.each do |city|
-        @locations[country_node.text][state_node.text][city[:name]] = city[:url]
+    def parse_areas(region_node, district_node)
+      areas = ParsingService::FindChildrenAreas.new.call(district_node)
+      areas.each do |area|
+        @locations[region_node.text][district_node.text][area[:name]] = area[:url]
       end
     end
 
     def persist_locations
-      @locations.each do |country_name, states|
-        country = Country.find_or_create_by!(
-          name: country_name
+      @locations.each do |region_name, districts|
+        region = Region.find_or_create_by!(
+          name: region_name
         )
-        persist_states(states, country.id)
+        persist_districts(districts, region.id)
       end
     end
 
-    def persist_states(states, country_id)
-      states.each do |state_name, cities|
-        state = State.find_or_initialize_by(
-          name: state_name
+    def persist_districts(districts, region_id)
+      districts.each do |district_name, areas|
+        district = District.find_or_initialize_by(
+          name: district_name
         )
-        state.country_id = country_id
-        state.save!
-        persist_cities(cities, state.id)
+        district.region_id = region_id
+        district.save!
+        persist_areas(areas, district.id)
       end
     end
 
-    def persist_cities(cities, state_id)
-      cities.each do |city_name, url|
-        city = City.find_or_initialize_by(
-          name: city_name
+    def persist_areas(areas, district_id)
+      areas.each do |area_name, url|
+        area = Area.find_or_initialize_by(
+          name: area_name
         )
-        city.state_id = state_id
-        city.url = url
-        city.save!
+        area.district_id = district_id
+        area.url = url
+        area.save!
       end
     end
   end

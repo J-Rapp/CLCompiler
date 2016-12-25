@@ -1,12 +1,12 @@
 module ParsingService
-  class FindAllCountries
+  class FindAllRegions
     def call(nokogiri_object)
-      parse_countries(nokogiri_object)
+      parse_regions(nokogiri_object)
     end
 
     private
 
-    def parse_countries(nokogiri_object)
+    def parse_regions(nokogiri_object)
       nokogiri_object.xpath('//h1')
     end
   end
