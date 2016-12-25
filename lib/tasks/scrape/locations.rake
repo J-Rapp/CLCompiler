@@ -1,4 +1,4 @@
-desc 'Scrapes all the countries, states, and cities from Craigslist'
+desc 'Scrapes all the regions, districts, and areas from Craigslist'
 namespace :scrape do
   task locations: :environment do
     locations = CraigslistService::Locations.new
