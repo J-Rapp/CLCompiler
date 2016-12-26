@@ -5,29 +5,44 @@
 <%= form_for @search do |f| %>
   <%= hidden_field(:search, :user_id, value: current_user.id) %>
 
-  <%= f.label :name, 'Search Name' %>
+  <%= f.label :name, 'Search Name:' %>
+  <br />
   <%= f.text_field :name %>
+  <br /><br />
+
+  <%= label_tag :area_ids, "Select Districts:" %>
+  <br />
+  <%= grouped_collection_select :districts, :name, @regions, :districts, :name, :id, :name, include_hidden: false %>
+  <br /><br />
+
+  <%= f.label :area_ids, "Select Areas:" %>
+  <br />
+  <%= f.collection_check_boxes :area_ids, @areas, :id, :name, { include_hidden: false } do |b| %>
+    <div data-district-id="<%= b.object.district_id %>" class="hidden">
+      <%= b.check_box + b.text %><br />
+    </div>
+  <% end %>
   <br />
 
-  <%= f.label :locations, 'Locations' %>
-  <%= f.text_field :locations %>
+  <%= f.label :includes, 'Included in listing copy:' %>
   <br />
-
-  <%= f.label :includes, 'Includes' %>
   <%= f.text_field :includes %>
-  <br />
+  <br /><br />
 
-  <%= f.label :excludes, 'Excludes' %>
+  <%= f.label :excludes, 'Excluded from listing copy:' %>
+  <br />
   <%= f.text_field :excludes %>
-  <br />
+  <br /><br />
 
-  <%= f.label :price_min, 'Minimum Price' %>
+  <%= f.label :price_min, 'Minimum asking price:' %>
+  <br />
   <%= f.number_field :price_min %>
-  <br />
+  <br /><br />
 
-  <%= f.label :price_max, 'Maximum Price' %>
-  <%= f.number_field :price_max %>
+  <%= f.label :price_max, 'Maximum asking price:' %>
   <br />
+  <%= f.number_field :price_max %>
+  <br /><br />
 
   <%= f.radio_button(:refresh_interval, "hourly") %>
   <%= f.label(:refresh_interval_hourly, "Check every hour") %>
@@ -35,8 +50,10 @@
 
   <%= f.radio_button(:refresh_interval, "daily") %>
   <%= f.label(:refresh_interval_daily, "Check every day") %>
-  <br />
+  <br /><br />
 
   <%= f.submit 'Create Search' %>
 
 <% end %>
+
+<%= javascript_include_tag 'dynamic_area_checkboxes' %>
