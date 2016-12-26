@@ -2,7 +2,6 @@ class SearchesController < ApplicationController
   def new
     @search = Search.new(user_id: current_user.id)
     @areas = Area.all
-    @districts = District.all
     @regions = Region.all
   end
 
