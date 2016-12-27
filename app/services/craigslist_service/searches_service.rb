@@ -1,11 +1,12 @@
 module CraigslistService
-  class Searches
+  class SearchesService
     def send
       send_all_searches
     end
+
     private
 
-    def send_all_searches
+    def send_all_ready_searches
       searches = Search.all
       searches.each do |search|
         if search.daily?
@@ -16,14 +17,11 @@ module CraigslistService
     end
 
     def check_if_ready(search)
-      execute_search(search) if # (logic for 24 hours passing)
+      execute_search(search) if (search.updated_at >= 1.day.ago)
     end
 
     def execute_search
-      craigslist_urls = URLAssembler.new.generate_url(search)
-      craigslist_urls.each do |craigslist_url|
-        response = RestClient.get(search_url)
-      end
+      SearchService.new.call
     end
   end
 end
