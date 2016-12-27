@@ -1,5 +1,5 @@
 module CraigslistService
-  class Locations
+  class LocationsService
     def persist(all_locations)
       persist_regions(all_locations)
     end

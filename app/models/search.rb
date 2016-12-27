@@ -4,4 +4,6 @@ class Search < ApplicationRecord
   has_many :listings
 
   validates :name, uniqueness: true
+
+  enum refresh_interval: { hourly: 0, daily: 1 }
 end

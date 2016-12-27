@@ -2,7 +2,7 @@ require 'rest-client'
 require 'nokogiri'
 
 module CraigslistParser
-  class AllLocations
+  class RetrieveLocations
     def parse
       process_response
     end
