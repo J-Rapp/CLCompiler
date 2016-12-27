@@ -6,8 +6,4 @@ class Search < ApplicationRecord
   validates :name, uniqueness: true
 
   enum refresh_interval: { hourly: 0, daily: 1 }
-
-  def daily?
-    refresh_interval == 1
-  end
 end
