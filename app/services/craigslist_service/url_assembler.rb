@@ -19,12 +19,13 @@ module CraigslistService
     end
 
     def path_and_parameters(search)
-      # TODO: add ability to alter search directory
+      # TODO: add ability to alter search directory path
       # (for sale, services, housing, etc)
       'search/sss?' +
         build_query(search) +
         min_price(search) +
-        max_price(search)
+        max_price(search) +
+        sort_by
     end
 
     def build_query(search)
@@ -41,11 +42,15 @@ module CraigslistService
     end
 
     def min_price(search)
-      '&min_price=' + search.price_min if search.price_min
+      search.min_price ? ('&min_price=' + search.min_price) : ''
     end
 
     def max_price(search)
-      '&max_price=' + search.price_max if search.price_max
+      search.max_price ? ('&max_price=' + search.max_price) : ''
+    end
+
+    def sort_by
+      '&sort=date'
     end
   end
 end

@@ -8,9 +8,7 @@ module CraigslistService
 
     def send_all_ready_searches
       searches = Search.all
-      p searches.count
       searches.each do |search|
-        p search.name
         if search.refresh_interval == 'daily'
           check_if_ready(search)
         else
