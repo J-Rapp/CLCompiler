@@ -29,8 +29,8 @@ class SearchesController < ApplicationController
                                    :name,
                                    :includes,
                                    :excludes,
-                                   :price_min,
-                                   :price_max,
+                                   :min_price,
+                                   :max_price,
                                    :refresh_interval,
                                    area_ids: []
   end

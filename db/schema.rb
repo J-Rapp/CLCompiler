@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161227091744) do
+ActiveRecord::Schema.define(version: 20161228022501) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20161227091744) do
     t.string   "name",              null: false
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
-    t.string   "url"
+    t.string   "subdomain"
     t.integer  "district_id"
     t.integer  "areas_searches_id"
     t.index ["areas_searches_id"], name: "index_areas_on_areas_searches_id", using: :btree
