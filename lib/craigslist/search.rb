@@ -1,8 +1,4 @@
 module Craigslist
-  def self.search(subdomains, query_opts = {})
-    Search.new.perform(subdomains, query_opts)
-  end
-
   class Search
     def perform(subdomains, query_opts = {})
       send_request_for_each_search_area(subdomains, query_opts)

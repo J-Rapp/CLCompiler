@@ -2,10 +2,6 @@ require 'rest-client'
 require 'nokogiri'
 
 module Craigslist
-  def self.locations
-    Locations.new.parse
-  end
-
   class Locations
     def parse
       # Returns a nested hash of all locations
@@ -18,7 +14,7 @@ module Craigslist
 
     def process_response
       response = RestClient.get(LIST_OF_CL_SUBDOMAINS_URL)
-      clean_html = HTMLCleaner.new.clean(response.body)
+      clean_html = Parser::HTMLCleaner.new.clean(response.body)
       nokogori_object = Nokogiri::HTML(clean_html)
       locations = {}
       parse_regions(nokogori_object, locations)

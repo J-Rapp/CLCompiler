@@ -1,13 +1,15 @@
-module CraigslistParser
-  class Regions
-    def parse(nokogiri_object)
-      all_regions(nokogiri_object)
-    end
+module Craigslist
+  module Parser
+    class Regions
+      def parse(nokogiri_object)
+        all_regions(nokogiri_object)
+      end
 
-    private
+      private
 
-    def all_regions(nokogiri_object)
-      nokogiri_object.xpath('//h1')
+      def all_regions(nokogiri_object)
+        nokogiri_object.xpath('//h1')
+      end
     end
   end
 end

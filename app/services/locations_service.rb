@@ -1,3 +1,5 @@
+require 'craigslist'
+
 class LocationsService
   def call
     retrieve_and_persist_locations
@@ -5,7 +7,7 @@ class LocationsService
 
   private
 
-  def retrieve_location_data
+  def retrieve_and_persist_locations
     locations = Craigslist.locations
     persist_regions(locations)
   end

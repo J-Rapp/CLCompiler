@@ -1,3 +1,5 @@
+require 'craigslist'
+
 class SearchesService
   def send
     send_all_ready_searches
