@@ -41,7 +41,7 @@ module Craigslist
       areas = Parser::Areas.new.parse(district_node)
       areas.each do |area|
         locations[region_node.text][district_node.text][area[:name]] =
-          area[:url]
+          area[:subdomain]
       end
     end
   end

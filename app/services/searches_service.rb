@@ -25,7 +25,7 @@ class SearchesService
   end
 
   def execute(search)
-    subdomains = search.areas.map(&:url)
+    subdomains = search.areas.map(&:subdomain)
     params = {
       includes: search.includes,
       excludes: search.excludes,

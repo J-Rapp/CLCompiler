@@ -33,12 +33,12 @@ class LocationsService
   end
 
   def persist_areas(areas, district_id)
-    areas.each do |area_name, url|
+    areas.each do |area_name, subdomain|
       area = Area.find_or_initialize_by(
         name: area_name
       )
       area.district_id = district_id
-      area.url = url
+      area.subdomain = subdomain
       area.save!
     end
   end
