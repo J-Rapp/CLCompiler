@@ -34,14 +34,14 @@
   <%= f.text_field :excludes %>
   <br /><br />
 
-  <%= f.label :price_min, 'Minimum asking price:' %>
+  <%= f.label :min_price, 'Minimum asking price:' %>
   <br />
-  <%= f.number_field :price_min %>
+  <%= f.number_field :min_price %>
   <br /><br />
 
-  <%= f.label :price_max, 'Maximum asking price:' %>
+  <%= f.label :max_price, 'Maximum asking price:' %>
   <br />
-  <%= f.number_field :price_max %>
+  <%= f.number_field :max_price %>
   <br /><br />
 
   <%= f.radio_button(:refresh_interval, "hourly") %>

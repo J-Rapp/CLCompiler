@@ -3,6 +3,7 @@ module Craigslist
     Craigslist::Locations.new.parse
   end
 
-  def self.search
+  def self.search(subdomains, params)
+    Craigslist::Search.new.perform(subdomains, params)
   end
 end

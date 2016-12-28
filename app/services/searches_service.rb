@@ -25,13 +25,13 @@ class SearchesService
   end
 
   def execute(search)
-    subdomains = search.areas.map { area.url }
-    parameters = {
+    subdomains = search.areas.map(&:url)
+    params = {
       includes: search.includes,
       excludes: search.excludes,
       min_price: search.min_price,
       max_price: search.max_price
     }
-    Craigslist.search(subdomains, parameters)
+    Craigslist.search(subdomains, params)
   end
 end

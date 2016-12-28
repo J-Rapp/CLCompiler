@@ -1,22 +1,22 @@
 module Craigslist
   class Search
     class URL
-      def assemble_urls(search)
-        build_urls(search)
+      def assemble_urls(subdomains, params)
+        build_urls(subdomains, params)
       end
 
       private
 
-      def build_urls(search)
+      def build_urls(subdomains, params)
         urls = []
         search.areas.each do |area|
-          urls << protocol_and_domain(area) + path_and_parameters(search)
+          urls << protocol_and_subdomain(area) + path_and_parameters(search)
         end
         urls
       end
 
-      def protocol_and_domain(area)
-        'http:' + area.url
+      def protocol_and_subdomain(area)
+        'http://' + subdomain + 
       end
 
       def path_and_parameters(search)
