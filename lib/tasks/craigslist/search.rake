@@ -1,4 +1,4 @@
-desc 'Scrapes all the regions, districts, and areas from Craigslist'
+desc 'Executes all readied searches'
 namespace :craigslist do
   task search: :environment do
     SearchesService.new.send
