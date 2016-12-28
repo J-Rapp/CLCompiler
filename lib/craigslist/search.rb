@@ -21,8 +21,8 @@ module Craigslist
     def process_response(craigslist_url)
       response = RestClient.get(craigslist_url)
       clean_html = Parser::HTMLCleaner.new.clean(response.body)
-      nokogiri_object = Nokogiri::HTML(clean_html)
-      Parser::Listings.new.parse(nokogiri_object)
+      nokogiri_results_page = Nokogiri::HTML(clean_html)
+      Parser::Listings.new.parse(nokogiri_results_page)
     end
   end
 end
