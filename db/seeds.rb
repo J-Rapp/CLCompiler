@@ -6,4 +6,31 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+user = User.create!(
+  username: 'Captain Fantastic',
+  email: 'user@user.com',
+  password: 'password'
+)
+puts 'Created default user. Email: \'user@user.com\', Password: \'password\'.'
+
+puts 'Scraping and persisting all Craigslist locations...'
 LocationsService.new.call
+
+search = Search.create!(
+  name: 'School Bus Conversion',
+  includes: 'bus',
+  excludes: 'vw',
+  min_price: '200',
+  max_price: '7500',
+  refresh_interval: 'hourly',
+  user_id: user.id
+)
+puts 'Created default hourly search.'
+
+search.area_ids = [2, 5, 26, 94, 392]
+puts 'Associated search\'s areas...'
+
+puts 'Scraping and persisting search\'s current listings...'
+SearchesService.new.call
+
+puts 'Seeding complete.'
