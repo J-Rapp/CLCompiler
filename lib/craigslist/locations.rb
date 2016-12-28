@@ -3,8 +3,8 @@ require 'nokogiri'
 
 module Craigslist
   class Locations
+    # Returns a nested hash of all locations
     def parse
-      # Returns a nested hash of all locations
       process_response
     end
 

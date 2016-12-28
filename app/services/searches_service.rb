@@ -1,24 +1,21 @@
 require 'craigslist'
 
 class SearchesService
-  def send
-    send_all_ready_searches
+  def call
+    parse_and_persist_ready_searches
   end
 
   private
 
-  def send_all_ready_searches
+  def parse_and_persist_ready_searches
     searches = Search.all
     searches.each do |search|
-      if search.refresh_interval == 'daily'
-        check_if_ready(search)
-      else
-        execute(search)
-      end
+      listings = search.refresh_interval == 'daily' ? check(search) : execute(search)
+      # ListingsService.new.persist(listings, search)
     end
   end
 
-  def check_if_ready(search)
+  def check(search)
     execute(search) if search.updated_at <= 1.day.ago # "before" 1 day ago
     # TODO: make certain that .updated_at will update with each daily rake
     # even if nothing new is returned from listings.
