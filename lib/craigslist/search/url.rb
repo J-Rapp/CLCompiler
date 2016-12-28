@@ -1,7 +1,7 @@
 module Craigslist
   class Search
     class URL
-      def assemble_urls(subdomains, params)
+      def assemble(subdomains, params)
         build_urls(subdomains, params)
       end
 
@@ -9,30 +9,30 @@ module Craigslist
 
       def build_urls(subdomains, params)
         urls = []
-        search.areas.each do |area|
-          urls << protocol_and_subdomain(area) + path_and_parameters(search)
+        subdomains.each do |subdomain|
+          urls << protocol_and_domain(subdomain) + path_and_parameters(params)
         end
         urls
       end
 
-      def protocol_and_subdomain(area)
-        'http://' + subdomain + 
+      def protocol_and_domain(subdomain)
+        'https://' + subdomain + '.craigslist.org/'
       end
 
-      def path_and_parameters(search)
+      def path_and_parameters(params)
         # TODO: add ability to alter search directory path
         # (for sale, services, housing, etc)
         'search/sss?' +
-          build_query(search) +
-          min_price(search) +
-          max_price(search) +
+          build_query(params) +
+          min_price(params) +
+          max_price(params) +
           sort_by
       end
 
-      def build_query(search)
-        query = 'query=' + search.includes
-        unless search.excludes.empty?
-          query = query + ' -"' + search.excludes + '"'
+      def build_query(params)
+        query = 'query=' + params[:includes]
+        unless params[:excludes].empty?
+          query = query + ' -"' + params[:excludes] + '"'
         end
         parameterize(query)
       end
@@ -42,12 +42,12 @@ module Craigslist
         query.tr(' ', '+').downcase
       end
 
-      def min_price(search)
-        search.min_price ? ('&min_price=' + search.min_price) : ''
+      def min_price(params)
+        params[:min_price] ? ('&min_price=' + params[:min_price]) : ''
       end
 
-      def max_price(search)
-        search.max_price ? ('&max_price=' + search.max_price) : ''
+      def max_price(params)
+        params[:max_price] ? ('&max_price=' + params[:max_price]) : ''
       end
 
       def sort_by
