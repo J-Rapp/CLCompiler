@@ -1,4 +1,4 @@
-module CraigslistParser
+module Craigslist
   class HTMLCleaner
     def clean(html_string)
       remove_any_white_space_between_tags(
