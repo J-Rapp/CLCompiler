@@ -6,6 +6,9 @@ class ListingsService
   private
 
   def create_or_update_listings(craigslist_results, search_id)
-    p search_id
+    craigslist_results.each do |result|
+      puts result
+      # Listing.find_or_initialize_by(result)
+    end
   end
 end

@@ -11,8 +11,8 @@ module Craigslist
         result_card_nodes = parse_result_cards(nokogiri_subdomain_results)
         subdomain_results = {}
         result_card_nodes.each do |card|
-          subdomain_results[get_result_title(card)] = {
-            url: get_result_path(card, craigslist_url),
+          subdomain_results[get_result_url(card, craigslist_url)] = {
+            title: get_result_title(card),
             price: get_result_price(card)
           }
         end
@@ -23,17 +23,17 @@ module Craigslist
         nokogiri_subdomain_results.css('.result-row')
       end
 
-      def get_result_title(card)
-        card.css('.result-title')[0].text
-      end
-
-      def get_result_path(card, craigslist_url)
+      def get_result_url(card, craigslist_url)
         path = card.css('.result-title')[0]['href']
         if path[/craigslist/]
           'https:' + path
         else
           craigslist_url[/.+org/] + path
         end
+      end
+
+      def get_result_title(card)
+        card.css('.result-title')[0].text
       end
 
       def get_result_price(card)
