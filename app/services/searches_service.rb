@@ -10,8 +10,8 @@ class SearchesService
   def parse_and_persist_ready_searches
     searches = Search.all
     searches.each do |search|
-      listings = search.refresh_interval == 'daily' ? check(search) : execute(search)
-      # ListingsService.new.persist(listings, search)
+      results = search.refresh_interval == 'daily' ? check(search) : execute(search)
+      ListingsService.new.persist(results, search.id)
     end
   end
 
@@ -29,7 +29,6 @@ class SearchesService
       min_price: search.min_price,
       max_price: search.max_price
     }
-    results = Craigslist.search(subdomains, params)
-    persist_listings(results)
+    Craigslist.search(subdomains, params)
   end
 end
