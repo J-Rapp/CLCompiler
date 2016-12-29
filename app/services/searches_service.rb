@@ -29,6 +29,7 @@ class SearchesService
       min_price: search.min_price,
       max_price: search.max_price
     }
-    listings = Craigslist.search(subdomains, params)
+    results = Craigslist.search(subdomains, params)
+    persist_listings(results)
   end
 end
