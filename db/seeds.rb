@@ -18,16 +18,16 @@ LocationsService.new.call
 
 search = Search.create!(
   name: 'School Bus Conversion',
-  includes: 'bus',
+  includes: 'school bus',
   excludes: 'vw',
   min_price: '200',
-  max_price: '7500',
+  max_price: '10000',
   refresh_interval: 'hourly',
   user_id: user.id
 )
 puts 'Created default hourly search.'
 
-search.area_ids = [2, 5, 26, 94, 392]
+search.area_ids = [392, 2, 5, 26, 94]
 puts 'Associated search\'s areas...'
 
 puts 'Scraping and persisting search\'s current listings...'

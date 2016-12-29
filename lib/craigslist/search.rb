@@ -5,24 +5,23 @@ module Craigslist
       request_and_parse_each_search_area(subdomains, params)
     end
 
-    # TODO: Give this an instance variable of listings
-    # and methods to return specific listings and values
-
     private
 
     def request_and_parse_each_search_area(subdomains, params)
       craigslist_urls = Search::URL.new.assemble(subdomains, params)
-      process_response(craigslist_urls[0])
-      # craigslist_urls.each do |craigslist_url|
-      #   process_response(craigslist_url)
-      # end
+      all_listings = {}
+      craigslist_urls.each do |craigslist_url|
+        subdomain_results = process_response(craigslist_url)
+        all_listings = all_listings.merge(subdomain_results)
+      end
+      all_listings
     end
 
     def process_response(craigslist_url)
       response = RestClient.get(craigslist_url)
       clean_html = Parser::HTMLCleaner.new.clean(response.body)
       nokogiri_results_page = Nokogiri::HTML(clean_html)
-      Parser::Listings.new.parse(nokogiri_results_page)
+      Parser::Listings.new.parse(nokogiri_results_page, craigslist_url)
     end
   end
 end
