@@ -19,7 +19,7 @@ class SearchesController < ApplicationController
   def show
     @search = Search.find(params[:id])
     @areas = @search.areas
-    @listings = @search.listings
+    @results = @search.results.includes(:listing)
   end
 
   private

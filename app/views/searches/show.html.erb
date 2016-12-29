@@ -30,10 +30,10 @@
 <!-- Ability to have a section of "new" listings -->
 <!-- New listings are added to visited after clicking link -->
 <ul>
-  <% @listings.each do |listing| %>
+  <% @results.each do |result| %>
   <!-- TODO: Ability to section by date posted -->
     <li>
-      <%= link_to listing.title, listing.url, target: '_blank' %>
+      <%= link_to result.listing.title, result.listing.url, target: '_blank' %>
       <!-- Ability to blacklist this search association (but not delete the listing) -->
     </li>
   <% end %>
