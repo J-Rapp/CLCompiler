@@ -1,5 +1,5 @@
 class Listing < ApplicationRecord
-  belongs_to :search
+  has_many :results
 
   validates :url, uniqueness: true
 end
