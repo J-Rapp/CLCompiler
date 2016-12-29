@@ -10,19 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161228022501) do
+ActiveRecord::Schema.define(version: 20161229022023) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "areas", force: :cascade do |t|
-    t.string   "name",              null: false
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.string   "name",        null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.string   "subdomain"
     t.integer  "district_id"
-    t.integer  "areas_searches_id"
-    t.index ["areas_searches_id"], name: "index_areas_on_areas_searches_id", using: :btree
     t.index ["district_id"], name: "index_areas_on_district_id", using: :btree
   end
 
@@ -45,9 +43,8 @@ ActiveRecord::Schema.define(version: 20161228022501) do
 
   create_table "listings", force: :cascade do |t|
     t.string   "title",      null: false
-    t.string   "link",       null: false
+    t.string   "url",        null: false
     t.string   "price",      null: false
-    t.string   "location",   null: false
     t.boolean  "favorite"
     t.integer  "search_id"
     t.datetime "created_at", null: false
@@ -62,17 +59,15 @@ ActiveRecord::Schema.define(version: 20161228022501) do
   end
 
   create_table "searches", force: :cascade do |t|
-    t.string   "name",              null: false
-    t.string   "includes",          null: false
+    t.string   "name",             null: false
+    t.string   "includes",         null: false
     t.string   "excludes"
     t.string   "min_price"
     t.string   "max_price"
-    t.integer  "refresh_interval",  null: false
+    t.integer  "refresh_interval", null: false
     t.integer  "user_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-    t.integer  "areas_searches_id"
-    t.index ["areas_searches_id"], name: "index_searches_on_areas_searches_id", using: :btree
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.index ["user_id"], name: "index_searches_on_user_id", using: :btree
   end
 

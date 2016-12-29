@@ -30,7 +30,7 @@
 <ul>
   <% @listings.each do |listing| %>
     <li>
-      <%= listing.title %>
+      <%= link_to listing.title, listing.url, target: '_blank' %>
     </li>
   <% end %>
 </ul>
