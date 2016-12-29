@@ -62,12 +62,12 @@ ActiveRecord::Schema.define(version: 20161229220331) do
     t.boolean  "new",         default: true
     t.boolean  "favorited",   default: false
     t.boolean  "blacklisted", default: false
-    t.integer  "searches_id"
-    t.integer  "listings_id"
+    t.integer  "search_id"
+    t.integer  "listing_id"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
-    t.index ["listings_id"], name: "index_results_on_listings_id", using: :btree
-    t.index ["searches_id"], name: "index_results_on_searches_id", using: :btree
+    t.index ["listing_id"], name: "index_results_on_listing_id", using: :btree
+    t.index ["search_id"], name: "index_results_on_search_id", using: :btree
   end
 
   create_table "searches", force: :cascade do |t|

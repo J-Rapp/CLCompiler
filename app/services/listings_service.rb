@@ -1,17 +1,15 @@
 class ListingsService
-  def persist(craigslist_results, search_id)
-    create_or_update_listings(craigslist_results, search_id)
+  def persist(craigslist_results)
+    create_or_update_listings(craigslist_results)
   end
 
   private
 
-  def create_or_update_listings(craigslist_results, search_id)
-    craigslist_results.each do |url, details|
+  def create_or_update_listings(craigslist_results)
+    craigslist_results.map do |url, details|
       listing = Listing.find_or_initialize_by(url: url)
-      listing.title = details[:title]
-      listing.price = details[:price]
-      listing.search_id = search_id
-      listing.save!
+      listing.update_attributes!(title: details[:title], price: details[:price])
+      listing
     end
   end
 end

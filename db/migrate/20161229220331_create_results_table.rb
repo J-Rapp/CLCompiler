@@ -5,8 +5,8 @@ class CreateResultsTable < ActiveRecord::Migration[5.0]
       t.boolean :favorited,   default: false
       t.boolean :blacklisted, default: false
 
-      t.references :searches, index: true
-      t.references :listings, index: true
+      t.references :search,  index: true
+      t.references :listing, index: true
 
       t.timestamps
     end
