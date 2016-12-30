@@ -8,4 +8,5 @@ class Result < ApplicationRecord
 
   scope :unfavorited, -> { where favorited: false, blacklisted: false }
   scope :favorited, -> { where favorited: true, blacklisted: false }
+  scope :deliverable, -> { where delivered: false }
 end

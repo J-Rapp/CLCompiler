@@ -10,8 +10,9 @@ class SearchesService
   def parse_and_persist_ready_searches
     searches = Search.all
     searches.each do |search|
-      results = search.refresh_interval == 'daily' ? check(search) : execute(search)
-      ResultsService.new.persist(results, search.id)
+      craigslist_results = search.refresh_interval == 'daily' ? check(search) : execute(search)
+      ResultsService.new.persist(craigslist_results, search.id)
+      SearchMailer.new_results(search).deliver_now
     end
   end
 
