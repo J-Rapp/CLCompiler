@@ -19,7 +19,8 @@ class SearchesController < ApplicationController
   def show
     @search = Search.find(params[:id])
     @areas = @search.areas
-    @results = @search.results.includes(:listing)
+    @new_results = @search.results.where(new: true).includes(:listing)
+    @old_results = @search.results.where(new: false).includes(:listing)
   end
 
   private
