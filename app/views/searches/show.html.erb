@@ -32,12 +32,14 @@
 </h1>
 
 <ul>
-  <% @new_results.each do |new_result| %>
+  <% @fresh_results.each do |fresh_result| %>
   <!-- TODO: Ability to section by date posted -->
     <li>
-      <%= link_to new_result.listing.title, new_result.listing.url, target: '_blank' %>
-      <!-- TODO: Ability to blacklist this search association (but not delete the listing) -->
-      <!-- TODO: New listings are added to old listings after clicking link -->
+      <%= link_to fresh_result.listing.title, fresh_result.listing.url, target: '_blank' %>
+      <%= form_for fresh_result do |f| %>
+        <%= f.hidden_field :visited, value: true %>
+        <%= f.submit 'Mark as Visited' %>
+      <% end %>
     </li>
   <% end %>
 </ul>
@@ -45,15 +47,18 @@
 <hr />
 
 <h1>
-  Old Results
+  Visited Results
 </h1>
 
 <ul>
-  <% @old_results.each do |old_result| %>
+  <% @visited_results.each do |visited_result| %>
   <!-- TODO: Ability to section by date posted -->
     <li>
-      <%= link_to old_result.listing.title, old_result.listing.url, target: '_blank' %>
-      <!-- TODO: Ability to blacklist this search association (but not delete the listing) -->
+      <%= link_to visited_result.listing.title, visited_result.listing.url, target: '_blank' %>
+      <%= form_for visited_result do |f| %>
+        <%= f.hidden_field :blacklisted, value: true %>
+        <%= f.submit 'Blacklist' %>
+      <% end %>
     </li>
   <% end %>
 </ul>

@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 20161229220331) do
   end
 
   create_table "results", force: :cascade do |t|
-    t.boolean  "new",         default: true
+    t.boolean  "visited",     default: false
     t.boolean  "favorited",   default: false
     t.boolean  "blacklisted", default: false
     t.integer  "search_id"

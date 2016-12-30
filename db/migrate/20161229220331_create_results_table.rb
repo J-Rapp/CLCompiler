@@ -1,7 +1,7 @@
 class CreateResultsTable < ActiveRecord::Migration[5.0]
   def change
     create_table :results do |t|
-      t.boolean :new,         default: true
+      t.boolean :visited,     default: false
       t.boolean :favorited,   default: false
       t.boolean :blacklisted, default: false
 
