@@ -80,7 +80,7 @@
       <%= link_to visited_result.listing.title, visited_result.listing.url, target: '_blank' %>
       <%= form_for visited_result do |f| %>
         <%= f.hidden_field :blacklisted %>
-        <%= f.submit 'Blacklist' %>
+        <%= f.submit 'Remove from this Search' %>
       <% end %>
       <%= form_for visited_result do |f| %>
         <%= f.hidden_field :favorited, value: true %>
