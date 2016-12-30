@@ -12,7 +12,7 @@ class SearchesService
     searches.each do |search|
       craigslist_results = search.refresh_interval == 'daily' ? check(search) : execute(search)
       ResultsService.new.persist(craigslist_results, search.id)
-      SearchMailer.new_results(search).deliver_now
+      email_new_results(search) if search.results.deliverable.any?
     end
   end
 
@@ -31,5 +31,10 @@ class SearchesService
       max_price: search.max_price
     }
     Craigslist.search(subdomains, params)
+  end
+
+  def email_new_results(search)
+    SearchMailer.new_results(search).deliver_now
+    search.results.update_attributes!(delivered: true)
   end
 end

@@ -1,9 +1,6 @@
-Welcome to example.com, <%= @user.name %>
+You have new search results for <%= link_to @search.title, @search.url, target: '_blank' %>
 ===============================================
- 
-You have successfully signed up to example.com,
-your username is: <%= @user.login %>.
- 
-To login to the site, just follow this link: <%= @url %>.
- 
-Thanks for joining and have a great day!
+
+<% @new_results.each do |new_result| %>
+    <%= link_to new_result.listing.title, new_result.listing.url, target: '_blank' %>
+<% end %>
