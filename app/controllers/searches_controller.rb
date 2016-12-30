@@ -19,7 +19,9 @@ class SearchesController < ApplicationController
   def show
     @search = Search.find(params[:id])
     @areas = @search.areas
-    @listings = @search.listings
+    @fresh_results = @search.results.fresh.includes(:listing)
+    @visited_results = @search.results.visited.includes(:listing)
+    @favorited_results = @search.results.favorited.includes(:listing)
   end
 
   private

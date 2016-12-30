@@ -27,10 +27,67 @@
 
 <hr />
 
+<h1>
+  Favorited Results
+</h1>
+
 <ul>
-  <% @listings.each do |listing| %>
+  <% @favorited_results.each do |favorited_result| %>
+  <!-- TODO: Ability to section by date posted -->
     <li>
-      <%= link_to listing.title, listing.url, target: '_blank' %>
+      <%= link_to favorited_result.listing.title, favorited_result.listing.url, target: '_blank' %>
+      <%= form_for favorited_result do |f| %>
+        <%= f.hidden_field :favorited, value: false %>
+        <%= f.submit 'Unfavorite' %>
+      <% end %>
     </li>
   <% end %>
 </ul>
+
+<hr />
+
+<h1>
+  New Results
+</h1>
+
+<ul>
+  <% @fresh_results.each do |fresh_result| %>
+  <!-- TODO: Ability to section by date posted -->
+    <li>
+      <%= link_to fresh_result.listing.title, fresh_result.listing.url, target: '_blank' %>
+      <%= form_for fresh_result do |f| %>
+        <%= f.hidden_field :visited %>
+        <%= f.submit 'Mark as Visited' %>
+      <% end %>
+      <%= form_for fresh_result do |f| %>
+        <%= f.hidden_field :favorited, value: true %>
+        <%= f.submit 'Favorite' %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+
+<hr />
+
+<h1>
+  Visited Results
+</h1>
+
+<ul>
+  <% @visited_results.each do |visited_result| %>
+  <!-- TODO: Ability to section by date posted -->
+    <li>
+      <%= link_to visited_result.listing.title, visited_result.listing.url, target: '_blank' %>
+      <%= form_for visited_result do |f| %>
+        <%= f.hidden_field :blacklisted %>
+        <%= f.submit 'Remove from this Search' %>
+      <% end %>
+      <%= form_for visited_result do |f| %>
+        <%= f.hidden_field :favorited, value: true %>
+        <%= f.submit 'Favorite' %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+
+<hr />

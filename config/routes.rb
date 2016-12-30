@@ -13,4 +13,5 @@ Rails.application.routes.draw do
   get 'dashboard', to: 'dashboard#index'
 
   resources :searches, only: [:new, :create, :show]
+  resources :results, only: [:update]
 end

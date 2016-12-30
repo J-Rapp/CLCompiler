@@ -11,7 +11,7 @@ class SearchesService
     searches = Search.all
     searches.each do |search|
       results = search.refresh_interval == 'daily' ? check(search) : execute(search)
-      ListingsService.new.persist(results, search.id)
+      ResultsService.new.persist(results, search.id)
     end
   end
 
