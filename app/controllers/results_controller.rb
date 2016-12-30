@@ -13,15 +13,12 @@ class ResultsController < ApplicationController
   end
 
   def update_result(result, params)
-    p params
-    if params['visited']
-      result.update_attributes!(visited: true)
-    elsif params['blacklisted']
+    if params['blacklisted']
       result.update_attributes!(blacklisted: true)
     elsif params['favorited'] == 'true'
       result.update_attributes!(favorited: true)
     elsif params['favorited'] == 'false'
-      result.update_attributes!(favorited: false, visited: true)
+      result.update_attributes!(favorited: false)
     end
   end
 end

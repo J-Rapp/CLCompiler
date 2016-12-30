@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161229220331) do
+ActiveRecord::Schema.define(version: 20161230215922) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 20161229220331) do
   end
 
   create_table "results", force: :cascade do |t|
-    t.boolean  "visited",     default: false
+    t.boolean  "delivered",   default: false
     t.boolean  "favorited",   default: false
     t.boolean  "blacklisted", default: false
     t.integer  "search_id"
