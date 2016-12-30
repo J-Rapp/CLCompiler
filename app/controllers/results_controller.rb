@@ -9,14 +9,19 @@ class ResultsController < ApplicationController
   private
 
   def result_params
-    params.require(:result).permit(:visited, :blacklisted)
+    params.require(:result).permit(:visited, :blacklisted, :favorited)
   end
 
   def update_result(result, params)
+    p params
     if params['visited']
       result.update_attributes!(visited: true)
     elsif params['blacklisted']
       result.update_attributes!(blacklisted: true)
+    elsif params['favorited'] == 'true'
+      result.update_attributes!(favorited: true)
+    elsif params['favorited'] == 'false'
+      result.update_attributes!(favorited: false, visited: true)
     end
   end
 end

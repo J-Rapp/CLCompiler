@@ -21,6 +21,7 @@ class SearchesController < ApplicationController
     @areas = @search.areas
     @fresh_results = @search.results.fresh.includes(:listing)
     @visited_results = @search.results.visited.includes(:listing)
+    @favorited_results = @search.results.favorited.includes(:listing)
   end
 
   private

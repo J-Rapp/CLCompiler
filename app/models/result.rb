@@ -9,4 +9,5 @@ class Result < ApplicationRecord
 
   scope :fresh, -> { where visited: false, blacklisted: false }
   scope :visited, -> { where visited: true, blacklisted: false }
+  scope :favorited, -> { where favorited: true, blacklisted: false }
 end
