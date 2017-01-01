@@ -97,5 +97,5 @@ Rails.application.configure do
     enable_starttls_auto: true
   }
 
-  config.assets.precompile += ["#{APP_ROOT}/lib/craigslist/*"]
+  config.assets.precompile += ["./lib/craigslist/*"]
 end
