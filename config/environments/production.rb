@@ -99,5 +99,5 @@ Rails.application.configure do
 
   # Rails 5 now disables autoload in production for whatever reason
   # Env files take precedence over application.rb
-  config.autoload_paths += %W(#{config.root}/lib)
+  config.autoload_paths += %W(#{config.root}/lib/craigslist)
 end
