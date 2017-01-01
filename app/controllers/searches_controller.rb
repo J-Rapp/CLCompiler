@@ -6,12 +6,14 @@ class SearchesController < ApplicationController
   end
 
   def create
-    @search = Search.create(search_params)
-    if @search.id
+    @search = Search.new(search_params)
+    if @search.save
       redirect_to search_path(@search)
     else
       # TODO: Build this out more
       flash[:error] = 'Oops, please try again.'
+      @areas = Area.all
+      @regions = Region.all
       render :new
     end
   end
