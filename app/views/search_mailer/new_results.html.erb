@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>
+      You have new search results for <%= link_to @search.name, @search, target: '_blank' %>
+    </h1>
+    <hr />
+    <ul>
+      <% @new_results.each do |new_result| %>
+        <li>
+          <%= link_to new_result.listing.title, new_result.listing.url, target: '_blank' %>
+        </li>
+      <% end %>
+    </ul>
+  </body>
+</html>
