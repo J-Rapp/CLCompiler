@@ -97,7 +97,7 @@ Rails.application.configure do
     enable_starttls_auto: true
   }
 
-  # Rails 5 now disables autoload in production for whatever reason
+  # Rails 5 now disables auto/eager load in production for whatever reason
   # Env files take precedence over application.rb
-  config.autoload_paths += %W(#{config.root}/lib/craigslist)
+  config.eager_load_paths += %W(#{config.root}/lib)
 end
