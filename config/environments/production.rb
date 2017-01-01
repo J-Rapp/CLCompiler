@@ -96,4 +96,8 @@ Rails.application.configure do
     domain:               'heroku.com',
     enable_starttls_auto: true
   }
+
+  # Rails 5 now disables auto/eager load in production for whatever reason
+  # Env files take precedence over application.rb
+  config.eager_load_paths += %W(#{config.root}/lib)
 end
