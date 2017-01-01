@@ -35,6 +35,8 @@ class SearchesService
 
   def email_new_results(search)
     SearchMailer.new_results(search).deliver_now
-    search.results.update_attributes!(delivered: true)
+    search.results.deliverable.each do |result|
+      result.update_attributes!(delivered: true)
+    end
   end
 end
