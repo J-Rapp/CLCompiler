@@ -54,7 +54,7 @@
   <% @results.each do |result| %>
   <!-- TODO: Ability to section by date posted -->
     <li>
-      <%= link_to result.listing.title, result.listing.url, target: '_blank' %> - <%= favorited_result.listing.price %>
+      <%= link_to result.listing.title, result.listing.url, target: '_blank' %> - <%= result.listing.price %>
       <%= form_for result do |f| %>
         <%= f.hidden_field :blacklisted %>
         <%= f.submit 'Remove from this Search' %>
