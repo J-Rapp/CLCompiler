@@ -16,6 +16,7 @@
 <% @user.searches.each do |search| %>
   <li>
     <%= link_to "#{search.name}", search_path(search) %>
+    <%= button_to 'Delete Search', search, method: :delete %>
   </li>
 <% end %>
 </ul>

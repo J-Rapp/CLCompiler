@@ -23,6 +23,12 @@ class SearchesController < ApplicationController
     @favorited_results = @search.results.favorited.includes(:listing)
   end
 
+  def destroy
+    search = Search.find(params[:id])
+    search.destroy!
+    redirect_to dashboard_path
+  end
+
   private
 
   def search_params
