@@ -6,12 +6,14 @@ class SearchesController < ApplicationController
   end
 
   def create
-    @search = Search.create(search_params)
-    if @search.id
+    @search = Search.new(search_params)
+    if @search.save
       redirect_to search_path(@search)
     else
       # TODO: Build this out more
       flash[:error] = 'Oops, please try again.'
+      @areas = Area.all
+      @regions = Region.all
       render :new
     end
   end
@@ -21,6 +23,12 @@ class SearchesController < ApplicationController
     @areas = @search.areas
     @results = @search.results.unfavorited.includes(:listing)
     @favorited_results = @search.results.favorited.includes(:listing)
+  end
+
+  def destroy
+    search = Search.find(params[:id])
+    search.destroy!
+    redirect_to dashboard_path
   end
 
   private
