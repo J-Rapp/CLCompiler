@@ -11,7 +11,7 @@
     <ul>
       <% @new_results.each do |new_result| %>
         <li>
-          <%= link_to new_result.listing.title, new_result.listing.url, target: '_blank' %>
+          <%= link_to new_result.listing.title, new_result.listing.url, target: '_blank' %> - <%= new_result.listing.price %>
         </li>
       <% end %>
     </ul>

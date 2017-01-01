@@ -10,8 +10,9 @@ Rails.application.routes.draw do
     get 'dashboard', to: 'dashboard#index', as: :user_root
   end
 
-  get 'dashboard', to: 'dashboard#index'
-
   resources :searches, only: [:new, :create, :show, :destroy]
   resources :results, only: [:update]
+
+  get 'dashboard', to: 'dashboard#index'
+  get 'searches/execute', to: 'searches#execute'
 end

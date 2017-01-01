@@ -2,5 +2,5 @@ You have new search results for <%= link_to @search.name, @search, target: '_bla
 ===============================================
 
 <% @new_results.each do |new_result| %>
-    <%= link_to new_result.listing.title, new_result.listing.url, target: '_blank' %>
+    <%= link_to new_result.listing.title, new_result.listing.url, target: '_blank' %> - <%= new_result.listing.price %>
 <% end %>

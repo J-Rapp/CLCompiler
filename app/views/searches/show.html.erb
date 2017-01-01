@@ -35,7 +35,7 @@
   <% @favorited_results.each do |favorited_result| %>
   <!-- TODO: Ability to section by date posted -->
     <li>
-      <%= link_to favorited_result.listing.title, favorited_result.listing.url, target: '_blank' %>
+      <%= link_to favorited_result.listing.title, favorited_result.listing.url, target: '_blank' %> - <%= favorited_result.listing.price %>
       <%= form_for favorited_result do |f| %>
         <%= f.hidden_field :favorited, value: false %>
         <%= f.submit 'Unfavorite' %>
@@ -54,7 +54,7 @@
   <% @results.each do |result| %>
   <!-- TODO: Ability to section by date posted -->
     <li>
-      <%= link_to result.listing.title, result.listing.url, target: '_blank' %>
+      <%= link_to result.listing.title, result.listing.url, target: '_blank' %> - <%= favorited_result.listing.price %>
       <%= form_for result do |f| %>
         <%= f.hidden_field :blacklisted %>
         <%= f.submit 'Remove from this Search' %>
