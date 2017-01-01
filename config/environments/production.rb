@@ -96,4 +96,8 @@ Rails.application.configure do
     domain:               'heroku.com',
     enable_starttls_auto: true
   }
+
+  # Rails 5 now disables autoload in production for whatever reason
+  # Env files take precedence over application.rb
+  config.autoload_paths << Rails.root.join('lib')
 end
