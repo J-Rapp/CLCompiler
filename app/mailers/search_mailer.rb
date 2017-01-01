@@ -1,5 +1,5 @@
 class SearchMailer < ApplicationMailer
-  default from: 'jake.rapp322@gmail.com'
+  default from: 'no-reply@megslist.com'
 
   def new_results(search)
     @search = search
