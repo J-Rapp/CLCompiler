@@ -31,6 +31,10 @@ class SearchesController < ApplicationController
     redirect_to dashboard_path
   end
 
+  def execute
+    SearchesService.new.call
+  end
+
   private
 
   def search_params
