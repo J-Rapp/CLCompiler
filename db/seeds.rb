@@ -8,10 +8,10 @@
 
 user = User.create!(
   username: 'Captain Fantastic',
-  email: 'jake.rapp322@gmail.com',
+  email: 'meg@list.com',
   password: 'password'
 )
-puts 'Created default user. Email: \'jake.rapp322@gmail.com\', Password: \'password\'.'
+puts 'Created default user. Email: \'user@list.com\', Password: \'password\'.'
 
 puts 'Scraping and persisting all Craigslist locations...'
 LocationsService.new.call

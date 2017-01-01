@@ -1,12 +1,12 @@
-if (typeof CraigslistCompiler === 'undefined') {
-  CraigslistCompiler = {};
+if (typeof MegsList === 'undefined') {
+  MegsList = {};
 }
 
 $(document).ready(function() {
-  CraigslistCompiler.dynamicAreaCheckboxes();
+  MegsList.dynamicAreaCheckboxes();
 })
 
-CraigslistCompiler.dynamicAreaCheckboxes = function() {
+MegsList.dynamicAreaCheckboxes = function() {
   var onLoadDistrictAreas = $('div[data-district-id="1"]')
 
   onLoadDistrictAreas.removeClass('hidden')
