@@ -1,14 +1,18 @@
 require 'craigslist'
 
 class SearchesService
-  def call
-    parse_and_persist_ready_searches
+  def call(opts = {})
+    parse_and_persist_ready_searches(opts)
   end
 
   private
 
-  def parse_and_persist_ready_searches
-    searches = Search.all
+  def parse_and_persist_ready_searches(opts = {})
+    if opts[:user_id]
+      searches = Search.all.where(user_id: opts[:user_id])
+    else
+      searches = Search.all
+    end
     searches.each do |search|
       craigslist_results = search.refresh_interval == 'daily' ? check(search) : execute(search)
       ResultsService.new.persist(craigslist_results, search.id)
