@@ -8,11 +8,11 @@ class SearchesService
   private
 
   def parse_and_persist_ready_searches(opts = {})
-    if opts[:user_id]
-      searches = Search.all.where(user_id: opts[:user_id])
-    else
-      searches = Search.all
-    end
+    searches = if opts[:user_id]
+                 Search.all.where(user_id: opts[:user_id])
+               else
+                 Search.all
+               end
     searches.each do |search|
       craigslist_results = search.refresh_interval == 'daily' ? check(search) : execute(search)
       ResultsService.new.persist(craigslist_results, search.id)

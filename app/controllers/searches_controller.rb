@@ -10,6 +10,7 @@ class SearchesController < ApplicationController
   def create
     @search = Search.new(search_params)
     if @search.save
+      SearchesService.new.call(current_user.id)
       redirect_to search_path(@search)
     else
       # TODO: Build this out more
