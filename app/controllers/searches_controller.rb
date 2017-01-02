@@ -1,4 +1,6 @@
 class SearchesController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:execute]
+
   def new
     @search = Search.new(user_id: current_user.id)
     @areas = Area.all
