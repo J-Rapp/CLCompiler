@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   root 'welcome#index'
+  
+  get 'dashboard', to: 'dashboard#index'
+  get 'searches/execute', to: 'searches#execute'
 
   devise_for :users
   as :user do
@@ -12,7 +15,4 @@ Rails.application.routes.draw do
 
   resources :searches, only: [:new, :create, :show, :destroy]
   resources :results, only: [:update]
-
-  get 'dashboard', to: 'dashboard#index'
-  get 'searches/execute', to: 'searches#execute'
 end
