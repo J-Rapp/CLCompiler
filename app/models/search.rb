@@ -6,12 +6,4 @@ class Search < ApplicationRecord
   validates :name, uniqueness: true, presence: true
 
   enum refresh_interval: { hourly: 0, daily: 1 }
-
-  after_create :execute_search
-
-  private
-
-  def execute_search
-    SearchesService.new.call
-  end
 end
