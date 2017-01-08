@@ -1,6 +1,6 @@
 # MegsList
 
-This app stores a users parameters for a custom Craigslist search. It then executes that search on multiple chosen Craigslist locations at once and compiles the results. Lastly, it runs the search at automatic intervals and emails the user when any new listings are posted.
+This app stores a user's parameters for a custom Craigslist search. It then executes that search on multiple chosen Craigslist locations at once and compiles the results. Lastly, it runs the search at automatic intervals and emails the user when any new listings are posted.
 
 ---
 
