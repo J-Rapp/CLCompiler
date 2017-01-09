@@ -4,10 +4,6 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
 
   protected
-
-  def after_sign_in_path_for(resource)
-    dashboard_path
-  end
   
   # Devise params require configuring for any fields it doesn't auto-generate
   def configure_permitted_parameters
