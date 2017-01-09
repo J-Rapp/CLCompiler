@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
-  root 'welcome#index'
-
+  get '/' => redirect('/dashboard')
+  get 'welcome', to: 'welcome#index'
   get 'dashboard', to: 'dashboard#index', as: :user_root
+  get 'users/sign_in' => redirect('/welcome')
   get 'searches/execute', to: 'searches#execute'
 
   devise_for :users
