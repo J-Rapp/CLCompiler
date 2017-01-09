@@ -18,7 +18,7 @@ var WelcomePage = React.createClass({
   },
   render: function() {
     return (
-      <div>
+      <div className="container">
         <h1>MegsList</h1>
         <h2>Let Meg take care of it!</h2>
         <p>
