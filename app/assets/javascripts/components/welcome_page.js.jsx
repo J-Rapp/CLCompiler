@@ -40,7 +40,7 @@ var WelcomePage = React.createClass({
         <div className='row text-center'>
           <div className='col-xs-12'>
             <button className='btn btn-secondary' onClick={(e) => this.handleLogin(e)}>
-              Login
+              Log In
             </button>
           </div>
           <div className='col-xs-12'>
