@@ -1,12 +1,20 @@
 var WelcomePage = React.createClass({
+  getToken() {
+    var metas = document.getElementsByTagName('meta');
+    for (var i=0; i<metas.length; i++) {
+      if (metas[i].getAttribute("name") === 'csrf-token') {
+        return metas[i].getAttribute("content");
+      }
+    }
+  },
   handleLogin() {
-    ReactDOM.render(<LoginForm />, document.getElementById('form-area'))
+    ReactDOM.render(<LoginForm token={this.getToken()}/>, document.getElementById('form-area'))
   },
   handleRegistration() {
-    ReactDOM.render(<RegistrationForm />, document.getElementById('form-area'))
+    ReactDOM.render(<RegistrationForm token={this.getToken()}/>, document.getElementById('form-area'))
   },
   handlePassword() {
-    ReactDOM.render(<PasswordForm />, document.getElementById('form-area'))
+    ReactDOM.render(<PasswordForm token={this.getToken()}/>, document.getElementById('form-area'))
   },
   render: function() {
     return (

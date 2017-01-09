@@ -3,26 +3,26 @@ var LoginForm = React.createClass({
     return (
       <form id="new_user" action="/users/sign_in" method="post">
         <input name="utf8" type="hidden" value="&#x2713;" />
-        <input type="hidden" name="authenticity_token" value="nkGtAIAhwGF4cl6RfV5LHBk+vSKyfbKsIWuMLYT9MVLx7Dc4t6fxUuue60KnM3oRy7Qqq29cuo1tqdSX+s4TqA==" />
+        <input type="hidden" name="authenticity_token" value={this.props.token} />
 
         <div>
           <label>Email</label><br />
-          <input type="email" name="user[email]" id="user_email" />
+          <input type="email" name="user[email]" />
         </div>
 
         <div>
           <label>Password</label><br />
-          <input type="password" name="user[password]" id="user_password" />
+          <input type="password" name="user[password]" />
         </div>
 
         <div>
           <input name="user[remember_me]" type="hidden" value="0" />
-          <input type="checkbox" value="1" name="user[remember_me]" id="user_remember_me" />
+          <input type="checkbox" name="user[remember_me]" />
           <label>Remember me</label>
         </div>
 
         <div>
-          <input type="submit" name="commit" value="Log in" data-disable-with="Log in" />
+          <input type="submit" value="Log In" />
         </div>
       </form>
     )
