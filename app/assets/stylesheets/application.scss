@@ -2,19 +2,21 @@
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
 @import 'variables';
+@import 'forms';
 
 // Mobile
 
 html, body {
   background-color: $offwhite;
   margin-top: 2em;
+  margin-bottom: 2em;
   font-family: 'Veranda', sans-serif;
-  font-size: 1.5em;
+  font-size: 1.7em;
   h1 {
-    font-size: 2.3em;
+    font-size: 2.5em;
   }
   h2 {
-    font-size: 1.7em;
+    font-size: 1.4em;
   }
   hr {
     background-color: $charcoal;
@@ -30,6 +32,14 @@ html, body {
   border-radius: .5em;
 }
 
-.btn-large {
-  outline: 1px solid red;
+.btn {
+  font-size: 1.4em;
+  margin: .2em;
+  border-radius: .2em;
+  padding: .5em;
+  margin: .2em;
+}
+
+.row {
+  padding: .2em .5em;
 }

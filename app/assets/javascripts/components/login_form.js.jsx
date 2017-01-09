@@ -3,28 +3,28 @@ var LoginForm = React.createClass({
     return (
       <div>
         <hr />
-        <form id="new_user" action="/users/sign_in" method="post">
-          <input name="utf8" type="hidden" value="&#x2713;" />
-          <input type="hidden" name="authenticity_token" value={this.props.token} />
+        <form id='new_user' action='/users/sign_in' method='post'>
+          <input name='utf8' type='hidden' value='&#x2713;' />
+          <input type='hidden' name='authenticity_token' value={this.props.token} />
 
-          <div>
+          <div className='form-field'>
             <label>Email</label><br />
-            <input type="email" name="user[email]" />
+            <input type='email' name='user[email]' />
           </div>
 
-          <div>
+          <div className='form-field'>
             <label>Password</label><br />
-            <input type="password" name="user[password]" />
+            <input type='password' name='user[password]' />
           </div>
 
-          <div>
-            <input name="user[remember_me]" type="hidden" value="0" />
-            <input type="checkbox" name="user[remember_me]" />
-            <label>Remember me</label>
+          <div className='form-field'>
+            <input name='user[remember_me]' type='hidden' value='0' />
+            <input type='checkbox' name='user[remember_me]' />
+            <label>Remember Me</label>
           </div>
 
-          <div>
-            <input type="submit" value="Log In" />
+          <div className='form-field'>
+            <input type='submit' className='btn btn-secondary' value='Log In' />
           </div>
         </form>
       </div>
