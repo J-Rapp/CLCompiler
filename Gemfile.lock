@@ -214,7 +214,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bootstrap-sass
+  bootstrap-sass (= 3.3.7)
   bullet (= 5.4.2)
   byebug
   devise (= 4.2.0)

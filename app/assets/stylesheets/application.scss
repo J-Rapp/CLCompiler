@@ -1,3 +1,35 @@
 // "bootstrap-sprockets" must be imported before "bootstrap" and "bootstrap/variables"
-@import "bootstrap-sprockets";
-@import "bootstrap";
+@import 'bootstrap-sprockets';
+@import 'bootstrap';
+@import 'variables';
+
+// Mobile
+
+html, body {
+  background-color: $offwhite;
+  margin-top: 2em;
+  font-family: 'Veranda', sans-serif;
+  font-size: 1.5em;
+  h1 {
+    font-size: 2.3em;
+  }
+  h2 {
+    font-size: 1.7em;
+  }
+  hr {
+    background-color: $charcoal;
+    color: $charcoal;
+    border: 0;
+    border-radius: 2px;
+    height: 5px;
+  }
+}
+
+.content-box {
+  background-color: $lightgrey;
+  border-radius: .5em;
+}
+
+.btn-large {
+  outline: 1px solid red;
+}
