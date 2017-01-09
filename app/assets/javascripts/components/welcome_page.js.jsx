@@ -20,7 +20,11 @@ var WelcomePage = React.createClass({
     return (
       <div>
         <h1>MegsList</h1>
-        <h2>Let Meg search for you!</h2>
+        <h2>Let Meg take care of it!</h2>
+        <p>
+          Automatically search multiple Craigslist cities at once,<br />
+          and get emails when new listings are posted!
+        </p>
         <button onClick={(e) => this.handleLogin(e)}>
           Login
         </button>

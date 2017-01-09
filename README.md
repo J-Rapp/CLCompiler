@@ -32,3 +32,11 @@ To try the app out live, go to [megslist.herokuapp.com](http://megslist.herokuap
 
 I spent a fair amount of time researching Rails architecture opinions about what belongs in `app/services` vs `lib`, and as a result I think I have a decent start to a potential Craiglist gem living in my `lib` directory.
 
+---
+
+### Future Features
+
+> - Ability to search more than the 'for sale' section
+> - Smart notifications - teaching the app to filter out postings that are likely duplicates
+> - Automated database cleaning - deleting old listings that no longer are active
+
