@@ -13,7 +13,7 @@ var PasswordForm = React.createClass({
           </div>
 
           <div className='form-field'>
-            <input type='submit' className='btn btn-secondary' value='Email Instructions' />
+            <input type='submit' className='btn btn-secondary' value='Send Instructions' />
           </div>
         </form>
       </div>

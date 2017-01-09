@@ -8,8 +8,8 @@
 
 html, body {
   background-color: $offwhite;
-  margin-top: 2em;
-  margin-bottom: 2em;
+  margin-top: 1.2em;
+  margin-bottom: 1.2em;
   font-family: 'Veranda', sans-serif;
   font-size: 1.7em;
   h1 {
@@ -42,4 +42,12 @@ html, body {
 
 .row {
   padding: .2em .5em;
+}
+
+// Desktop
+
+@media all and (min-device-width: $breakbig) {
+  html, body {
+    font-size: 100%;
+  }
 }
