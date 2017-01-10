@@ -17,7 +17,22 @@ class WelcomePage extends React.Component {
     }
   }
   handleClick(button) {
-    console.log(this.state.token)
+    this.setState({
+      showPassword: false,
+      showRegistration: false,
+      showLogin: false
+    });
+    switch(button) {
+      case('login'):
+        this.setState({showLogin: true});
+        break;
+      case('register'):
+        this.setState({showRegistration: true});
+        break;
+      case('password'):
+        this.setState({showPassword: true});
+        break;
+    };
   }
   render() {
     return (
@@ -42,13 +57,13 @@ class WelcomePage extends React.Component {
         </div>
         <div className='row text-center'>
           <div className='col-xs-12'>
-            <button className='btn btn-secondary' onClick={() => this.handleClick('login')}>
+            <button className='btn btn-secondary' onClick={ () => this.handleClick('login') }>
               Log In
             </button>
-            <button className='btn btn-secondary' onClick={() => this.handleClick('register')}>
+            <button className='btn btn-secondary' onClick={ () => this.handleClick('register')}>
               Register
             </button>
-            <button className='btn btn-secondary' onClick={() => this.handleClick('password')}>
+            <button className='btn btn-secondary' onClick={ () => this.handleClick('password') }>
               Reset Password
             </button>
           </div>
