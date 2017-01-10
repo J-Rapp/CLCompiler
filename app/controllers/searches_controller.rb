@@ -34,9 +34,7 @@ class SearchesController < ApplicationController
 
   def destroy
     search = Search.find(params[:id])
-    if user_is_owner?(search)
-      search.destroy!
-    end
+    search.destroy! if user_is_owner?(search)
     redirect_to dashboard_path
   end
 
