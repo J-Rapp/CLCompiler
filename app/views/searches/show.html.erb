@@ -50,21 +50,28 @@
   Results
 </h1>
 
-<ul>
-  <% @results.each do |result| %>
+
+<% @results.group_by(&:group_by_date).each do |date, results| %>
+  <h2>
+    <%= date %>
+  </h2>
+  <ul>
   <!-- TODO: Ability to section by date posted -->
-    <li>
-      <%= link_to result.listing.title, result.listing.url, target: '_blank' %> - <%= result.listing.price %>
-      <%= form_for result do |f| %>
-        <%= f.hidden_field :blacklisted %>
-        <%= f.submit 'Remove from this Search' %>
-      <% end %>
-      <%= form_for result do |f| %>
-        <%= f.hidden_field :favorited, value: true %>
-        <%= f.submit 'Favorite' %>
-      <% end %>
-    </li>
-  <% end %>
-</ul>
+    <% results.each do |result| %>
+      <li>
+        <%= link_to result.listing.title, result.listing.url, target: '_blank' %> - <%= result.listing.price %>
+        <%= form_for result do |f| %>
+          <%= f.hidden_field :blacklisted %>
+          <%= f.submit 'Remove from this Search' %>
+        <% end %>
+        <%= form_for result do |f| %>
+          <%= f.hidden_field :favorited, value: true %>
+          <%= f.submit 'Favorite' %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
 
 <hr />

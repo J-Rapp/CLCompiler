@@ -6,7 +6,12 @@ class Result < ApplicationRecord
 
   # TODO: on_create - queue for mailing
 
+  default_scope { order(created_at: :desc) }
   scope :unfavorited, -> { where favorited: false, blacklisted: false }
   scope :favorited, -> { where favorited: true, blacklisted: false }
   scope :deliverable, -> { where delivered: false }
+
+  def group_by_date
+    created_at.strftime('%m/%d')
+  end
 end
