@@ -1,4 +1,4 @@
-var WelcomePage = React.createClass({
+class WelcomePage extends React.Component {
   getToken() {
     var metas = document.getElementsByTagName('meta');
     for (var i=0; i<metas.length; i++) {
@@ -6,17 +6,17 @@ var WelcomePage = React.createClass({
         return metas[i].getAttribute('content');
       }
     }
-  },
+  }
   handleLogin() {
     ReactDOM.render(<LoginForm token={this.getToken()}/>, document.getElementById('form-area'))
-  },
+  }
   handleRegistration() {
     ReactDOM.render(<RegistrationForm token={this.getToken()}/>, document.getElementById('form-area'))
-  },
+  }
   handlePassword() {
     ReactDOM.render(<PasswordForm token={this.getToken()}/>, document.getElementById('form-area'))
-  },
-  render: function() {
+  }
+  render() {
     return (
       <div className='container content-box'>
         <div className='row text-center'>
@@ -61,4 +61,4 @@ var WelcomePage = React.createClass({
       </div>
     )
   }
-});
+}
