@@ -9,4 +9,8 @@ class Result < ApplicationRecord
   scope :unfavorited, -> { where favorited: false, blacklisted: false }
   scope :favorited, -> { where favorited: true, blacklisted: false }
   scope :deliverable, -> { where delivered: false }
+
+  def group_by_date
+    created_at.strftime('%m/%d')
+  end
 end
