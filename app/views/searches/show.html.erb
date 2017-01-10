@@ -52,9 +52,9 @@
 
 
 <% @results.group_by(&:group_by_date).each do |date, results| %>
-  <h1>
+  <h2>
     <%= date %>
-  </h1>
+  </h2>
   <ul>
   <!-- TODO: Ability to section by date posted -->
     <% results.each do |result| %>
