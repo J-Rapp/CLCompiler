@@ -39,4 +39,5 @@ I spent a fair amount of time researching Rails architecture opinions about what
 > - Ability to search more than the 'for sale' section
 > - Smart notifications - teaching the app to filter out postings that are likely duplicates
 > - Automated database cleaning - deleting old listings that no longer are active
+> - Allow non-registered users to search - user creates account if they want to be emailed, results aren't persisted otherwise
 
