@@ -1,28 +1,72 @@
-function LoginForm(props) {
-  return (
-    <form id='new_user' action='/users/sign_in' method='post'>
-      <input name='utf8' type='hidden' value='&#x2713;' />
-      <input type='hidden' name='authenticity_token' value={props.token} />
+class LoginForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      token: props.token,
+      email: '',
+      password: '',
+      isChecked: false,
+      failedAuth: false,
+      errors: null
+    }
+  }
+  handleChange(event) {
+    this.setState({
+      [event.target.type]: event.target.value
+    })
+  }
+  toggleCheckbox() {
+    this.setState({
+      isChecked: !this.state.isChecked
+    })
+  }
+  handleSubmit(event) {
+    event.preventDefault();
+    const self = this
+    $.ajax({
+      type: 'POST',
+      url: '/users/sign_in',
+      data: {
+        authenticity_token: this.state.token,
+        user: {
+          email: this.state.email,
+          password: this.state.password,
+          remember_me: this.state.isChecked ? '1' : '0'
+        }
+      }
+    }).done(function(data) {
+      window.location.href = '/dashboard'
+    }).fail(function(data) {
+      self.setState({
+        failedAuth: true,
+        errors: data.responseText
+      })
+    });
+  }
+  render() {
+    return (
+      <form onSubmit={(e) => this.handleSubmit(e)}>
+        <div className='form-field'>
+          <label>Email</label><br />
+          <input type='email' onChange={(e) => this.handleChange(e)} />
+        </div>
 
-      <div className='form-field'>
-        <label>Email</label><br />
-        <input type='email' name='user[email]' />
-      </div>
+        <div className='form-field'>
+          <label>Password</label><br />
+          <input type='password' onChange={(e) => this.handleChange(e)} />
+        </div>
 
-      <div className='form-field'>
-        <label>Password</label><br />
-        <input type='password' name='user[password]' />
-      </div>
+        <div className='form-field'>
+          <input type='checkbox' onChange={() => this.toggleCheckbox()} />
+          <label>Remember Me</label>
+        </div>
 
-      <div className='form-field'>
-        <input name='user[remember_me]' type='hidden' value='0' />
-        <input type='checkbox' name='user[remember_me]' />
-        <label>Remember Me</label>
-      </div>
+        { this.state.failedAuth ? <ErrorDisplay errors={this.state.errors} /> : null }
 
-      <div className='form-field'>
-        <input type='submit' className='btn btn-secondary' value='Log In' />
-      </div>
-    </form>
-  )
+        <div className='form-field'>
+          <input type='submit' className='btn btn-secondary' value='Log In' />
+        </div>
+      </form>
+    )
+  }
 }

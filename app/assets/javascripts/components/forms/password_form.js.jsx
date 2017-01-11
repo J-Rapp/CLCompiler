@@ -1,7 +1,6 @@
 function PasswordForm(props) {
   return (
-    <form id='new_user' action='/users/password' method='post'>
-      <input name='utf8' type='hidden' value='&#x2713;' />
+    <form action='/users/password'>
       <input type='hidden' name='authenticity_token' value={props.token} />
 
       <div className='form-field'>
