@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'dashboard', to: 'dashboard#index', as: :user_root
   get 'users/sign_in' => redirect('/welcome')
   get 'searches/execute', to: 'searches#execute'
+  get '/check_user', to: 'welcome#check_user'
 
   devise_for :users
   as :user do

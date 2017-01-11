@@ -48,16 +48,16 @@ class LoginForm extends React.Component {
       <form onSubmit={(e) => this.handleSubmit(e)}>
         <div className='form-field'>
           <label>Email</label><br />
-          <input type='email' value={this.state.email} onChange={(e) => this.handleChange(e)} />
+          <input type='email' onChange={(e) => this.handleChange(e)} />
         </div>
 
         <div className='form-field'>
           <label>Password</label><br />
-          <input type='password' value={this.state.password} onChange={(e) => this.handleChange(e)} />
+          <input type='password' onChange={(e) => this.handleChange(e)} />
         </div>
 
         <div className='form-field'>
-          <input type='checkbox' value={this.state.isChecked} onChange={() => this.toggleCheckbox()} />
+          <input type='checkbox' onChange={() => this.toggleCheckbox()} />
           <label>Remember Me</label>
         </div>
 
