@@ -5,6 +5,14 @@ class Dashboard extends React.Component {
       user: props.user
     }
   }
+  handleLogout(event) {
+    $.ajax({
+      method: 'DELETE',
+      url: '/logout'
+    }).done(function(data){
+      window.location.href = '/welcome'
+    })
+  }
   render() {
     return (
       <div className='container content-box'>
@@ -17,7 +25,7 @@ class Dashboard extends React.Component {
             <button className='btn btn-secondary'>
               Edit Account
             </button>
-            <button className='btn btn-secondary'>
+            <button className='btn btn-secondary' onClick={(e) => this.handleLogout(e)}>
               Logout
             </button>
           </div>
