@@ -14,10 +14,21 @@ class Dashboard extends React.Component {
           </div>
           <div className='col-sm-12'>
             <hr />
-            <p><a href='/users/edit'>Edit Account</a></p>
-            <p><a href='/logout'>Logout</a></p>
-            <p>My Searches</p>
-            <p>New Search</p>
+            <button className='btn btn-secondary'>
+              Edit Account
+            </button>
+            <button className='btn btn-secondary'>
+              Logout
+            </button>
+          </div>
+          <div className='col-sm-12'>
+            <button className='btn btn-secondary'>
+              My Searches
+            </button>
+            <button className='btn btn-secondary'>
+              New Search
+            </button>
+            <hr />
           </div>
         </div>
       </div>
