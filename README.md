@@ -30,9 +30,9 @@ To try the app out live, go to [megslist.herokuapp.com](http://megslist.herokuap
 
 ### Personal Learning Outcomes
 
-I spent a fair amount of time researching Rails architecture opinions about what belongs in `app/services` vs `lib`. This had two significant results:
-    1) As a fun future project, the `lib/craigslist` directory could easily fork off as a nice start for an open source gem.
-    2) At one point I decided to do a major overhaul of the entire stack after completing nearly 80% of MVP, and was pretty terrified at first. Researching good OOP & architecture and scrutinously refactoring the code paid dividends - reorganizing the existing MVP components to introduce entirely new ones was a breeze.
+- I spent a fair amount of time researching Rails architecture opinions about what belongs in `app/services` vs `lib`. This had two significant results:
+  1. As a fun future project, the `lib/craigslist` directory could easily fork off as a nice start for an open source gem.
+  2. At one point I decided to do a major overhaul of the entire stack after completing nearly 80% of MVP, and was pretty terrified at first. Researching good OOP & architecture and scrutinously refactoring the code paid dividends - reorganizing the existing MVP components to introduce entirely new ones was a breeze.
 
 ---
 
