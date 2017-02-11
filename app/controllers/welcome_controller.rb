@@ -4,6 +4,9 @@ class WelcomeController < ApplicationController
   def index
   end
 
+  def enter
+  end
+
   def check_user
     user = User.where(email: params[:email])
     if user.exists?

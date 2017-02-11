@@ -2,7 +2,8 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   get 'dashboard', to: 'dashboard#index', as: :user_root
-  get 'users/sign_in', to: redirect('/')
+  get 'enter', to: 'welcome#enter'
+  get 'users/sign_in', to: redirect('enter')
   get 'searches/execute', to: 'searches#execute'
   get 'check_user', to: 'welcome#check_user'
 
