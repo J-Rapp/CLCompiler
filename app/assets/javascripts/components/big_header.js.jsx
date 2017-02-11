@@ -7,8 +7,8 @@ function BigHeader() {
         </div>
         <div className='col-xs-12'>
           <p>
-          automatically search multiple craigslist communities at once<br />
-          <small><em>(megslist is not affiliated with craigslist)</em></small>
+          search multiple craigslist communities at once<br />
+          <small><em>(in no way affiliated with craigslist)</em></small>
           </p>
         </div>
       </div>

@@ -1,4 +1,4 @@
-class Dashboard extends React.Component {
+class DashboardPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

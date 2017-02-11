@@ -1,4 +1,4 @@
-class Enter extends React.Component {
+class EnterPage extends React.Component {
   constructor() {
     super();
     this.state = {
