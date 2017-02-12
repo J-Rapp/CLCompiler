@@ -7,7 +7,7 @@ function BigHeader() {
         </div>
         <div className='col-xs-12'>
           <p>
-          search multiple craigslist communities at once<br />
+          search multiple craigslist areas at once<br />
           <small><em>(in no way affiliated with craigslist)</em></small>
           </p>
         </div>

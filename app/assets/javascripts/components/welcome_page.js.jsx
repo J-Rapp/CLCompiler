@@ -1,8 +1,11 @@
 class WelcomePage extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      token: this.getToken()
+      token: this.getToken(),
+      regions: props.regions,
+      districts: props.districts,
+      areas: props.areas
     };
   }
   getToken() {
@@ -13,6 +16,13 @@ class WelcomePage extends React.Component {
       }
     }
   }
+  renderRegions() {
+    return this.state.regions.map((region) => <Region key={region.id} name={region.name} changeRegion={this.changeRegion} />)
+  }
+  changeRegion(event) {
+    event.preventDefault();
+    console.log(event)
+  }
   render() {
     return (
       <form>
@@ -22,6 +32,9 @@ class WelcomePage extends React.Component {
               <p>
               I'm gonna put a search fields here for terms and pricing
               </p>
+              <input type='text' placeholder='search terms'></input>
+              <input type='text' placeholder='min price'></input>
+              <input type='text' placeholder='max price'></input>
             </div>
           </div>
         </div>
@@ -31,6 +44,7 @@ class WelcomePage extends React.Component {
               <p>
               I'm going to list all regions here
               </p>
+              { this.renderRegions() }
             </div>
           </div>
         </div>
@@ -38,7 +52,7 @@ class WelcomePage extends React.Component {
           <div className='row text-center'>
             <div className='col-xs-12'>
               <p>
-              I'm going to list all areas here, and these will vary based on the region selected
+              I'm going to list all districts here, and these will vary based on the region selected
               </p>
             </div>
           </div>
@@ -47,7 +61,7 @@ class WelcomePage extends React.Component {
           <div className='row text-center'>
             <div className='col-xs-12'>
               <p>
-              I'm going to list all communities of the selected area here
+              I'm going to list all areas of the selected district here
               </p>
             </div>
           </div>
