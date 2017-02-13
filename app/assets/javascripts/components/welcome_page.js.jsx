@@ -23,7 +23,7 @@ class WelcomePage extends React.Component {
       areas: props.areas,
       region: 1,
       district: 1,
-      selectedAreas: [1, 2, 3, 5]
+      selectedAreas: [1, 3]
     };
   }
 
@@ -62,19 +62,19 @@ class WelcomePage extends React.Component {
 
   // Adds and Removes Area IDs from this.state.selectedAreas Array
   toggleArea(area) {
+    var stateArray = this.state.selectedAreas
+    var areaID = area.props.id
     // Removing
-    if (area.props.isSelected && this.state.selectedAreas.contains(area.props.id)) {
-      // Deleting from state's Arrays proved a rabbit hole, so mutate locally and then set
-      var array = this.state.selectedAreas
-      var i = array.indexOf(area.props.id)
-      array.splice(i, 1)
+    if (area.props.isSelected && stateArray.contains(areaID)) {
+      var i = stateArray.indexOf(areaID)
+      stateArray.splice(i, 1)
       this.setState({
-        selectedAreas: array
+        selectedAreas: stateArray
       })
     // Adding
-    } else if (this.state.selectedAreas.length <= 5) {
+    } else if (stateArray.length < 5) {
       this.setState({
-        selectedAreas: this.state.selectedAreas.concat([area.props.id])
+        selectedAreas: stateArray.concat([areaID])
       })
     }
   }
@@ -98,6 +98,7 @@ class WelcomePage extends React.Component {
   }
 
   // // Child Groups
+  // // TODO: Break these out into Group Components?
 
   // Renders child Buttons for each Object in `this.state.regions` Array
   renderRegions() {
@@ -131,14 +132,13 @@ class WelcomePage extends React.Component {
     })
   }
 
-  // Renders child Buttons for each Associated Object in Areas `this.state.areas` Array
+  // Renders child Buttons for each Associated Object in `this.state.areas` Array
   renderAreas() {
     return this.state.areas.map((area) => {
       if (area.district_id === this.state.district) {
         var isSelected = this.state.selectedAreas.contains(area.id)
         return <Button 
                  key={area.id}
-                 type='area'
                  id={area.id}
                  name={area.name}
                  select={this.toggleArea.bind(this)}
@@ -148,7 +148,24 @@ class WelcomePage extends React.Component {
     })
   }
 
+  // Renders child Buttons for each Object in `this.state.selectedAreas` Array
+  renderSelectedAreas() {
+    return this.state.areas.map((area) => {
+      if (this.state.selectedAreas.contains(area.id)) {
+        return <Button 
+                 key={area.id}
+                 id={area.id}
+                 name={area.name}
+                 select={this.toggleArea.bind(this)}
+                 isSelected='true'
+                 getsX='true'
+               />
+      }
+    })
+  }
+
   // // JSX
+  // // TODO: Consider ease of interpreting by assistive technologies
 
   render() {
     return (
@@ -185,6 +202,19 @@ class WelcomePage extends React.Component {
               </p>
               <div className='btn-group-sm'>
               { this.renderAreas() }
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className='container content-box'>
+          <div className='row text-center'>
+            <div className='col-xs-12'>
+              <p>
+              Selected Areas<br />
+              <small><em>(up to 5)</em></small>
+              </p>
+              <div className='btn-group-sm'>
+              { this.renderSelectedAreas() }
               </div>
             </div>
           </div>

@@ -53,6 +53,16 @@ html, body {
   border: 1px solid black;
 }
 
+// Positioning the Selected Area Xs
+
+.glyphicon {
+  padding-right: .7em;
+}
+
+.selected-area {
+  display: inline-block;
+}
+
 // Desktop
 
 @media all and (min-device-width: $breakbig) {
