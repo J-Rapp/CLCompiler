@@ -11,6 +11,7 @@ Array.prototype.contains = function(obj) {
 }
 
 // Landing Page rendered on `views/welcome/index.html.erb`
+// TODO: Add immutability-helper for state altering
 
 class WelcomePage extends React.Component {
   constructor(props) {
@@ -55,9 +56,11 @@ class WelcomePage extends React.Component {
 
   // Adds Area IDs to the selectedAreas state array
   addArea(area) {
-    // if (this.state.selectedAreas.length <= 5) {
-    //   selectedAreas.push(area.props.id)
-    // }
+    if (this.state.selectedAreas.length <= 5) {
+      this.setState({
+        selectedAreas: this.state.selectedAreas.concat([area.props.id])
+      })
+    }
   }
 
   // Removes Area IDs from the selectedAreas state array
