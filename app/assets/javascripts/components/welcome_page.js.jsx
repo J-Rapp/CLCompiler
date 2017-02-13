@@ -47,30 +47,36 @@ class WelcomePage extends React.Component {
 
   // // Altering State
 
-  // Updates state for either current Region or District
+
+  // Handles text field inputs
+  handleTextInput(event) {
+
+  }
+
+  // Updates this.state.region and this.state.district
   changePlace(location) {
     this.setState({ 
       [location.props.type]: location.props.id
     })
   }
 
-  // Adds Area IDs to the selectedAreas state array
-  addArea(area) {
-    if (this.state.selectedAreas.length <= 5) {
+  // Adds and Removes Area IDs from this.state.selectedAreas Array
+  toggleArea(area) {
+    // Removing
+    if (area.props.isSelected && this.state.selectedAreas.contains(area.props.id)) {
+      // Deleting from state's Arrays proved a rabbit hole, so mutate locally and then set
+      var array = this.state.selectedAreas
+      var i = array.indexOf(area.props.id)
+      array.splice(i, 1)
+      this.setState({
+        selectedAreas: array
+      })
+    // Adding
+    } else if (this.state.selectedAreas.length <= 5) {
       this.setState({
         selectedAreas: this.state.selectedAreas.concat([area.props.id])
       })
     }
-  }
-
-  // Removes Area IDs from the selectedAreas state array
-  removeArea(area) {
-
-  }
-
-  // Handles text field inputs
-  handleTextInput(event) {
-
   }
 
   // // Page Content
@@ -135,7 +141,7 @@ class WelcomePage extends React.Component {
                  type='area'
                  id={area.id}
                  name={area.name}
-                 select={this.addArea.bind(this)}
+                 select={this.toggleArea.bind(this)}
                  isSelected={isSelected}
                />
       }
