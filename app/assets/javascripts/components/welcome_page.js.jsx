@@ -4,9 +4,11 @@ class WelcomePage extends React.Component {
     this.state = {
       token: this.getToken(),
       regions: props.regions,
-      selectedRegion: 1,
       districts: props.districts,
-      areas: props.areas
+      areas: props.areas,
+      region: 1,
+      district: 1,
+      selectedAreas: []
     };
   }
   getToken() {
@@ -17,15 +19,31 @@ class WelcomePage extends React.Component {
       }
     }
   }
-  renderRegions() {
-    return this.state.regions.map((region) => {
-      var isSelected = region.id === this.state.selectedRegion;
-      return <Button key={region.id} id={region.id} name={region.name} changeRegion={this.changeRegion.bind(this)} isSelected={isSelected} />;
+  _changePlace(location) {
+    this.setState({ 
+      [location.props.type]: location.props.id
     })
   }
-  changeRegion(region) {
-    this.setState({
-      selectedRegion: region.props.id
+  renderRegions() {
+    return this.state.regions.map((region) => {
+      var isSelected = region.id === this.state.region;
+      return <Button key={region.id} type='region' id={region.id} name={region.name} _changePlace={this._changePlace.bind(this)} isSelected={isSelected} />;
+    })
+  }
+  renderDistricts() {
+    return this.state.districts.map((district) => {
+      if (district.region_id === this.state.region) {
+        var isSelected = district.id === this.state.district;
+        return <Button key={district.id} type='district' id={district.id} name={district.name} _changePlace={this._changePlace.bind(this)} isSelected={isSelected} />
+      }
+    })
+  }
+  renderAreas() {
+    return this.state.areas.map((area) => {
+      if (area.district_id === this.state.district) {
+        var isSelected = area.id === this.state.area;
+        return <Button key={area.id} type='area' id={area.id} name={area.name} _changePlace={this._changePlace.bind(this)} isSelected={isSelected} />
+      }
     })
   }
   render() {
@@ -59,6 +77,9 @@ class WelcomePage extends React.Component {
               <p>
               Select District:
               </p>
+              <div className='btn-group-sm'>
+              { this.renderDistricts() }
+              </div>
             </div>
           </div>
         </div>
@@ -68,6 +89,9 @@ class WelcomePage extends React.Component {
               <p>
               Select Areas (up to 5):
               </p>
+              <div className='btn-group-sm'>
+              { this.renderAreas() }
+              </div>
             </div>
           </div>
         </div>

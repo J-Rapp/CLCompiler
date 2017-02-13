@@ -2,16 +2,17 @@ class Button extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      type: props.type,
       name: props.name,
       id: props.id,
       isSelected: props.isSelected,
-      handleClick: () => props.changeRegion(this)
+      handleClick: () => props._changePlace(this)
     }
   }
   componentWillReceiveProps(props) {
-  this.setState({
-    isSelected: props.isSelected 
-  });
+    this.setState({
+      isSelected: props.isSelected 
+    });
   }
   render() {
     return (
