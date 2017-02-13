@@ -1,3 +1,17 @@
+// Nifty Array extension function grabbed from Stack Overflow
+
+Array.prototype.contains = function(obj) {
+    var i = this.length;
+    while (i--) {
+        if (this[i] === obj) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// Landing Page rendered on `views/welcome/index.html.erb`
+
 class WelcomePage extends React.Component {
   constructor(props) {
     super(props);
@@ -11,6 +25,10 @@ class WelcomePage extends React.Component {
       selectedAreas: []
     };
   }
+
+  // // Form Data & Sending
+
+  // Grabs authenticity token from head/meta tag
   getToken() {
     var metas = document.getElementsByTagName('meta');
     for (var i=0; i<metas.length; i++) {
@@ -19,33 +37,110 @@ class WelcomePage extends React.Component {
       }
     }
   }
-  _changePlace(location) {
+
+  // Executes AJAX Call
+
+  handleSubmitForm(event) {
+
+  }
+
+  // // Altering State
+
+  // Updates state for either current Region or District
+  changePlace(location) {
     this.setState({ 
       [location.props.type]: location.props.id
     })
   }
+
+  // Adds Area IDs to the selectedAreas state array
+  addArea(area) {
+    if (this.state.selectedAreas.length <= 5) {
+      selectedAreas.push(area.props.id)
+    }
+  }
+
+  // Removes Area IDs from the selectedAreas state array
+  removeArea(area) {
+
+  }
+
+  // Handles text field inputs
+  handleTextInput(event) {
+
+  }
+
+  // // Page Content
+
+  // Renders the selected Region ("country") name above the rendered Districts ("states")
+  currentRegionName() {
+    var currentRegionID = this.state.region
+    return this.state.regions.find(function(region) {
+      return region.id === currentRegionID
+    }).name
+  }
+
+  // Renders the selected District name above the rendered Areas ("cities")
+  currentDistrictName() {
+    var currentDistrictID = this.state.district
+    return this.state.districts.find(function(district) {
+      return district.id === currentDistrictID
+    }).name
+  }
+
+  // // Child Groups
+
+  // Renders child Buttons for each Object in `this.state.regions` Array
   renderRegions() {
     return this.state.regions.map((region) => {
       var isSelected = region.id === this.state.region;
-      return <Button key={region.id} type='region' id={region.id} name={region.name} _changePlace={this._changePlace.bind(this)} isSelected={isSelected} />;
+        return <Button 
+                 key={region.id}
+                 type='region'
+                 id={region.id}
+                 name={region.name}
+                 select={this.changePlace.bind(this)}
+                 isSelected={isSelected}
+               />
     })
   }
+
+  // Renders child Buttons for each Associated Object in `this.state.districts` Array
   renderDistricts() {
     return this.state.districts.map((district) => {
       if (district.region_id === this.state.region) {
         var isSelected = district.id === this.state.district;
-        return <Button key={district.id} type='district' id={district.id} name={district.name} _changePlace={this._changePlace.bind(this)} isSelected={isSelected} />
+        return <Button 
+                 key={district.id}
+                 type='district'
+                 id={district.id}
+                 name={district.name}
+                 select={this.changePlace.bind(this)}
+                 isSelected={isSelected}
+               />
       }
     })
   }
+
+  // Renders child Buttons for each Associated Object in Areas `this.state.areas` Array
   renderAreas() {
     return this.state.areas.map((area) => {
       if (area.district_id === this.state.district) {
         var isSelected = area.id === this.state.area;
-        return <Button key={area.id} type='area' id={area.id} name={area.name} _changePlace={this._changePlace.bind(this)} isSelected={isSelected} />
+        return <Button 
+                 key={area.id}
+                 type='area'
+                 id={area.id}
+                 name={area.name}
+                 select={this.addArea.bind(this)}
+                 isSelected={isSelected}
+               />
       }
     })
   }
+
+  // // JSX
+
   render() {
     return (
       <form>
@@ -53,21 +148,11 @@ class WelcomePage extends React.Component {
           <div className='row text-center'>
             <div className='col-xs-12'>
               <p>
-              I'm gonna put a search fields here for terms and pricing
+              Region
               </p>
-              <input type='text' placeholder='search terms'></input>
-              <input type='text' placeholder='min price'></input>
-              <input type='text' placeholder='max price'></input>
-            </div>
-          </div>
-        </div>
-        <div className='container content-box'>
-          <div className='row text-center'>
-            <div className='col-xs-12'>
-              <p>
-              Select Region:
-              </p>
+              <div className='btn-group-sm'>
               { this.renderRegions() }
+              </div>
             </div>
           </div>
         </div>
@@ -75,7 +160,7 @@ class WelcomePage extends React.Component {
           <div className='row text-center'>
             <div className='col-xs-12'>
               <p>
-              Select District:
+              { this.currentRegionName() }
               </p>
               <div className='btn-group-sm'>
               { this.renderDistricts() }
@@ -87,11 +172,20 @@ class WelcomePage extends React.Component {
           <div className='row text-center'>
             <div className='col-xs-12'>
               <p>
-              Select Areas (up to 5):
+              { this.currentDistrictName() }
               </p>
               <div className='btn-group-sm'>
               { this.renderAreas() }
               </div>
+            </div>
+          </div>
+        </div>
+        <div className='container content-box'>
+          <div className='row text-center'>
+            <div className='col-xs-12'>
+              <input type='text' placeholder='search terms'></input>
+              <input type='text' placeholder='min price'></input>
+              <input type='text' placeholder='max price'></input>
             </div>
           </div>
         </div>

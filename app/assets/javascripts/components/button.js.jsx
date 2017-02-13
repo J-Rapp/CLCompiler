@@ -6,14 +6,20 @@ class Button extends React.Component {
       name: props.name,
       id: props.id,
       isSelected: props.isSelected,
-      handleClick: () => props._changePlace(this)
+      handleClick: () => props.select(this)
     }
   }
+
+  // Called when the Welcome Page re-renders and passes props down
+
   componentWillReceiveProps(props) {
     this.setState({
       isSelected: props.isSelected 
     });
   }
+
+  // JSX
+  
   render() {
     return (
       <div className={this.state.isSelected ? "btn selected" : "btn"} onClick={this.state.handleClick}>
