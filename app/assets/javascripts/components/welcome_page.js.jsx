@@ -1,4 +1,4 @@
-// Nifty Array function grabbed from Stack Overflow
+// Array function from Stack Overflow to help with `this.state.selectedAreaIDs`
 
 Array.prototype.contains = function(obj) {
     var i = this.length;
@@ -53,7 +53,7 @@ class WelcomePage extends React.Component {
 
   }
 
-  // Updates this.state.selectedRegionID and this.state.selectedDistrictID
+  // Updates `this.state.selectedRegionID` and `this.state.selectedDistrictID`
   changePlace(location) {
     var type = location.props.type
     var newID = location.props.id
@@ -75,7 +75,7 @@ class WelcomePage extends React.Component {
     }
   }
 
-  // Adds and Removes Area IDs from this.state.selectedAreaIDs Array
+  // Adds and Removes Area IDs from `this.state.selectedAreaIDs` Array
   toggleArea(area) {
     var stateArray = this.state.selectedAreaIDs
     var areaID = area.props.id
