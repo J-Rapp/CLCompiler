@@ -4,6 +4,7 @@ class WelcomePage extends React.Component {
     this.state = {
       token: this.getToken(),
       regions: props.regions,
+      selectedRegion: 1,
       districts: props.districts,
       areas: props.areas
     };
@@ -17,11 +18,15 @@ class WelcomePage extends React.Component {
     }
   }
   renderRegions() {
-    return this.state.regions.map((region) => <Region key={region.id} name={region.name} changeRegion={this.changeRegion} />)
+    return this.state.regions.map((region) => {
+      var isSelected = region.id === this.state.selectedRegion;
+      return <Button key={region.id} id={region.id} name={region.name} changeRegion={this.changeRegion.bind(this)} isSelected={isSelected} />;
+    })
   }
-  changeRegion(event) {
-    event.preventDefault();
-    console.log(event)
+  changeRegion(region) {
+    this.setState({
+      selectedRegion: region.props.id
+    })
   }
   render() {
     return (
@@ -42,7 +47,7 @@ class WelcomePage extends React.Component {
           <div className='row text-center'>
             <div className='col-xs-12'>
               <p>
-              I'm going to list all regions here
+              Select Region:
               </p>
               { this.renderRegions() }
             </div>
@@ -52,7 +57,7 @@ class WelcomePage extends React.Component {
           <div className='row text-center'>
             <div className='col-xs-12'>
               <p>
-              I'm going to list all districts here, and these will vary based on the region selected
+              Select District:
               </p>
             </div>
           </div>
@@ -61,7 +66,7 @@ class WelcomePage extends React.Component {
           <div className='row text-center'>
             <div className='col-xs-12'>
               <p>
-              I'm going to list all areas of the selected district here
+              Select Areas (up to 5):
               </p>
             </div>
           </div>
