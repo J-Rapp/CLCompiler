@@ -21,9 +21,9 @@ class WelcomePage extends React.Component {
       regions: props.regions,
       districts: props.districts,
       areas: props.areas,
-      region: 1,
-      district: 1,
-      selectedAreas: [1, 3]
+      selectedRegionID: 1,
+      selectedDistrictID: 1,
+      selectedAreaIDs: [1, 3]
     };
   }
 
@@ -53,28 +53,43 @@ class WelcomePage extends React.Component {
 
   }
 
-  // Updates this.state.region and this.state.district
+  // Updates this.state.selectedRegionID and this.state.selectedDistrictID
   changePlace(location) {
-    this.setState({ 
-      [location.props.type]: location.props.id
+    var type = location.props.type
+    var newID = location.props.id
+    var firstDistrictOfNewRegion = this.state.districts.find(function(district) {
+      return district.region_id == newID
     })
+    switch(type) {
+      case('region'):
+        this.setState({ 
+          selectedRegionID: newID,
+          selectedDistrictID: firstDistrictOfNewRegion.id
+        })
+        break;
+      case('district'):
+        this.setState({ 
+          selectedDistrictID: newID
+        })
+        break;
+    }
   }
 
-  // Adds and Removes Area IDs from this.state.selectedAreas Array
+  // Adds and Removes Area IDs from this.state.selectedAreaIDs Array
   toggleArea(area) {
-    var stateArray = this.state.selectedAreas
+    var stateArray = this.state.selectedAreaIDs
     var areaID = area.props.id
     // Removing
     if (area.props.isSelected && stateArray.contains(areaID)) {
       var i = stateArray.indexOf(areaID)
       stateArray.splice(i, 1)
       this.setState({
-        selectedAreas: stateArray
+        selectedAreaIDs: stateArray
       })
     // Adding
     } else if (stateArray.length < 5) {
       this.setState({
-        selectedAreas: stateArray.concat([areaID])
+        selectedAreaIDs: stateArray.concat([areaID])
       })
     }
   }
@@ -83,27 +98,27 @@ class WelcomePage extends React.Component {
 
   // Renders the selected Region ("country") name above the rendered Districts ("states")
   currentRegionName() {
-    var currentRegionID = this.state.region
+    var selectedRegionID = this.state.selectedRegionID
     return this.state.regions.find(function(region) {
-      return region.id === currentRegionID
+      return region.id === selectedRegionID
     }).name
   }
 
   // Renders the selected District name above the rendered Areas ("cities")
   currentDistrictName() {
-    var currentDistrictID = this.state.district
+    var selectedDistrictID = this.state.selectedDistrictID
     return this.state.districts.find(function(district) {
-      return district.id === currentDistrictID
+      return district.id === selectedDistrictID
     }).name
   }
 
   // // Child Groups
   // // TODO: Break these out into Group Components?
 
-  // Renders child Buttons for each Object in `this.state.regions` Array
+  // Renders child Buttons for each Object in `this.state.selectedRegionIDs` Array
   renderRegions() {
     return this.state.regions.map((region) => {
-      var isSelected = region.id === this.state.region;
+      var isSelected = region.id === this.state.selectedRegionID;
         return <Button 
                  key={region.id}
                  type='region'
@@ -115,11 +130,11 @@ class WelcomePage extends React.Component {
     })
   }
 
-  // Renders child Buttons for each Associated Object in `this.state.districts` Array
+  // Renders child Buttons for each Associated Object in `this.state.selectedDistrictIDs` Array
   renderDistricts() {
     return this.state.districts.map((district) => {
-      if (district.region_id === this.state.region) {
-        var isSelected = district.id === this.state.district;
+      if (district.region_id === this.state.selectedRegionID) {
+        var isSelected = district.id === this.state.selectedDistrictID;
         return <Button 
                  key={district.id}
                  type='district'
@@ -135,8 +150,8 @@ class WelcomePage extends React.Component {
   // Renders child Buttons for each Associated Object in `this.state.areas` Array
   renderAreas() {
     return this.state.areas.map((area) => {
-      if (area.district_id === this.state.district) {
-        var isSelected = this.state.selectedAreas.contains(area.id)
+      if (area.district_id === this.state.selectedDistrictID) {
+        var isSelected = this.state.selectedAreaIDs.contains(area.id)
         return <Button 
                  key={area.id}
                  id={area.id}
@@ -148,10 +163,10 @@ class WelcomePage extends React.Component {
     })
   }
 
-  // Renders child Buttons for each Object in `this.state.selectedAreas` Array
-  renderSelectedAreas() {
+  // Renders child Buttons for each Object in `this.state.selectedAreaIDs` Array
+  renderSelectedAreaIDs() {
     return this.state.areas.map((area) => {
-      if (this.state.selectedAreas.contains(area.id)) {
+      if (this.state.selectedAreaIDs.contains(area.id)) {
         return <Button 
                  key={area.id}
                  id={area.id}
@@ -214,7 +229,7 @@ class WelcomePage extends React.Component {
               <small><em>(up to 5)</em></small>
               </p>
               <div className='btn-group-sm'>
-              { this.renderSelectedAreas() }
+              { this.renderSelectedAreaIDs() }
               </div>
             </div>
           </div>
@@ -222,6 +237,9 @@ class WelcomePage extends React.Component {
         <div className='container content-box'>
           <div className='row text-center'>
             <div className='col-xs-12'>
+              <p>
+              Search Criteria
+              </p>
               <input type='text' placeholder='search terms'></input>
               <input type='text' placeholder='min price'></input>
               <input type='text' placeholder='max price'></input>
@@ -232,13 +250,13 @@ class WelcomePage extends React.Component {
           <div className='row text-center'>
             <div className='col-xs-12'>
               <p>
-              I'm gonna put the submit button here, and it will disappear while loading
-              </p>
-              <p>
-              Underneath this I will populate the results underneath each community label
+              Submit Button / Loading Animation
               </p>
             </div>
           </div>
+        </div>
+        <div className="container">
+          <hr />
         </div>
       </form>
     )
