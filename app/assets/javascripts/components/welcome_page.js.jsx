@@ -1,4 +1,4 @@
-// Nifty Array extension function grabbed from Stack Overflow
+// Nifty Array function grabbed from Stack Overflow
 
 Array.prototype.contains = function(obj) {
     var i = this.length;
@@ -22,7 +22,7 @@ class WelcomePage extends React.Component {
       areas: props.areas,
       region: 1,
       district: 1,
-      selectedAreas: []
+      selectedAreas: [1, 2, 3, 5]
     };
   }
 
@@ -55,9 +55,9 @@ class WelcomePage extends React.Component {
 
   // Adds Area IDs to the selectedAreas state array
   addArea(area) {
-    if (this.state.selectedAreas.length <= 5) {
-      selectedAreas.push(area.props.id)
-    }
+    // if (this.state.selectedAreas.length <= 5) {
+    //   selectedAreas.push(area.props.id)
+    // }
   }
 
   // Removes Area IDs from the selectedAreas state array
@@ -126,7 +126,7 @@ class WelcomePage extends React.Component {
   renderAreas() {
     return this.state.areas.map((area) => {
       if (area.district_id === this.state.district) {
-        var isSelected = area.id === this.state.area;
+        var isSelected = this.state.selectedAreas.contains(area.id)
         return <Button 
                  key={area.id}
                  type='area'
