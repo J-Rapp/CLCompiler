@@ -23,7 +23,10 @@ class WelcomePage extends React.Component {
       areas: props.areas,
       selectedRegionID: 1,
       selectedDistrictID: 1,
-      selectedAreaIDs: [1, 3]
+      selectedAreaIDs: [1, 3],
+      searchTerms: '',
+      minPrice: '',
+      maxPrice: ''
     };
   }
 
@@ -50,7 +53,9 @@ class WelcomePage extends React.Component {
 
   // Handles text field inputs
   handleTextInput(event) {
-
+    this.setState({
+      [event.target.name]: event.target.value
+    })
   }
 
   // Updates `this.state.selectedRegionID` and `this.state.selectedDistrictID`
@@ -188,9 +193,11 @@ class WelcomePage extends React.Component {
         <div className='container content-box'>
           <div className='row text-center'>
             <div className='col-xs-12'>
-              <p>
+              <h2>
               Region
-              </p>
+              </h2>
+            </div>
+            <div className='col-xs-12'>
               <div className='btn-group-sm'>
               { this.renderRegions() }
               </div>
@@ -200,9 +207,11 @@ class WelcomePage extends React.Component {
         <div className='container content-box'>
           <div className='row text-center'>
             <div className='col-xs-12'>
-              <p>
+              <h2>
               { this.currentRegionName() }
-              </p>
+              </h2>
+            </div>
+            <div className='col-xs-12'>
               <div className='btn-group-sm'>
               { this.renderDistricts() }
               </div>
@@ -212,9 +221,11 @@ class WelcomePage extends React.Component {
         <div className='container content-box'>
           <div className='row text-center'>
             <div className='col-xs-12'>
-              <p>
+              <h2>
               { this.currentDistrictName() }
-              </p>
+              </h2>
+            </div>
+            <div className='col-xs-12'>
               <div className='btn-group-sm'>
               { this.renderAreas() }
               </div>
@@ -224,10 +235,12 @@ class WelcomePage extends React.Component {
         <div className='container content-box'>
           <div className='row text-center'>
             <div className='col-xs-12'>
-              <p>
+              <h2>
               Selected Areas<br />
               <small><em>(up to 5)</em></small>
-              </p>
+              </h2>
+            </div>
+            <div className='col-xs-12'>
               <div className='btn-group-sm'>
               { this.renderSelectedAreaIDs() }
               </div>
@@ -237,21 +250,21 @@ class WelcomePage extends React.Component {
         <div className='container content-box'>
           <div className='row text-center'>
             <div className='col-xs-12'>
-              <p>
+              <h2>
               Search Criteria
-              </p>
-              <input type='text' placeholder='search terms'></input>
-              <input type='text' placeholder='min price'></input>
-              <input type='text' placeholder='max price'></input>
+              </h2>
+            </div>
+            <div className='col-xs-12'>
+              <input name='searchTerms' type='text' className='form-input' onChange={(e) => this.handleTextInput(e)} placeholder='search terms'></input>
+              <input name='minPrice' type='text' className='form-input' onChange={(e) => this.handleTextInput(e)} placeholder='min price'></input>
+              <input name='maxPrice' type='text' className='form-input' onChange={(e) => this.handleTextInput(e)} placeholder='max price'></input>
             </div>
           </div>
         </div>
         <div className='container content-box'>
           <div className='row text-center'>
             <div className='col-xs-12'>
-              <p>
-              Submit Button / Loading Animation
-              </p>
+              <input type='submit'></input>
             </div>
           </div>
         </div>

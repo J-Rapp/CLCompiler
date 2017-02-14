@@ -4,10 +4,10 @@
 @import 'variables';
 @import 'forms';
 
-// Mobile
+// Mobile First
 
 html, body {
-  background-color: $offwhite;
+  background-color: $lightgrey;
   margin-top: 1.2em;
   margin-bottom: 1.2em;
   font-family: 'Veranda', sans-serif;
@@ -18,6 +18,8 @@ html, body {
   }
   h2 {
     font-size: 1.4em;
+    margin-top: 0;
+    margin-bottom: .6em;
   }
   hr {
     background-color: $charcoal;
@@ -28,24 +30,25 @@ html, body {
   }
 }
 
-.content-box {
-  background-color: $lightgrey;
-  border-radius: .5em;
+.content-box { 
+  background-color: $offwhite;
+  border: .3em solid $almostblack;
   margin-bottom: 2.5em;
   padding-top: 1.5em;
   padding-bottom: 1.5em;
 }
 
-.btn {
-  font-size: 1.4em;
-  margin: .2em;
-  border-radius: .2em;
-  padding: .5em;
-  margin: .2em;
+.btn-group-sm {
+  .btn {
+    border-radius: 0px;
+    font-size: .7em;
+  }
 }
 
-.btn-secondary {
-  background-color: $mediumgrey;
+.btn {
+  margin: .2em;
+  padding: .5em;
+  border-radius: 0px;
 }
 
 .row {
@@ -56,14 +59,25 @@ html, body {
   border: 1px solid black;
 }
 
-// Positioning the Selected Area Xs
-
 .glyphicon {
-  padding-right: .7em;
+  padding-top: .3em;
+  padding-right: .3em;
 }
 
 .selected-area {
   display: inline-block;
+}
+
+input[type='text'] {
+  display: block;
+  border: 1px solid $almostblack;
+  margin: .3em auto;
+  padding: .2em;
+}
+
+input[type='submit'] {
+  background-color: $offwhite;
+  border: 1px solid $almostblack;
 }
 
 // Desktop
@@ -71,5 +85,8 @@ html, body {
 @media all and (min-device-width: $breakbig) {
   html, body {
     font-size: 100%;
+    .container {
+      max-width: 400px;
+    }
   }
 }
