@@ -8,6 +8,7 @@ class Result extends React.Component {
     }
   }
 
+  // Called when the Welcome Page re-renders and passes props down
   componentWillReceiveProps(props) {
     this.setState({
       title: props.title,
@@ -16,13 +17,16 @@ class Result extends React.Component {
     })
   }
 
+  // JSX
   render() {
     return (
       <div>
         <div className='container content-box'>
           <div className='row text-center'>
             <div className='col-xs-12'>
-             {this.state.title}
+              <a href={this.state.url} target='_blank'>
+                {this.state.title}
+              </a> - {this.state.price}
             </div>
           </div>
         </div>

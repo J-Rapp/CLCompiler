@@ -83,13 +83,17 @@ class WelcomePage extends React.Component {
         resultsIn: true,
         craigslistResults: data
       })
-      $('html, body').animate({scrollTop:$(document).height()}, 1500)
+      $('html, body').animate({
+        scrollTop: $('#start-results').offset().top + 'px'
+      }, 1500)
     }).fail(function(data){
       pageApp.setState({
         // TODO: populate errors
         errors: null
       })
-      $('html, body').animate({scrollTop:$(document).height()}, 1500)
+      $('html, body').animate({
+        scrollTop:$(document).height()
+      }, 1500)
     })
   }
 
