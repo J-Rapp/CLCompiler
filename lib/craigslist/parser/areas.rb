@@ -15,7 +15,7 @@ module Craigslist
         areas_node.xpath('.//li').each do |list_node|
           areas << {
             name: list_node.text,
-            subdomain: list_node.xpath('.//a/@href').first.value[/(\w+)/]
+            subdomain: list_node.xpath('.//a/@href').first.value
           }
         end
         areas

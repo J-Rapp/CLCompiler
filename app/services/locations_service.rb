@@ -9,6 +9,7 @@ class LocationsService
 
   def retrieve_and_persist_locations
     locations = Craigslist.locations
+    p 'Persisting parsed locations - `app/services/locations_service.rb'
     persist_regions(locations)
   end
 

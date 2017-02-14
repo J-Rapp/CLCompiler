@@ -13,6 +13,7 @@ module Craigslist
     LIST_OF_CL_SUBDOMAINS_URL = 'http://www.craigslist.org/about/sites'.freeze
 
     def process_response
+      p 'Retrieving and parsing page - `lib/craigslist/locations.rb`'
       response = RestClient.get(LIST_OF_CL_SUBDOMAINS_URL)
       clean_html = Parser::HTMLCleaner.new.clean(response.body)
       nokogori_subdomain_page = Nokogiri::HTML(clean_html)
