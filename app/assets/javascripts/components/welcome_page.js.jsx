@@ -26,6 +26,7 @@ class WelcomePage extends React.Component {
       excludesTerms: '',
       minPrice: '',
       maxPrice: '',
+      fetchingResults: false,
       resultsIn: false,
       craigslistResults: {},
       errors: null
@@ -65,6 +66,9 @@ class WelcomePage extends React.Component {
   handleSubmitForm(event) {
     event.preventDefault()
     var pageApp = this
+    pageApp.setState({
+      fetchingResults: true
+    })
     $.ajax({
       type: 'POST',
       url: 'search',
@@ -80,6 +84,7 @@ class WelcomePage extends React.Component {
       }
     }).done(function(data){
       pageApp.setState({
+        fetchingResults: false,
         resultsIn: true,
         craigslistResults: data
       })
@@ -330,7 +335,7 @@ class WelcomePage extends React.Component {
           <div className='container content-box'>
             <div className='row text-center'>
               <div className='col-xs-12'>
-                <input type='submit' className='key-btn'></input>
+                { this.state.fetchingResults ? 'Fetching results...' : <input type='submit' className='key-btn'></input> }
               </div>
             </div>
           </div>
