@@ -6,6 +6,12 @@ To try the app out live, go to [megslist.herokuapp.com](http://megslist.herokuap
 
 ---
 
+### Setting it up locally
+
+Make sure to run `rake craigslist:locations` - that parses all of the craigslist subdomains and adds them to the database.
+
+---
+
 ### Personal Learning Outcomes
 
 - I've been comfortable with Vanilla JS for some time, but this will be my first endeavor working with React. As such I am challenging myself to do the entire front end with it, and give it that fluid "single page" feel.

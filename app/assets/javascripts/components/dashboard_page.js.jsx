@@ -1,4 +1,4 @@
-class Dashboard extends React.Component {
+class DashboardPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -10,7 +10,7 @@ class Dashboard extends React.Component {
       method: 'DELETE',
       url: '/logout'
     }).done(function(data){
-      window.location.href = '/welcome'
+      window.location.href = '/'
     })
   }
   render() {
