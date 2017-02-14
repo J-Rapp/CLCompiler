@@ -19,8 +19,8 @@ There are no secret global keys, nor a `.env` file. Add the gem and file if your
 
 - I've been comfortable with VanillaJS for some time, but this is my first project implementing React. As such, I am challenging myself to implement the entire front end with it and give the landing page a fluid "single page" feel.
 - I spent a fair amount of time researching Rails architecture opinions about what belongs in the `services` vs `lib` directories. This had two significant results:
-  1. At one point I decided to do a sizable overhaul of the views and controllers (after completing nearly 80% of the original MVP) in order to offer users much more of the app's backend power without having to register. I was terrified of the task at first, but researching good OOP/architecture and scrutinously refactoring my code paid dividends - recycling the existing architecture components in order to integrate new ones was a breeze.
-  2. As a fun project, the `lib/craigslist` directory could be a starting chunk for a larger craigslist gem.
+  1. At one point, after completing roughly 80% of the original MVP, I decided to do a sizable overhaul of the views and controllers in order to give users more access to more backend functionality without having to register. I was pretty intimidated by the task at first, but researching good OOP/architecture and scrutinously refactoring my code paid dividends - recycling the existing architecture/components in order to integrate new ones was a breeze.
+  2. As a fun project, the `lib/craigslist` directory could be a start for a larger craigslist gem.
 
 ---
 
@@ -42,5 +42,5 @@ And it rhymes with Craig.
 
 ### Legal
 
-This app has no affiliation with craigslist, and admittedly directly violates craigslist terms of use by scraping from their public pages. In an attempt to not be a total jerk about it, the app is very conscious of bandwidth consumption by limiting search functionality/frequency in order to imitate the traffic of an average human user on any craigslist server. Further, very few posting details are persisted - save for price and a link directly to the original craigslist posting - and no craislist user data is scraped, nor persisted.
+This app has no affiliation with craigslist, and admittedly directly violates craigslist terms of use by scraping from their public pages. In an attempt to not be a total jerk about it, the app is very conscious of bandwidth consumption by limiting search functionality/frequency in order to imitate the traffic of an average human user on any craigslist server. Further, very few posting details are persisted (currently just the url, title, and price) and no craislist user data is scraped, nor persisted.
 
