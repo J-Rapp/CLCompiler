@@ -2,10 +2,8 @@
 
 Megslist has two distinct use cases:
 
-  1. On the public landing page, a user can execute a limited search on up to 5 craigslist subdomains at once. This is executed with React and in-memory  POROs - no data is persisted. The rendering of the entire landing page lives in `app/assets/javascripts/components/welcome_age.js.jsx`, and the backend process for generating the POROs during the AJAX call lives in `lib/craigslist/search.rb`.
-  2. On the backend, this app can stores an admin's parameters for a custom craigslist search. It then executes that search on multiple chosen craigslist locations at once and persists the results. Lastly, it runs the search at automatic intervals and notifies the user via email when any new listings are posted to craigslist. This is accomplished by a rake task that fires a service (`/app/services/searches_service.rb`) at scheduled chron intervals from the production environment.
-
-To see the app live, visit [megslist.herokuapp.com](http://megslist.herokuapp.com).
+  1. On the [public landing page](http://megslist.herokuapp.com), a user can execute a limited search on up to 5 craigslist subdomains at once. This is executed with React and in-memory  POROs - no data is persisted. The rendering of the entire landing page lives in `app/assets/javascripts/components/welcome_age.js.jsx`, and the backend process for generating the POROs during the AJAX call lives in `lib/craigslist/search.rb`.
+  2. On the [backend](http://megslist.herokuapp.com/entry), this app can stores an admin's parameters for a custom craigslist search. It then executes that search on multiple chosen craigslist locations at once and persists the results. Lastly, it runs the search at automatic intervals and notifies the user via email when any new listings are posted to craigslist. This is accomplished by a rake task that fires a service (`/app/services/searches_service.rb`) at scheduled chron intervals from the production environment.
 
 ---
 
