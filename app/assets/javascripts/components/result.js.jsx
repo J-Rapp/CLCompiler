@@ -2,9 +2,20 @@ class Result extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: 'Feb 2017 - Work In Progress'
+      title: props.title,
+      url: props.url,
+      price: props.price
     }
   }
+
+  componentWillReceiveProps(props) {
+    this.setState({
+      title: props.title,
+      url: props.url,
+      price: props.price
+    })
+  }
+
   render() {
     return (
       <div>
@@ -14,7 +25,7 @@ class Result extends React.Component {
         <div className='container content-box'>
           <div className='row text-center'>
             <div className='col-xs-12'>
-            { this.state.message }
+             {this.state.title}
             </div>
           </div>
         </div>

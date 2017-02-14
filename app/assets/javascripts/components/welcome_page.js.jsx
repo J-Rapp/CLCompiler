@@ -22,10 +22,12 @@ class WelcomePage extends React.Component {
       selectedRegionID: 1,
       selectedDistrictID: 1,
       selectedAreaIDs: [1, 3],
-      searchTerms: '',
+      includesTerms: '',
+      excludesTerms: '',
       minPrice: '',
       maxPrice: '',
       resultsIn: false,
+      craigslistResults: {},
       errors: null
     };
   }
@@ -68,16 +70,19 @@ class WelcomePage extends React.Component {
       url: 'search',
       data: {
         authenticity_token: this.state.token,
+        subdomains: this.getSubdomains(),
         search: {
-          areas: this.getSubdomains(),
-          includes: this.state.searchTerms,
+          includes: this.state.includesTerms,
+          excludes: this.state.excludesTerms,
           min_price: this.state.minPrice,
           max_price: this.state.maxPrice
         }
       }
     }).done(function(data){
+        console.log(data)
       pageApp.setState({
-        resultsIn: true
+        resultsIn: true,
+        craigslistResults: data
       })
       $('html, body').animate({scrollTop:$(document).height()}, 1500)
     }).fail(function(data){
@@ -217,9 +222,14 @@ class WelcomePage extends React.Component {
     })
   }
 
-  // Renders results from Craigslist searches
+  // Renders child Results for each Object in `this.state.craigslistResults` Object
   renderResults() {
-    return <Result />
+    for (var key in this.state.craigslistResults) {
+      return <Result key={key} url={key} title={key.title} price={key.price} />
+    }
+    // .map((key) => {
+    //   return <Result url={key} title={key.title} price={key.price} />
+    // })
   }
 
   // // JSX
@@ -290,13 +300,18 @@ class WelcomePage extends React.Component {
             <div className='row text-center'>
               <div className='col-xs-12'>
                 <h2>
-                Search Criteria
+                Search For Sale
                 </h2>
               </div>
             </div>
             <div className='row text-center'>
               <div className='col-xs-12'>
-                <input name='searchTerms' type='text' onChange={(e) => this.handleTextInput(e)} placeholder='for sale'></input>
+                <input name='includesTerms' type='text' onChange={(e) => this.handleTextInput(e)} placeholder='search for...'></input>
+              </div>
+            </div>
+            <div className='row text-center'>
+              <div className='col-xs-12'>
+                <input name='excludesTerms' type='text' onChange={(e) => this.handleTextInput(e)} placeholder='skip if it includes...'></input>
               </div>
             </div>
             <div className='row text-center'>

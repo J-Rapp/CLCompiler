@@ -9,9 +9,10 @@ module Craigslist
 
       def parse_subdomain_results(nokogiri_subdomain_results, craigslist_url)
         result_card_nodes = parse_result_cards(nokogiri_subdomain_results)
-        subdomain_results = {}
+        subdomain_results = []
         result_card_nodes.each do |card|
-          subdomain_results[get_result_url(card, craigslist_url)] = {
+          subdomain_results << {
+            url: get_result_url(card, craigslist_url),
             title: get_result_title(card),
             price: get_result_price(card)
           }

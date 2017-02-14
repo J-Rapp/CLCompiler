@@ -8,7 +8,7 @@ class WelcomeController < ApplicationController
   end
 
   def search
-    p params
+    render json: Craigslist.search(params[:subdomains], search_params)
   end
 
   def entry
@@ -21,5 +21,11 @@ class WelcomeController < ApplicationController
     else
       render json: {}, status: :ok
     end
+  end
+
+  private
+
+  def search_params
+    params.require(:search).permit(:includes, :excludes, :min_price, :max_price)
   end
 end
