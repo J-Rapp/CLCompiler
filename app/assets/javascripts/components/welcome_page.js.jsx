@@ -42,6 +42,13 @@ class WelcomePage extends React.Component {
     }
   }
 
+  // Handles text field inputs
+  handleTextInput(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+  }
+
   // Executes AJAX Call
   handleSubmitForm(event) {
     event.preventDefault()
@@ -73,13 +80,6 @@ class WelcomePage extends React.Component {
   }
 
   // // Altering State
-
-  // Handles text field inputs
-  handleTextInput(event) {
-    this.setState({
-      [event.target.name]: event.target.value
-    })
-  }
 
   // Updates `this.state.selectedRegionID` and `this.state.selectedDistrictID`
   changePlace(location) {
