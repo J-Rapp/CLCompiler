@@ -59,7 +59,6 @@ class WelcomePage extends React.Component {
         }
       }
     }).done(function(data){
-      console.log('submitted')
       pageApp.setState({
         resultsIn: true
       })

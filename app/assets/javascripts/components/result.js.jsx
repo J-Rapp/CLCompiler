@@ -2,7 +2,7 @@ class Result extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: 'Work In Progress ;)'
+      message: 'Feb 2017 - Work In Progress'
     }
   }
   render() {
