@@ -79,7 +79,6 @@ class WelcomePage extends React.Component {
         }
       }
     }).done(function(data){
-        console.log(data)
       pageApp.setState({
         resultsIn: true,
         craigslistResults: data
@@ -224,12 +223,13 @@ class WelcomePage extends React.Component {
 
   // Renders child Results for each Object in `this.state.craigslistResults` Object
   renderResults() {
-    for (var key in this.state.craigslistResults) {
-      return <Result key={key} url={key} title={key.title} price={key.price} />
-    }
-    // .map((key) => {
-    //   return <Result url={key} title={key.title} price={key.price} />
-    // })
+    return this.state.craigslistResults.map((result) => {
+      return <Result 
+               key={result.url}
+               url={result.url}
+               title={result.title} 
+               price={result.price} />
+    })
   }
 
   // // JSX
@@ -331,6 +331,7 @@ class WelcomePage extends React.Component {
             </div>
           </div>
         </form>
+        { this.state.resultsIn ? <HR /> : null }
         { this.state.resultsIn ? this.renderResults() : null }
         { this.state.errors ? "Errors - WIP" : null }
       </div>
