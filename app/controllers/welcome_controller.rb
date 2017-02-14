@@ -10,7 +10,7 @@ class WelcomeController < ApplicationController
   def search
   end
 
-  def enter
+  def entry
   end
 
   def check_user

@@ -293,7 +293,7 @@ class WelcomePage extends React.Component {
           <div className='container content-box'>
             <div className='row text-center'>
               <div className='col-xs-12'>
-                <input type='submit'></input>
+                <input type='submit' className='key-btn'></input>
               </div>
             </div>
           </div>

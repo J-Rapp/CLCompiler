@@ -3,17 +3,15 @@ Rails.application.routes.draw do
 
   post 'search', to: 'welcome#search'
   get 'dashboard', to: 'dashboard#index', as: :user_root
-  get 'enter', to: 'welcome#enter'
-  get 'users/sign_in', to: redirect('enter')
+  get 'entry', to: 'welcome#entry'
+  get 'users/sign_in', to: redirect('entry')
   get 'searches/execute', to: 'searches#execute'
   get 'check_user', to: 'welcome#check_user'
 
   devise_for :users
   as :user do
     get 'login', to: 'devise/sessions#new'
-    post 'login', to: 'devise/sessions#create'
     delete 'logout', to: 'devise/sessions#destroy'
-    get 'register', to: 'devise/registrations#new'
   end
 
   resources :searches, only: [:new, :create, :show, :destroy]
