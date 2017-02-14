@@ -1,5 +1,4 @@
 // Array function from Stack Overflow to help with `this.state.selectedAreaIDs`
-
 Array.prototype.contains = function(obj) {
     var i = this.length;
     while (i--) {
@@ -12,7 +11,6 @@ Array.prototype.contains = function(obj) {
 
 // Landing Page rendered on `views/welcome/index.html.erb`
 // TODO: Add immutability-helper for state altering
-
 class WelcomePage extends React.Component {
   constructor(props) {
     super(props);
@@ -26,7 +24,9 @@ class WelcomePage extends React.Component {
       selectedAreaIDs: [1, 3],
       searchTerms: '',
       minPrice: '',
-      maxPrice: ''
+      maxPrice: '',
+      resultsIn: false,
+      errors: null
     };
   }
 
@@ -43,13 +43,37 @@ class WelcomePage extends React.Component {
   }
 
   // Executes AJAX Call
-
   handleSubmitForm(event) {
-
+    event.preventDefault()
+    var pageApp = this
+    $.ajax({
+      type: 'POST',
+      url: 'search',
+      data: {
+        authenticity_token: this.state.token,
+        search: {
+          areas: this.state.selectedAreaIDs,
+          terms: this.state.searchTerms,
+          min_price: this.state.minPrice,
+          max_price: this.state.maxPrice
+        }
+      }
+    }).done(function(data){
+      console.log('submitted')
+      pageApp.setState({
+        resultsIn: true
+      })
+      $('html, body').animate({scrollTop:$(document).height()}, 1500)
+    }).fail(function(data){
+      pageApp.setState({
+        // TODO: populate errors
+        errors: null
+      })
+      $('html, body').animate({scrollTop:$(document).height()}, 1500)
+    })
   }
 
   // // Altering State
-
 
   // Handles text field inputs
   handleTextInput(event) {
@@ -184,94 +208,100 @@ class WelcomePage extends React.Component {
     })
   }
 
+  // Renders results from Craigslist searches
+  renderResults() {
+    return <Result />
+  }
+
   // // JSX
   // // TODO: Consider ease of interpreting by assistive technologies
 
   render() {
     return (
-      <form>
-        <div className='container content-box'>
-          <div className='row text-center'>
-            <div className='col-xs-12'>
-              <h2>
-              Region
-              </h2>
-            </div>
-            <div className='col-xs-12'>
-              <div className='btn-group-sm'>
-              { this.renderRegions() }
+      <div>
+        <form onSubmit={(e) => this.handleSubmitForm(e)}>
+          <div className='container content-box'>
+            <div className='row text-center'>
+              <div className='col-xs-12'>
+                <h2>
+                Region
+                </h2>
+              </div>
+              <div className='col-xs-12'>
+                <div className='btn-group-sm'>
+                { this.renderRegions() }
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className='container content-box'>
-          <div className='row text-center'>
-            <div className='col-xs-12'>
-              <h2>
-              { this.currentRegionName() }
-              </h2>
-            </div>
-            <div className='col-xs-12'>
-              <div className='btn-group-sm'>
-              { this.renderDistricts() }
+          <div className='container content-box'>
+            <div className='row text-center'>
+              <div className='col-xs-12'>
+                <h2>
+                { this.currentRegionName() }
+                </h2>
+              </div>
+              <div className='col-xs-12'>
+                <div className='btn-group-sm'>
+                { this.renderDistricts() }
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className='container content-box'>
-          <div className='row text-center'>
-            <div className='col-xs-12'>
-              <h2>
-              { this.currentDistrictName() }
-              </h2>
-            </div>
-            <div className='col-xs-12'>
-              <div className='btn-group-sm'>
-              { this.renderAreas() }
+          <div className='container content-box'>
+            <div className='row text-center'>
+              <div className='col-xs-12'>
+                <h2>
+                { this.currentDistrictName() }
+                </h2>
+              </div>
+              <div className='col-xs-12'>
+                <div className='btn-group-sm'>
+                { this.renderAreas() }
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className='container content-box'>
-          <div className='row text-center'>
-            <div className='col-xs-12'>
-              <h2>
-              Selected Areas<br />
-              <small><em>(up to 5)</em></small>
-              </h2>
-            </div>
-            <div className='col-xs-12'>
-              <div className='btn-group-sm'>
-              { this.renderSelectedAreaIDs() }
+          <div className='container content-box'>
+            <div className='row text-center'>
+              <div className='col-xs-12'>
+                <h2>
+                Selected Areas<br />
+                <small><em>(up to 5)</em></small>
+                </h2>
+              </div>
+              <div className='col-xs-12'>
+                <div className='btn-group-sm'>
+                { this.renderSelectedAreaIDs() }
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className='container content-box'>
-          <div className='row text-center'>
-            <div className='col-xs-12'>
-              <h2>
-              Search Criteria
-              </h2>
-            </div>
-            <div className='col-xs-12'>
-              <input name='searchTerms' type='text' className='form-input' onChange={(e) => this.handleTextInput(e)} placeholder='search terms'></input>
-              <input name='minPrice' type='text' className='form-input' onChange={(e) => this.handleTextInput(e)} placeholder='min price'></input>
-              <input name='maxPrice' type='text' className='form-input' onChange={(e) => this.handleTextInput(e)} placeholder='max price'></input>
-            </div>
-          </div>
-        </div>
-        <div className='container content-box'>
-          <div className='row text-center'>
-            <div className='col-xs-12'>
-              <input type='submit'></input>
+          <div className='container content-box'>
+            <div className='row text-center'>
+              <div className='col-xs-12'>
+                <h2>
+                Search Criteria
+                </h2>
+              </div>
+              <div className='col-xs-12'>
+                  <input name='searchTerms' type='text' className='form-input' onChange={(e) => this.handleTextInput(e)} placeholder='search terms'></input>
+                  <input name='minPrice' type='text' className='form-input' onChange={(e) => this.handleTextInput(e)} placeholder='min price'></input>
+                  <input name='maxPrice' type='text' className='form-input' onChange={(e) => this.handleTextInput(e)} placeholder='max price'></input>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="container">
-          <hr />
-        </div>
-      </form>
+          <div className='container content-box'>
+            <div className='row text-center'>
+              <div className='col-xs-12'>
+                <input type='submit'></input>
+              </div>
+            </div>
+          </div>
+        </form>
+        { this.state.resultsIn ? this.renderResults() : null }
+        { this.state.errors ? "Errors - WIP" : null }
+      </div>
     )
   }
 }

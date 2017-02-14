@@ -12,7 +12,6 @@ class Button extends React.Component {
   }
 
   // Called when the Welcome Page re-renders and passes props down
-
   componentWillReceiveProps(props) {
     this.setState({
       isSelected: props.isSelected 
@@ -20,7 +19,6 @@ class Button extends React.Component {
   }
 
   // JSX
-
   render() {
     return (
       <div className={this.state.isSelected ? "btn selected" : "btn"} onClick={this.state.handleClick}>

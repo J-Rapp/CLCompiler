@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root 'welcome#index'
 
+  post 'search', to: 'welcome#search'
   get 'dashboard', to: 'dashboard#index', as: :user_root
   get 'enter', to: 'welcome#enter'
   get 'users/sign_in', to: redirect('enter')

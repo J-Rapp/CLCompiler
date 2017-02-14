@@ -7,6 +7,9 @@ class WelcomeController < ApplicationController
     @areas = Area.all
   end
 
+  def search
+  end
+
   def enter
   end
 

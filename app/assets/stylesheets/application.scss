@@ -27,6 +27,8 @@ html, body {
     border: 0;
     border-radius: 2px;
     height: 5px;
+    margin-top: 0px;
+    margin-bottom: 2.5em;
   }
 }
 
@@ -60,8 +62,8 @@ html, body {
 }
 
 .glyphicon {
-  padding-top: .3em;
-  padding-right: .3em;
+  top: .15em;
+  margin-right: .2em;
 }
 
 .selected-area {
@@ -71,13 +73,14 @@ html, body {
 input[type='text'] {
   display: block;
   border: 1px solid $almostblack;
-  margin: .3em auto;
-  padding: .2em;
+  margin: .5em auto;
+  padding: .25em;
 }
 
 input[type='submit'] {
   background-color: $offwhite;
   border: 1px solid $almostblack;
+  padding: .5em;
 }
 
 // Desktop
