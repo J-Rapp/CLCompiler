@@ -49,6 +49,16 @@ class WelcomePage extends React.Component {
     })
   }
 
+  // Delivers subdomain array to controller params for search creation
+  getSubdomains() {
+    var selectedAreaObjects = this.state.areas.filter((area) => {
+      return this.state.selectedAreaIDs.contains(area.id)
+    })
+    return selectedAreaObjects.map((area) => {
+      return area.subdomain
+    })
+  }
+
   // Executes AJAX Call
   handleSubmitForm(event) {
     event.preventDefault()
@@ -59,8 +69,8 @@ class WelcomePage extends React.Component {
       data: {
         authenticity_token: this.state.token,
         search: {
-          areas: this.state.selectedAreaIDs,
-          terms: this.state.searchTerms,
+          areas: this.getSubdomains(),
+          includes: this.state.searchTerms,
           min_price: this.state.minPrice,
           max_price: this.state.maxPrice
         }
