@@ -27,7 +27,7 @@ class EntryPage extends React.Component {
         <div className='container content-box'>
           <div className='row text-center'>
             <div className='col-xs-12'>
-              <button className='btn key-btn' onClick={ () => this.handleClick() }>
+              <button className='key-btn' onClick={ () => this.handleClick() }>
                 Admin Access
               </button>
             </div>

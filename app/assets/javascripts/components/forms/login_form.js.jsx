@@ -40,18 +40,20 @@ class LoginForm extends React.Component {
   render() {
     return (
       <div className='container content-box'>
-        <div className='row text-center'>
-          <form onSubmit={(e) => this.handleSubmit(e)}>
+        <form onSubmit={(e) => this.handleSubmit(e)}>
+          <div className='row text-center'>    
             <div className='col-xs-12'>
-                <input type='text' name='email' placeholder='email' className='form-input' onChange={(e) => this.handleChange(e)} />
-                <input type='text' name='password' placeholder='password' className='form-input' onChange={(e) => this.handleChange(e)} />
+                <input type='text' name='email' placeholder='email' onChange={(e) => this.handleChange(e)} />
+                <input type='text' name='password' placeholder='password' onChange={(e) => this.handleChange(e)} />
                 { this.state.failedAuth ? <ErrorDisplay errors={this.state.errors} /> : null }
             </div>
+          </div>
+          <div className='row text-center'>
             <div className='col-xs-12'>
               <input type='submit' className='key-btn'></input>
             </div>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
     )
   }

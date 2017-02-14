@@ -22,10 +22,12 @@ class WelcomePage extends React.Component {
       selectedRegionID: 1,
       selectedDistrictID: 1,
       selectedAreaIDs: [1, 3],
-      searchTerms: '',
+      includesTerms: '',
+      excludesTerms: '',
       minPrice: '',
       maxPrice: '',
       resultsIn: false,
+      craigslistResults: {},
       errors: null
     };
   }
@@ -49,6 +51,16 @@ class WelcomePage extends React.Component {
     })
   }
 
+  // Delivers subdomain array to controller params for search creation
+  getSubdomains() {
+    var selectedAreaObjects = this.state.areas.filter((area) => {
+      return this.state.selectedAreaIDs.contains(area.id)
+    })
+    return selectedAreaObjects.map((area) => {
+      return area.subdomain
+    })
+  }
+
   // Executes AJAX Call
   handleSubmitForm(event) {
     event.preventDefault()
@@ -58,24 +70,30 @@ class WelcomePage extends React.Component {
       url: 'search',
       data: {
         authenticity_token: this.state.token,
+        subdomains: this.getSubdomains(),
         search: {
-          areas: this.state.selectedAreaIDs,
-          terms: this.state.searchTerms,
+          includes: this.state.includesTerms,
+          excludes: this.state.excludesTerms,
           min_price: this.state.minPrice,
           max_price: this.state.maxPrice
         }
       }
     }).done(function(data){
       pageApp.setState({
-        resultsIn: true
+        resultsIn: true,
+        craigslistResults: data
       })
-      $('html, body').animate({scrollTop:$(document).height()}, 1500)
+      $('html, body').animate({
+        scrollTop: $('#start-results').offset().top + 'px'
+      }, 1500)
     }).fail(function(data){
       pageApp.setState({
         // TODO: populate errors
         errors: null
       })
-      $('html, body').animate({scrollTop:$(document).height()}, 1500)
+      $('html, body').animate({
+        scrollTop:$(document).height()
+      }, 1500)
     })
   }
 
@@ -207,9 +225,15 @@ class WelcomePage extends React.Component {
     })
   }
 
-  // Renders results from Craigslist searches
+  // Renders child Results for each Object in `this.state.craigslistResults` Object
   renderResults() {
-    return <Result />
+    return this.state.craigslistResults.map((result) => {
+      return <Result 
+               key={result.url}
+               url={result.url}
+               title={result.title} 
+               price={result.price} />
+    })
   }
 
   // // JSX
@@ -280,13 +304,26 @@ class WelcomePage extends React.Component {
             <div className='row text-center'>
               <div className='col-xs-12'>
                 <h2>
-                Search Criteria
+                Search For Sale
                 </h2>
               </div>
+            </div>
+            <div className='row text-center'>
               <div className='col-xs-12'>
-                  <input name='searchTerms' type='text' className='form-input' onChange={(e) => this.handleTextInput(e)} placeholder='search terms'></input>
-                  <input name='minPrice' type='text' className='form-input' onChange={(e) => this.handleTextInput(e)} placeholder='min price'></input>
-                  <input name='maxPrice' type='text' className='form-input' onChange={(e) => this.handleTextInput(e)} placeholder='max price'></input>
+                <input name='includesTerms' type='text' onChange={(e) => this.handleTextInput(e)} placeholder='search for...'></input>
+              </div>
+            </div>
+            <div className='row text-center'>
+              <div className='col-xs-12'>
+                <input name='excludesTerms' type='text' onChange={(e) => this.handleTextInput(e)} placeholder='skip if it includes...'></input>
+              </div>
+            </div>
+            <div className='row text-center'>
+              <div className='col-xs-6'>
+                <input name='minPrice' type='text' onChange={(e) => this.handleTextInput(e)} placeholder='min price'></input>
+              </div>
+              <div className='col-xs-6'>
+                <input name='maxPrice' type='text' onChange={(e) => this.handleTextInput(e)} placeholder='max price'></input>
               </div>
             </div>
           </div>
@@ -298,6 +335,7 @@ class WelcomePage extends React.Component {
             </div>
           </div>
         </form>
+        { this.state.resultsIn ? <HR /> : null }
         { this.state.resultsIn ? this.renderResults() : null }
         { this.state.errors ? "Errors - WIP" : null }
       </div>

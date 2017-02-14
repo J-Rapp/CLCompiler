@@ -10,13 +10,9 @@ module Craigslist
       def build_urls(subdomains, params)
         urls = []
         subdomains.each do |subdomain|
-          urls << protocol_and_domain(subdomain) + path_and_parameters(params)
+          urls << subdomain + path_and_parameters(params)
         end
         urls
-      end
-
-      def protocol_and_domain(subdomain)
-        'https://' + subdomain + '.craigslist.org/'
       end
 
       def path_and_parameters(params)

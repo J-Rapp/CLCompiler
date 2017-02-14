@@ -1,6 +1,6 @@
 module Craigslist
   class Search
-    # Returns a nested hash of all results
+    # Returns an array of parsed objects
     def perform(subdomains, params)
       request_and_parse_each_search_area(subdomains, params)
     end
@@ -9,10 +9,10 @@ module Craigslist
 
     def request_and_parse_each_search_area(subdomains, params)
       craigslist_urls = Search::URL.new.assemble(subdomains, params)
-      all_results = {}
+      all_results = []
       craigslist_urls.each do |craigslist_url|
         subdomain_results = process_response(craigslist_url)
-        all_results = all_results.merge(subdomain_results)
+        all_results.concat(subdomain_results)
       end
       all_results
     end
