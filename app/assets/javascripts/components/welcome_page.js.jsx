@@ -293,10 +293,18 @@ class WelcomePage extends React.Component {
                 Search Criteria
                 </h2>
               </div>
+            </div>
+            <div className='row text-center'>
               <div className='col-xs-12'>
-                  <input name='searchTerms' type='text' className='form-input' onChange={(e) => this.handleTextInput(e)} placeholder='search terms'></input>
-                  <input name='minPrice' type='text' className='form-input' onChange={(e) => this.handleTextInput(e)} placeholder='min price'></input>
-                  <input name='maxPrice' type='text' className='form-input' onChange={(e) => this.handleTextInput(e)} placeholder='max price'></input>
+                <input name='searchTerms' type='text' onChange={(e) => this.handleTextInput(e)} placeholder='for sale'></input>
+              </div>
+            </div>
+            <div className='row text-center'>
+              <div className='col-xs-6'>
+                <input name='minPrice' type='text' onChange={(e) => this.handleTextInput(e)} placeholder='min price'></input>
+              </div>
+              <div className='col-xs-6'>
+                <input name='maxPrice' type='text' onChange={(e) => this.handleTextInput(e)} placeholder='max price'></input>
               </div>
             </div>
           </div>

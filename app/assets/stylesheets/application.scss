@@ -71,7 +71,8 @@ html, body {
 }
 
 input[type='text'] {
-  display: block;
+  display: inline;
+  width: 100%;
   border: 1px solid $almostblack;
   margin: .5em auto;
   padding: .25em;
