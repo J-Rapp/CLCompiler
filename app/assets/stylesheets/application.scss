@@ -31,12 +31,39 @@ html, body {
   }
 }
 
+.row {
+  padding: .2em .5em;
+}
+
 .content-box { 
   background-color: $offwhite;
   border: .3em solid $almostblack;
   margin-bottom: 2.5em;
   padding-top: 1.5em;
   padding-bottom: 1.5em;
+}
+
+// Div animation
+
+.fade-enter {
+  opacity: 0.01;
+  transform: translateY(-2em);
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transform: translateY(0em);
+  transition: opacity 500ms ease-in, transform 500ms ease-in;
+}
+
+.fade-leave {
+  opacity: 1
+}
+
+.fade-leave-active {
+  opacity: 0.01;
+  transform: translateY(-2em);
+  transition: opacity 500ms ease-in, transform 500ms ease-in;
 }
 
 .btn-group-sm {
@@ -53,8 +80,10 @@ html, body {
   border-radius: 0px;
 }
 
-.row {
-  padding: .2em .5em;
+.key-btn {
+  background-color: $offwhite;
+  border: 1px solid $almostblack;
+  padding: .5em;
 }
 
 .selected {
@@ -76,12 +105,6 @@ input[type='text'] {
   border: 1px solid $almostblack;
   margin: .5em auto;
   padding: .25em;
-}
-
-.key-btn {
-  background-color: $offwhite;
-  border: 1px solid $almostblack;
-  padding: .5em;
 }
 
 // Desktop
