@@ -55,8 +55,8 @@ class EntryPage extends React.Component {
       <div>
         <ReactCSSTransitionGroup 
           transitionName="fade"
-          transitionEnterTimeout={2000}
-          transitionLeaveTimeout={2000}>
+          transitionEnterTimeout={1000}
+          transitionLeaveTimeout={1000}>
           { this.state.contentBoxes }
         </ReactCSSTransitionGroup>
       </div>
