@@ -1,7 +1,11 @@
 function ContentBox(props) {
   return (
-    <div className='container content-box'>
+    <div>
+      <div className='spacer'>
+      </div>
+      <div className='container content-box'>
       {props.children}
+      </div>
     </div>
   )
 }

@@ -29,7 +29,7 @@ body {
   left: 0px;
   right: -17px;
   overflow-y: scroll;
-  padding-top: 2.5em;
+  padding-bottom: 2.5em;
 }
 
 h1 {
@@ -53,35 +53,48 @@ hr {
   margin-bottom: 2.5em;
 }
 
-.row {
-  padding: .2em .5em;
+// Sloppy way to achieve content-box animation
+.spacer {
+  position: relative;
+  background-color: $lightgrey;
+  height: 2.5em;
+  z-index: 1;
 }
 
 .content-box { 
+  position: relative;
   background-color: $offwhite;
   border: .3em solid $almostblack;
-  margin-bottom: 2.5em;
   padding-top: 1.5em;
   padding-bottom: 1.5em;
+  z-index: 1;
+}
+
+.row {
+  padding: .2em .5em;
 }
 
 // Div animation
 
 .fade-enter {
-  transform: translateY(80em);
+  z-index: -1;
+  transform: translateY(-100%);
 }
 
 .fade-enter-active {
-  transform: translateY(0em);
-  transition: transform 500ms;
+  z-index: 0;
+  transform: translateY(0%);
+  transition: all 2s;
 }
 
 .fade-leave {
+  z-index: 0;
 }
 
 .fade-leave-active {
-  transform: translateY(80em);
-  transition: transform 500ms;
+  z-index: -1;
+  transform: translateY(-100%);
+  transition: all 2s;
 }
 
 .btn-group-sm {

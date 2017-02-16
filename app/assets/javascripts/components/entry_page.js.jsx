@@ -5,7 +5,7 @@ class EntryPage extends React.Component {
     super();
     this.state = {
       token: this.getToken(),
-      contentBoxes: [<BigHeader key='bigHeader' />]
+      contentBoxes: [<ContentBox key='bigHeader'><BigHeader /></ContentBox>]
     };
   }
 
@@ -38,9 +38,6 @@ class EntryPage extends React.Component {
   }
 
   componentDidMount() {
-    this.updateWindowDimensions()
-    window.addEventListener('resize', () => this.updateWindowDimensions())
-
     const content =
       <div className='row text-center'>
         <div className='col-xs-12'>
@@ -53,24 +50,13 @@ class EntryPage extends React.Component {
     this.toggleBox('adminButton', content)
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('resize', () => this.updateWindowDimensions());
-  }
-
-  updateWindowDimensions() {
-    this.setState({
-      windowWidth: window.innerWidth + 'px',
-      windowHeight: window.innerHeight + 'px'
-    })
-  }
-
   render() {
     return (
       <div>
         <ReactCSSTransitionGroup 
           transitionName="fade"
-          transitionEnterTimeout={500}
-          transitionLeaveTimeout={500}>
+          transitionEnterTimeout={2000}
+          transitionLeaveTimeout={2000}>
           { this.state.contentBoxes }
         </ReactCSSTransitionGroup>
       </div>
