@@ -8,7 +8,7 @@ class EntryPage extends React.Component {
       contentBoxes: [<BigHeader key='bigHeader' />]
     };
   }
-  
+
   getToken() {
     const metas = document.getElementsByTagName('meta')
 
@@ -38,6 +38,9 @@ class EntryPage extends React.Component {
   }
 
   componentDidMount() {
+    this.updateWindowDimensions()
+    window.addEventListener('resize', () => this.updateWindowDimensions())
+
     const content =
       <div className='row text-center'>
         <div className='col-xs-12'>
@@ -48,6 +51,17 @@ class EntryPage extends React.Component {
       </div>
 
     this.toggleBox('adminButton', content)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', () => this.updateWindowDimensions());
+  }
+
+  updateWindowDimensions() {
+    this.setState({
+      windowWidth: window.innerWidth + 'px',
+      windowHeight: window.innerHeight + 'px'
+    })
   }
 
   render() {
