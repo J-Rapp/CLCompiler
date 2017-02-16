@@ -15,13 +15,14 @@ class WelcomePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      contentBoxes: [<ContentBox key='bigHeader'><BigHeader /></ContentBox>],
       token: this.getToken(),
       regions: props.regions,
       districts: props.districts,
       areas: props.areas,
-      selectedRegionID: 1,
-      selectedDistrictID: 1,
-      selectedAreaIDs: [1, 3],
+      selectedRegionID: null,
+      selectedDistrictID: null,
+      selectedAreaIDs: [],
       includesTerms: '',
       excludesTerms: '',
       minPrice: '',
@@ -104,6 +105,25 @@ class WelcomePage extends React.Component {
 
   // // Altering State
 
+  // Adds or removes content box from this.state.contentBoxes
+  toggleBox(key, children) {
+    let newBoxes
+    const indexOf = this.state.contentBoxes.findIndex(box => box.key === key)
+
+    if (indexOf === -1) {
+      newBoxes = this.state.contentBoxes.concat([
+        <ContentBox key={key}>{children}</ContentBox>
+      ])
+    } else {
+      newBoxes = this.state.contentBoxes.slice()
+      newBoxes.splice(indexOf, 1)
+    }
+
+    this.setState({
+      contentBoxes: newBoxes
+    });
+  }
+
   // Updates `this.state.selectedRegionID` and `this.state.selectedDistrictID`
   changePlace(location) {
     var type = location.props.type
@@ -163,8 +183,22 @@ class WelcomePage extends React.Component {
     }).name
   }
 
-  // // Child Groups
-  // // TODO: Break these out into Group Components?
+  // // Content Boxes
+
+  // Renders region box
+  renderRegionBox() {
+    return (
+      <div className='row text-center'>
+        <div className='col-xs-12'>
+          <div className='btn-group-sm'>
+          { this.renderRegions() }
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // // Child Groups inside content boxes
 
   // Renders child Buttons for each Object in `this.state.selectedRegionIDs` Array
   renderRegions() {
@@ -244,106 +278,125 @@ class WelcomePage extends React.Component {
   // // JSX
   // // TODO: Consider ease of interpreting by assistive technologies
 
+  // Landing page - initialize region box animation
+
+  componentDidMount() {
+    const content = this.renderRegionBox()
+
+    this.toggleBox('regionBox', content)
+  }
+
   render() {
     return (
       <div>
-        <form onSubmit={(e) => this.handleSubmitForm(e)}>
-          <div className='container content-box'>
-            <div className='row text-center'>
-              <div className='col-xs-12'>
-                <h2>
-                Region
-                </h2>
-              </div>
-              <div className='col-xs-12'>
-                <div className='btn-group-sm'>
-                { this.renderRegions() }
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className='container content-box'>
-            <div className='row text-center'>
-              <div className='col-xs-12'>
-                <h2>
-                { this.currentRegionName() }
-                </h2>
-              </div>
-              <div className='col-xs-12'>
-                <div className='btn-group-sm'>
-                { this.renderDistricts() }
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className='container content-box'>
-            <div className='row text-center'>
-              <div className='col-xs-12'>
-                <h2>
-                { this.currentDistrictName() }
-                </h2>
-              </div>
-              <div className='col-xs-12'>
-                <div className='btn-group-sm'>
-                { this.renderAreas() }
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className='container content-box'>
-            <div className='row text-center'>
-              <div className='col-xs-12'>
-                <h2>
-                Selected Areas<br />
-                <small><em>(up to 5)</em></small>
-                </h2>
-              </div>
-              <div className='col-xs-12'>
-                <div className='btn-group-sm'>
-                { this.renderSelectedAreaIDs() }
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className='container content-box'>
-            <div className='row text-center'>
-              <div className='col-xs-12'>
-                <h2>
-                Search For Sale
-                </h2>
-              </div>
-            </div>
-            <div className='row text-center'>
-              <div className='col-xs-12'>
-                <input name='includesTerms' type='text' onChange={(e) => this.handleTextInput(e)} placeholder='search for...'></input>
-              </div>
-            </div>
-            <div className='row text-center'>
-              <div className='col-xs-12'>
-                <input name='excludesTerms' type='text' onChange={(e) => this.handleTextInput(e)} placeholder='skip if it includes...'></input>
-              </div>
-            </div>
-            <div className='row text-center'>
-              <div className='col-xs-6'>
-                <input name='minPrice' type='text' onChange={(e) => this.handleTextInput(e)} placeholder='min price'></input>
-              </div>
-              <div className='col-xs-6'>
-                <input name='maxPrice' type='text' onChange={(e) => this.handleTextInput(e)} placeholder='max price'></input>
-              </div>
-            </div>
-          </div>
-          <div className='container content-box'>
-            <div className='row text-center'>
-              <div className='col-xs-12'>
-                { this.state.fetchingResults ? 'Fetching results...' : <input type='submit' className='key-btn'></input> }
-              </div>
-            </div>
-          </div>
-        </form>
-        { this.state.resultsIn ? <HR /> : null }
-        { this.state.resultsIn ? this.renderResults() : null }
-        { this.state.errors ? "Errors - WIP" : null }
+        <ReactCSSTransitionGroup 
+          transitionName="fade"
+          transitionEnterTimeout={1000}
+          transitionLeaveTimeout={1000}>
+          { this.state.contentBoxes }
+        </ReactCSSTransitionGroup>
       </div>
     )
+    // return (
+    //   <div>
+    //     <ContentBox key='bigHeader'><BigHeader /></ContentBox>
+    //     <form onSubmit={(e) => this.handleSubmitForm(e)}>
+    //       <div className='container content-box'>
+    //         <div className='row text-center'>
+    //           <div className='col-xs-12'>
+    //             <h2>
+    //             Region
+    //             </h2>
+    //           </div>
+    //           <div className='col-xs-12'>
+    //             <div className='btn-group-sm'>
+    //             { this.renderRegions() }
+    //             </div>
+    //           </div>
+    //         </div>
+    //       </div>
+    //       <div className='container content-box'>
+    //         <div className='row text-center'>
+    //           <div className='col-xs-12'>
+    //             <h2>
+    //             { this.currentRegionName() }
+    //             </h2>
+    //           </div>
+    //           <div className='col-xs-12'>
+    //             <div className='btn-group-sm'>
+    //             { this.renderDistricts() }
+    //             </div>
+    //           </div>
+    //         </div>
+    //       </div>
+    //       <div className='container content-box'>
+    //         <div className='row text-center'>
+    //           <div className='col-xs-12'>
+    //             <h2>
+    //             { this.currentDistrictName() }
+    //             </h2>
+    //           </div>
+    //           <div className='col-xs-12'>
+    //             <div className='btn-group-sm'>
+    //             { this.renderAreas() }
+    //             </div>
+    //           </div>
+    //         </div>
+    //       </div>
+    //       <div className='container content-box'>
+    //         <div className='row text-center'>
+    //           <div className='col-xs-12'>
+    //             <h2>
+    //             Selected Areas<br />
+    //             <small><em>(up to 5)</em></small>
+    //             </h2>
+    //           </div>
+    //           <div className='col-xs-12'>
+    //             <div className='btn-group-sm'>
+    //             { this.renderSelectedAreaIDs() }
+    //             </div>
+    //           </div>
+    //         </div>
+    //       </div>
+    //       <div className='container content-box'>
+    //         <div className='row text-center'>
+    //           <div className='col-xs-12'>
+    //             <h2>
+    //             Search For Sale
+    //             </h2>
+    //           </div>
+    //         </div>
+    //         <div className='row text-center'>
+    //           <div className='col-xs-12'>
+    //             <input name='includesTerms' type='text' onChange={(e) => this.handleTextInput(e)} placeholder='search for...'></input>
+    //           </div>
+    //         </div>
+    //         <div className='row text-center'>
+    //           <div className='col-xs-12'>
+    //             <input name='excludesTerms' type='text' onChange={(e) => this.handleTextInput(e)} placeholder='skip if it includes...'></input>
+    //           </div>
+    //         </div>
+    //         <div className='row text-center'>
+    //           <div className='col-xs-6'>
+    //             <input name='minPrice' type='text' onChange={(e) => this.handleTextInput(e)} placeholder='min price'></input>
+    //           </div>
+    //           <div className='col-xs-6'>
+    //             <input name='maxPrice' type='text' onChange={(e) => this.handleTextInput(e)} placeholder='max price'></input>
+    //           </div>
+    //         </div>
+    //       </div>
+    //       <div className='container content-box'>
+    //         <div className='row text-center'>
+    //           <div className='col-xs-12'>
+    //             { this.state.fetchingResults ? 'Fetching results...' : <input type='submit' className='key-btn'></input> }
+    //           </div>
+    //         </div>
+    //       </div>
+    //     </form>
+    //     { this.state.resultsIn ? <HR /> : null }
+    //     { this.state.resultsIn ? this.renderResults() : null }
+    //     { this.state.errors ? "Errors - WIP" : null }
+    //   </div>
+    // )
   }
 }
