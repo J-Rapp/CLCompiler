@@ -5,58 +5,60 @@ class EntryPage extends React.Component {
     super();
     this.state = {
       token: this.getToken(),
-      contentBoxes: [],
-      showLogin: false
+      contentBoxes: [<BigHeader key='bigHeader' />]
     };
   }
+  
   getToken() {
-    const metas = document.getElementsByTagName('meta');
+    const metas = document.getElementsByTagName('meta')
+
     for  (let i=0; i<metas.length; i++) {
       if (metas[i].getAttribute('name') === 'csrf-token') {
         return metas[i].getAttribute('content');
       }
     }
   }
-  handleClick() {
-    if (this.state.showLogin) {
-      let newBoxes = this.state.contentBoxes.slice();
-      newBoxes.splice(0, 1);
-      console.log(newBoxes)
-      this.setState({
-        contentBoxes: newBoxes,
-        showLogin: false
-      });
+
+  toggleBox(key, children) {
+    let newBoxes
+    const indexOf = this.state.contentBoxes.findIndex(box => box.key === key)
+
+    if (indexOf === -1) {
+      newBoxes = this.state.contentBoxes.concat([
+        <ContentBox key={key}>{children}</ContentBox>
+      ])
     } else {
-      const newBoxes = this.state.contentBoxes.concat([
-        <ContentBox key={'loginForm'}><LoginForm token={this.state.token}/></ContentBox>
-      ]);
-      this.setState({
-        contentBoxes: newBoxes,
-        showLogin: true
-      });
+      newBoxes = this.state.contentBoxes.slice()
+      newBoxes.splice(indexOf, 1)
     }
+
+    this.setState({
+      contentBoxes: newBoxes
+    });
   }
+
+  componentDidMount() {
+    const content =
+      <div className='row text-center'>
+        <div className='col-xs-12'>
+          <button className='key-btn' onClick={() => this.toggleBox('loginForm', <LoginForm token={this.state.token}/>)}>
+              Admin Access
+          </button>
+        </div>
+      </div>
+
+    this.toggleBox('adminButton', content)
+  }
+
   render() {
     return (
       <div>
-
-        <div className='container content-box'>
-          <div className='row text-center'>
-            <div className='col-xs-12'>
-              <button className='key-btn' onClick={() => this.handleClick()}>
-                  Admin Access
-              </button>
-            </div>
-          </div>
-        </div>
-
         <ReactCSSTransitionGroup 
           transitionName="fade"
           transitionEnterTimeout={500}
           transitionLeaveTimeout={500}>
           { this.state.contentBoxes }
         </ReactCSSTransitionGroup>
-
       </div>
     )
   }
