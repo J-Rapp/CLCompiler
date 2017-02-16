@@ -7,7 +7,7 @@ class Button extends React.Component {
       id: props.id,
       isSelected: props.isSelected,
       getsX: props.getsX,
-      handleClick: () => props.select(this)
+      handleClick: props.select
     }
   }
 
@@ -21,7 +21,7 @@ class Button extends React.Component {
   // JSX
   render() {
     return (
-      <div className={this.state.isSelected ? "btn selected" : "btn"} onClick={this.state.handleClick}>
+      <div className={this.state.isSelected ? "btn selected" : "btn"} onClick={this.state.handleClick()}>
         <span className={ this.state.getsX ? "glyphicon glyphicon-remove" : ""} aria-hidden="true"></span>
         <div className={ this.state.getsX ? "selected-area" : "" }>
           { this.state.name }
