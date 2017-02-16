@@ -1,6 +1,6 @@
-// Array function from Stack Overflow to help with `this.state.selectedAreaIDs`
+// Array extension to help with `this.state.selectedAreaIDs`
 Array.prototype.contains = function(obj) {
-    var i = this.length;
+    let i = this.length;
     while (i--) {
         if (this[i] === obj) {
             return true;
@@ -38,8 +38,8 @@ class WelcomePage extends React.Component {
 
   // Grabs authenticity token from head/meta tag
   getToken() {
-    var metas = document.getElementsByTagName('meta');
-    for (var i=0; i<metas.length; i++) {
+    let metas = document.getElementsByTagName('meta');
+    for (let i=0; i<metas.length; i++) {
       if (metas[i].getAttribute('name') === 'csrf-token') {
         return metas[i].getAttribute('content');
       }
@@ -55,7 +55,7 @@ class WelcomePage extends React.Component {
 
   // Delivers subdomain array to controller params for search creation
   getSubdomains() {
-    var selectedAreaObjects = this.state.areas.filter((area) => {
+    let selectedAreaObjects = this.state.areas.filter((area) => {
       return this.state.selectedAreaIDs.contains(area.id)
     })
     return selectedAreaObjects.map((area) => {
@@ -66,7 +66,7 @@ class WelcomePage extends React.Component {
   // Executes AJAX Call
   handleSubmitForm(event) {
     event.preventDefault()
-    var pageApp = this
+    let pageApp = this
     pageApp.setState({
       fetchingResults: true
     })
@@ -105,7 +105,7 @@ class WelcomePage extends React.Component {
 
   // // Altering State
 
-  // Adds or removes content box from this.state.contentBoxes
+  // Adds (or removes) content box from this.state.contentBoxes
   toggleBox(key, children) {
     let newBoxes
     const indexOf = this.state.contentBoxes.findIndex(box => box.key === key)
@@ -114,33 +114,32 @@ class WelcomePage extends React.Component {
       newBoxes = this.state.contentBoxes.concat([
         <ContentBox key={key}>{children}</ContentBox>
       ])
+      this.setState({
+        contentBoxes: newBoxes
+      });
     } else {
-      newBoxes = this.state.contentBoxes.slice()
-      newBoxes.splice(indexOf, 1)
+      // newBoxes = this.state.contentBoxes.slice()
+      // newBoxes.splice(indexOf, 1)
     }
-
-    this.setState({
-      contentBoxes: newBoxes
-    });
   }
 
   // Updates `this.state.selectedRegionID` and `this.state.selectedDistrictID`
   changePlace(location) {
-    var type = location.props.type
-    var newID = location.props.id
-    var firstDistrictOfNewRegion = this.state.districts.find(function(district) {
-      return district.region_id == newID
-    })
+    let type = location.props.type
+    let newID = location.props.id
     switch(type) {
       case('region'):
-        this.setState({ 
-          selectedRegionID: newID,
-          selectedDistrictID: firstDistrictOfNewRegion.id
+        this.setState({
+          selectedRegionID: newID
+        }, function() {
+          this.toggleBox('districtBox', this.renderDistrictBox())
         })
         break;
       case('district'):
-        this.setState({ 
+        this.setState({
           selectedDistrictID: newID
+        }, function() {
+          this.toggleBox('areaBox', this.renderAreaBox())
         })
         break;
     }
@@ -148,11 +147,16 @@ class WelcomePage extends React.Component {
 
   // Adds and Removes Area IDs from `this.state.selectedAreaIDs` Array
   toggleArea(area) {
-    var stateArray = this.state.selectedAreaIDs
-    var areaID = area.props.id
+    let stateArray = this.state.selectedAreaIDs
+    let areaID = area.props.id
+
+    if (stateArray.length === 0) {
+      this.toggleBox('formBox', this.renderSearchForm())
+    }
+
     // Removing
     if (area.props.isSelected && stateArray.contains(areaID)) {
-      var i = stateArray.indexOf(areaID)
+      let i = stateArray.indexOf(areaID)
       stateArray.splice(i, 1)
       this.setState({
         selectedAreaIDs: stateArray
@@ -169,7 +173,7 @@ class WelcomePage extends React.Component {
 
   // Renders the selected Region ("country") name above the rendered Districts ("states")
   currentRegionName() {
-    var selectedRegionID = this.state.selectedRegionID
+    let selectedRegionID = this.state.selectedRegionID
     return this.state.regions.find(function(region) {
       return region.id === selectedRegionID
     }).name
@@ -177,7 +181,7 @@ class WelcomePage extends React.Component {
 
   // Renders the selected District name above the rendered Areas ("cities")
   currentDistrictName() {
-    var selectedDistrictID = this.state.selectedDistrictID
+    let selectedDistrictID = this.state.selectedDistrictID
     return this.state.districts.find(function(district) {
       return district.id === selectedDistrictID
     }).name
@@ -198,12 +202,100 @@ class WelcomePage extends React.Component {
     )
   }
 
+  renderDistrictBox(){
+    return (
+      <div className='row text-center'>
+        <div className='col-xs-12'>
+          <h2>
+          { this.currentRegionName() }
+          </h2>
+        </div>
+        <div className='col-xs-12'>
+          <div className='btn-group-sm'>
+          { this.renderDistricts() }
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  renderAreaBox() {
+    return (
+      <div className='row text-center'>
+        <div className='col-xs-12'>
+          <h2>
+          { this.currentDistrictName() }
+          </h2>
+        </div>
+        <div className='col-xs-12'>
+          <div className='btn-group-sm'>
+          { this.renderAreas() }
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  renderSearchForm() {
+    return (
+      <form onSubmit={(e) => this.handleSubmitForm(e)}>
+        <div className='row text-center'>
+          <div className='col-xs-12'>
+            <h2>
+            Search For Sale
+            </h2>
+          </div>
+        </div>
+
+        <div className='row text-center'>
+          <div className='col-xs-12'>
+            <p>
+            Selected Areas <small><em>(up to 5)</em></small>
+            </p>
+          </div>
+          <div className='col-xs-12'>
+            <div className='btn-group-sm'>
+            { this.renderSelectedAreaIDs() }
+            </div>
+          </div>
+        </div>
+
+        <div className='row text-center'>
+          <div className='col-xs-12'>
+            <input name='includesTerms' type='text' onChange={(e) => this.handleTextInput(e)} placeholder='search for...'></input>
+          </div>
+        </div>
+
+        <div className='row text-center'>
+          <div className='col-xs-12'>
+            <input name='excludesTerms' type='text' onChange={(e) => this.handleTextInput(e)} placeholder='skip if it includes...'></input>
+          </div>
+        </div>
+
+        <div className='row text-center'>
+          <div className='col-xs-6'>
+            <input name='minPrice' type='text' onChange={(e) => this.handleTextInput(e)} placeholder='min price'></input>
+          </div>
+          <div className='col-xs-6'>
+            <input name='maxPrice' type='text' onChange={(e) => this.handleTextInput(e)} placeholder='max price'></input>
+          </div>
+        </div>
+
+        <div className='row text-center'>
+          <div className='col-xs-12'>
+            { this.state.fetchingResults ? 'Fetching results...' : <input type='submit' className='key-btn'></input> }
+          </div>
+        </div>
+      </form>
+    )
+  }
+
   // // Child Groups inside content boxes
 
   // Renders child Buttons for each Object in `this.state.selectedRegionIDs` Array
   renderRegions() {
     return this.state.regions.map((region) => {
-      var isSelected = region.id === this.state.selectedRegionID;
+      let isSelected = region.id === this.state.selectedRegionID;
         return <Button 
                  key={region.id}
                  type='region'
@@ -219,7 +311,7 @@ class WelcomePage extends React.Component {
   renderDistricts() {
     return this.state.districts.map((district) => {
       if (district.region_id === this.state.selectedRegionID) {
-        var isSelected = district.id === this.state.selectedDistrictID;
+        let isSelected = district.id === this.state.selectedDistrictID;
         return <Button 
                  key={district.id}
                  type='district'
@@ -236,7 +328,7 @@ class WelcomePage extends React.Component {
   renderAreas() {
     return this.state.areas.map((area) => {
       if (area.district_id === this.state.selectedDistrictID) {
-        var isSelected = this.state.selectedAreaIDs.contains(area.id)
+        let isSelected = this.state.selectedAreaIDs.contains(area.id)
         return <Button 
                  key={area.id}
                  id={area.id}
@@ -267,11 +359,14 @@ class WelcomePage extends React.Component {
   // Renders child Results for each Object in `this.state.craigslistResults` Object
   renderResults() {
     return this.state.craigslistResults.map((result) => {
-      return <Result 
-               key={result.url}
-               url={result.url}
-               title={result.title} 
-               price={result.price} />
+      return 
+      <ContentBox key={result.url}>
+        <Result 
+          key={result.url}
+          url={result.url}
+          title={result.title} 
+          price={result.price} />
+      </ContentBox>
     })
   }
 
@@ -282,7 +377,6 @@ class WelcomePage extends React.Component {
 
   componentDidMount() {
     const content = this.renderRegionBox()
-
     this.toggleBox('regionBox', content)
   }
 
@@ -295,108 +389,10 @@ class WelcomePage extends React.Component {
           transitionLeaveTimeout={1000}>
           { this.state.contentBoxes }
         </ReactCSSTransitionGroup>
+        { this.state.resultsIn ? <HR /> : null }
+        { this.state.resultsIn ? this.renderResults() : null }
+        { this.state.errors ? "Errors - WIP" : null }
       </div>
     )
-    // return (
-    //   <div>
-    //     <ContentBox key='bigHeader'><BigHeader /></ContentBox>
-    //     <form onSubmit={(e) => this.handleSubmitForm(e)}>
-    //       <div className='container content-box'>
-    //         <div className='row text-center'>
-    //           <div className='col-xs-12'>
-    //             <h2>
-    //             Region
-    //             </h2>
-    //           </div>
-    //           <div className='col-xs-12'>
-    //             <div className='btn-group-sm'>
-    //             { this.renderRegions() }
-    //             </div>
-    //           </div>
-    //         </div>
-    //       </div>
-    //       <div className='container content-box'>
-    //         <div className='row text-center'>
-    //           <div className='col-xs-12'>
-    //             <h2>
-    //             { this.currentRegionName() }
-    //             </h2>
-    //           </div>
-    //           <div className='col-xs-12'>
-    //             <div className='btn-group-sm'>
-    //             { this.renderDistricts() }
-    //             </div>
-    //           </div>
-    //         </div>
-    //       </div>
-    //       <div className='container content-box'>
-    //         <div className='row text-center'>
-    //           <div className='col-xs-12'>
-    //             <h2>
-    //             { this.currentDistrictName() }
-    //             </h2>
-    //           </div>
-    //           <div className='col-xs-12'>
-    //             <div className='btn-group-sm'>
-    //             { this.renderAreas() }
-    //             </div>
-    //           </div>
-    //         </div>
-    //       </div>
-    //       <div className='container content-box'>
-    //         <div className='row text-center'>
-    //           <div className='col-xs-12'>
-    //             <h2>
-    //             Selected Areas<br />
-    //             <small><em>(up to 5)</em></small>
-    //             </h2>
-    //           </div>
-    //           <div className='col-xs-12'>
-    //             <div className='btn-group-sm'>
-    //             { this.renderSelectedAreaIDs() }
-    //             </div>
-    //           </div>
-    //         </div>
-    //       </div>
-    //       <div className='container content-box'>
-    //         <div className='row text-center'>
-    //           <div className='col-xs-12'>
-    //             <h2>
-    //             Search For Sale
-    //             </h2>
-    //           </div>
-    //         </div>
-    //         <div className='row text-center'>
-    //           <div className='col-xs-12'>
-    //             <input name='includesTerms' type='text' onChange={(e) => this.handleTextInput(e)} placeholder='search for...'></input>
-    //           </div>
-    //         </div>
-    //         <div className='row text-center'>
-    //           <div className='col-xs-12'>
-    //             <input name='excludesTerms' type='text' onChange={(e) => this.handleTextInput(e)} placeholder='skip if it includes...'></input>
-    //           </div>
-    //         </div>
-    //         <div className='row text-center'>
-    //           <div className='col-xs-6'>
-    //             <input name='minPrice' type='text' onChange={(e) => this.handleTextInput(e)} placeholder='min price'></input>
-    //           </div>
-    //           <div className='col-xs-6'>
-    //             <input name='maxPrice' type='text' onChange={(e) => this.handleTextInput(e)} placeholder='max price'></input>
-    //           </div>
-    //         </div>
-    //       </div>
-    //       <div className='container content-box'>
-    //         <div className='row text-center'>
-    //           <div className='col-xs-12'>
-    //             { this.state.fetchingResults ? 'Fetching results...' : <input type='submit' className='key-btn'></input> }
-    //           </div>
-    //         </div>
-    //       </div>
-    //     </form>
-    //     { this.state.resultsIn ? <HR /> : null }
-    //     { this.state.resultsIn ? this.renderResults() : null }
-    //     { this.state.errors ? "Errors - WIP" : null }
-    //   </div>
-    // )
   }
 }

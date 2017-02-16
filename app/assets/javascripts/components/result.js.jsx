@@ -20,15 +20,11 @@ class Result extends React.Component {
   // JSX
   render() {
     return (
-      <div>
-        <div className='container content-box'>
-          <div className='row text-center'>
-            <div className='col-xs-12'>
-              <a href={this.state.url} target='_blank'>
-                {this.state.title}
-              </a> - {this.state.price}
-            </div>
-          </div>
+      <div className='row text-center'>
+        <div className='col-xs-12'>
+          <a href={this.state.url} target='_blank'>
+            {this.state.title}
+          </a> - {this.state.price}
         </div>
       </div>
     )
