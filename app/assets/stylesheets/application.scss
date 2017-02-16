@@ -5,65 +5,96 @@
 
 // Mobile First
 
-html, body {
-  background-color: $lightgrey;
-  margin-top: 1.2em;
-  margin-bottom: 1.2em;
+html {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  height: 100%;
+  width: 100%;
   font-family: 'Veranda', sans-serif;
   font-size: 1.7em;
-  h1 {
-    font-size: 2.5em;
-    margin-top: 0em;
-  }
-  h2 {
-    font-size: 1.4em;
-    margin-top: 0;
-    margin-bottom: .6em;
-  }
-  hr {
-    background-color: $charcoal;
-    color: $charcoal;
-    border: 0;
-    border-radius: 2px;
-    height: 5px;
-    margin-top: 0px;
-    margin-bottom: 2.5em;
-  }
+  background-color: $lightgrey;
+
+  // Hides horizontal scroll bar for #app
+  overflow: hidden;
+}
+
+// Hides vertical scroll bar
+#app {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: -17px;
+  overflow-y: scroll;
+  padding-bottom: 2.5em;
+}
+
+h1 {
+  font-size: 2.5em;
+  margin-top: 0em;
+}
+
+h2 {
+  font-size: 1.4em;
+  margin-top: 0;
+  margin-bottom: .6em;
+}
+
+hr {
+  background-color: $charcoal;
+  color: $charcoal;
+  border: 0;
+  border-radius: 2px;
+  height: 5px;
+  margin-top: 0px;
+  margin-bottom: 2.5em;
+}
+
+// Sloppy way to achieve content-box animation
+.spacer {
+  position: relative;
+  background-color: $lightgrey;
+  height: 2.5em;
+  z-index: 1;
+}
+
+.content-box { 
+  position: relative;
+  background-color: $offwhite;
+  border: .3em solid $almostblack;
+  padding-top: 1.5em;
+  padding-bottom: 1.5em;
+  z-index: 1;
 }
 
 .row {
   padding: .2em .5em;
 }
 
-.content-box { 
-  background-color: $offwhite;
-  border: .3em solid $almostblack;
-  margin-bottom: 2.5em;
-  padding-top: 1.5em;
-  padding-bottom: 1.5em;
-}
-
 // Div animation
 
 .fade-enter {
-  opacity: 0.01;
-  transform: translateY(-2em);
+  z-index: -1;
+  transform: translateY(-105%);
 }
 
 .fade-enter-active {
-  opacity: 1;
-  transform: translateY(0em);
-  transition: opacity 500ms ease-in, transform 500ms ease-in;
+  z-index: 0;
+  transform: translateY(0%);
+  transition: all 1s;
 }
 
 .fade-leave {
-  opacity: 1
+  z-index: 0;
 }
 
 .fade-leave-active {
-  opacity: 0.01;
-  transform: translateY(-2em);
-  transition: opacity 500ms ease-in, transform 500ms ease-in;
+  z-index: -1;
+  transform: translateY(-105%);
+  transition: all 1s;
 }
 
 .btn-group-sm {

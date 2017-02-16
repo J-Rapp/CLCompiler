@@ -38,9 +38,3 @@ Because dismantling the patriarchy, that's why.
 
 And it rhymes with Craig.
 
----
-
-### Legal
-
-This app has no affiliation with craigslist, and admittedly directly violates craigslist terms of use by scraping from their public pages. In an attempt to not be a total jerk about it, the app is very conscious of bandwidth consumption by limiting search functionality/frequency in order to imitate the traffic of an average human user on any craigslist server. Further, very few posting details are persisted (currently just the url, title, and price) and no craislist user data is scraped, nor persisted.
-
