@@ -21,13 +21,16 @@ class WelcomePage extends React.Component {
       regions: props.regions,
       districts: props.districts,
       areas: props.areas,
-      selectedRegionID: null,
-      selectedDistrictID: null,
+      selectedRegion: null,
+      selectedDistrict: null,
       selectedAreaIDs: [],
       fetchingResults: false,
       craigslistResults: {},
       errors: null
-    };
+    }
+    this.changePlace = this.changePlace.bind(this)
+    this.addBox = this.addBox.bind(this)
+    this.toggleArea = this.toggleArea.bind(this)
   }
 
   // Delivers subdomain array to controller params for search creation
@@ -37,45 +40,48 @@ class WelcomePage extends React.Component {
     })
   }
 
-  // Landing page - initialize region box animation
+  // Adds first animated box after page load
   componentDidMount() {
-    this.toggleBox(
+    this.addBox(
       'regionBox',
       <RegionBox 
         regions={ this.state.regions }
-        selectedRegionID={ this.state.selectedRegionID }
         selectRegion={ this.changePlace } />
     )
   }
 
-  // Adds (or removes) content box from this.state.contentBoxes
-  toggleBox(key, children) {
-    let newBoxes
-    const indexOf = this.state.contentBoxes.findIndex(box => box.key === key)
-
+  // Adds content box from this.state.contentBoxes
+  addBox(key, children) {
+    let newBoxes = this.state.contentBoxes
+    const indexOf = newBoxes.findIndex(box => box.key === key)
     if (indexOf === -1) {
-      newBoxes = this.state.contentBoxes.concat([
+      newBoxes = newBoxes.concat([
         <ContentBox key={key}>{children}</ContentBox>
       ])
-      this.setState({
-        contentBoxes: newBoxes
-      });
     } else {
-      // newBoxes = this.state.contentBoxes.slice()
-      // newBoxes.splice(indexOf, 1)
+      newBoxes[indexOf] = <ContentBox key={key}>{children}</ContentBox>
     }
+    this.setState({contentBoxes: newBoxes});
   }
 
-  // Updates `this.state.selectedRegionID` and `this.state.selectedDistrictID`
-  changePlace(location) {
-    let type = location.props.type
-    let newID = location.props.id
-    switch(type) {
+  // Updates `this.state.selectedRegion` and `this.state.selectedDistrict`
+  changePlace(button) {
+    switch(button.state.type) {
       case('region'):
-        this.setState({selectedRegionID: newID})
+        this.setState({
+          selectedRegion: button.state.object
+        }, function() {
+          this.addBox(
+            'districtBox',
+            <DistrictBox
+              selectedRegion={ this.state.selectedRegion }
+              districts={ this.state.districts } />)
+        })
         break;
       case('district'):
-        this.setState({selectedDistrictID: newID})
+        this.setState({
+          selectedDistrict: object
+        })
         break;
     }
   }
@@ -86,7 +92,7 @@ class WelcomePage extends React.Component {
     let areaID = area.props.id
 
     if (stateArray.length === 0) {
-      this.toggleBox('formBox', this.renderSearchForm())
+      this.addBox('formBox', this.renderSearchForm())
     }
 
     // Removing
