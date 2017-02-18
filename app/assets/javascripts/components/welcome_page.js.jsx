@@ -38,7 +38,7 @@ class WelcomePage extends React.Component {
     }
     this.dynamicButtonSelection = this.dynamicButtonSelection.bind(this)
     this.createOrUpdateBox = this.createOrUpdateBox.bind(this)
-    this.populateResults = this.populateResults.bind(this)
+    this.handleResults = this.handleResults.bind(this)
   }
 
   // Adds first animated box after page load
@@ -98,7 +98,7 @@ class WelcomePage extends React.Component {
             <SearchForm
               selectedAreas={ this.state.selectedAreas }
               selectArea={ this.dynamicButtonSelection }
-              populateResults= { this.populateResults } />
+              handleResults= { this.handleResults } />
           )
         })
         break;
@@ -109,18 +109,26 @@ class WelcomePage extends React.Component {
   createOrUpdateBox(key, children) {
     let newBoxes = this.state.contentBoxes
     const indexOf = newBoxes.findIndex(box => box.key === key)
+
+    // Create a new box
     if (indexOf === -1) {
       newBoxes = newBoxes.concat([
         <ContentBox key={key}>{children}</ContentBox>
       ])
+      this.setState({contentBoxes: newBoxes});
+      // Scroll to new box after render
+      // Can this be done when the component joins CSSTransitionGroup?
+      const height = $('#search-animation').height()
+      $('#app').animate({scrollTop: height}, 1000);
     } else {
+      // Update an already existing box
       newBoxes[indexOf] = <ContentBox key={key}>{children}</ContentBox>
+      this.setState({contentBoxes: newBoxes});
     }
-    this.setState({contentBoxes: newBoxes});
   }
 
-  populateResults(results) {
-    // Filter by unique urls
+  handleResults(results) {
+    // Filter out duplicate urls and titles
     // TODO: move this to backend
     const uniqueResults = results.filter(function(result, index, self) {
       return self.findIndex(function(r) {
@@ -128,48 +136,24 @@ class WelcomePage extends React.Component {
       }) === index
     })
 
-    // First remove any current results if any are on the page
     this.setState({
-      resultsIn: false,
-      craigslistResults: []
-    }, function() {
-      // Populate new ones before render
-      this.setState({
-        resultsIn: true,
-        craigslistResults: uniqueResults
-      })
+      resultsIn: true,
+      craigslistResults: uniqueResults
     })
-  }
-
-  renderResults() {
-    let resultBoxes = this.state.craigslistResults.map((result) => {
-      return <ContentBox key={result.url}>
-               <Result 
-                 key={result.url}
-                 url={result.url}
-                 title={result.title} 
-                 price={result.price} />
-             </ContentBox>
-    })
-
-    // Include <hr> tag at the beginning
-    resultBoxes.unshift(<ResultsHR key='hr' />)
-    return resultBoxes
   }
 
   render() {
-    // $('html, body').animate({
-    //   scrollTop: $('#start-results').offset().top + 'px'
-    // }, 1500)
     return (
       <div>
         <ReactCSSTransitionGroup 
-          transitionName="fade"
+          component='div'
+          id='search-animation'
+          transitionName='fade'
           transitionEnterTimeout={1000}
           transitionLeaveTimeout={1000}>
           { this.state.contentBoxes }
         </ReactCSSTransitionGroup>
-        { this.state.resultsIn ? this.renderResults() : null }
+        { this.state.resultsIn ? <Results results={ this.state.craigslistResults } /> : null }
       </div>
     )
   }

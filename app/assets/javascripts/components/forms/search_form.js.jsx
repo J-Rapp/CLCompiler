@@ -75,10 +75,11 @@ class SearchForm extends React.Component {
       }
     }).done(function(data){
       searchForm.setState({
+        errors: false,
         fetchingResults: false
       }, function() {
         // Lift results up to WelcomePage
-        this.props.populateResults(data)
+        this.props.handleResults(data)
       })
     }).fail(function(data){
       searchForm.setState({
@@ -157,7 +158,7 @@ class SearchForm extends React.Component {
         <div className='row text-center'>
           <div className='col-xs-12'>
             { this.state.fetchingResults ? 'Fetching results...' : <input type='submit' className='key-btn'></input> }
-            { this.state.errors ? 'An error occurred' : null }
+            { this.state.errors ? <p><br></br>An error occurred</p> : null }
           </div>
         </div>
       </form>
