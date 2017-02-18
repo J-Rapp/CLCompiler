@@ -30,7 +30,6 @@ class WelcomePage extends React.Component {
     }
     this.dynamicButtonSelection = this.dynamicButtonSelection.bind(this)
     this.createOrUpdateBox = this.createOrUpdateBox.bind(this)
-    this.handleDeselect = this.handleDeselect.bind(this)
   }
 
   // Delivers subdomain array to controller params for search creation
@@ -64,12 +63,9 @@ class WelcomePage extends React.Component {
     this.setState({contentBoxes: newBoxes});
   }
 
-  handleDeselect(areaButton) {
-    console.log(areaButton)
-  }
-
   // Updates `selectedRegion`, `selectedDistrict`, and `selectedAreas`
   dynamicButtonSelection(button, selectedAreas) {
+    console.log(button.state, selectedAreas)
     switch(button.state.type) {
       case('region'):
         this.setState({
@@ -93,19 +89,29 @@ class WelcomePage extends React.Component {
             <AreaBox
               selectedDistrict={ this.state.selectedDistrict }
               areas={ this.state.areas }
-              selectArea={ this.dynamicButtonSelection } />
+              selectArea={ this.dynamicButtonSelection }
+              selectedAreas={ this.state.selectedAreas } />
           )
         })
         break;
       case('area'):
+              console.log('updating the areas', selectedAreas)
         this.setState({
           selectedAreas: selectedAreas
         }, function() {
           this.createOrUpdateBox(
+            'areaBox',
+            <AreaBox
+              selectedDistrict={ this.state.selectedDistrict }
+              areas={ this.state.areas }
+              selectArea={ this.dynamicButtonSelection }
+              selectedAreas={ this.state.selectedAreas } />
+          )
+          this.createOrUpdateBox(
             'formBox',
             <SearchForm
               selectedAreas={ this.state.selectedAreas }
-              handleDeselect={ this.state.handleDeselect } />
+              selectArea={ this.dynamicButtonSelection } />
           )
         })
         break;
@@ -127,7 +133,6 @@ class WelcomePage extends React.Component {
   }
 
   render() {
-    // console.log(this.state.selectedAreas)
     return (
       <div>
         <ReactCSSTransitionGroup 

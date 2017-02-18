@@ -4,7 +4,7 @@ class AreaBox extends React.Component {
     this.state = {
       areas: props.areas,
       selectedDistrict: props.selectedDistrict,
-      selectedAreas: []
+      selectedAreas: props.selectedAreas
     }
     this.handleSelect = this.handleSelect.bind(this)
   }

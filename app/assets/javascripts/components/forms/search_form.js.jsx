@@ -37,8 +37,18 @@ class SearchForm extends React.Component {
   }
 
   handleDeselect(button) {
-    // splice from state
-    // return selectedAreas back up to welcome
+    const selectedArea = button.state.object
+    let stateArray = this.state.selectedAreas
+    const i = stateArray.indexOf(selectedArea)
+
+    stateArray.splice(i, 1)
+
+    this.setState({
+      selectedAreas: stateArray
+    }, function() {
+      // Lift selectedAreas up to WelcomePage
+      this.props.selectArea(button, stateArray)
+    })
   }
 
   handleSubmitForm() {
@@ -89,7 +99,7 @@ class SearchForm extends React.Component {
     return this.state.selectedAreas.map((area) => {
         return <Button 
                  key={area.id}
-                 type='deselectArea'
+                 type='area'
                  object={area}
                  handleSelect={this.handleDeselect}
                  isSelected='true'
