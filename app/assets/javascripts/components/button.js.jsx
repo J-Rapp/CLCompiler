@@ -3,28 +3,30 @@ class Button extends React.Component {
     super(props);
     this.state = {
       type: props.type,
-      name: props.name,
-      id: props.id,
+      object: props.object,
       isSelected: props.isSelected,
-      getsX: props.getsX,
-      handleClick: () => props.select(this)
+      getsX: props.getsX
     }
+    this.handleClick = this.handleClick.bind(this)
   }
 
-  // Called when the Welcome Page re-renders and passes props down
+  handleClick() {
+    this.props.handleSelect(this)
+  }
+
+  // Called when the parent re-renders and passes props down
   componentWillReceiveProps(props) {
     this.setState({
       isSelected: props.isSelected 
     });
   }
 
-  // JSX
   render() {
     return (
-      <div className={this.state.isSelected ? "btn selected" : "btn"} onClick={this.state.handleClick}>
+      <div className={this.state.isSelected ? "btn selected" : "btn"} onClick={this.handleClick}>
         <span className={ this.state.getsX ? "glyphicon glyphicon-remove" : ""} aria-hidden="true"></span>
         <div className={ this.state.getsX ? "selected-area" : "" }>
-          { this.state.name }
+          { this.state.object.name }
         </div>
       </div>
     )

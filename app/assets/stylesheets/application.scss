@@ -5,12 +5,7 @@
 
 // Mobile First
 
-html {
-  height: 100%;
-  width: 100%;
-}
-
-body {
+html, body {
   height: 100%;
   width: 100%;
   font-family: 'Veranda', sans-serif;
@@ -18,18 +13,21 @@ body {
   background-color: $lightgrey;
 
   // Hides horizontal scroll bar for #app
+  position: relative;
   overflow: hidden;
 }
 
-// Hides vertical scroll bar
+
 #app {
+  padding-bottom: 2.5em;
   position: absolute;
   top: 0px;
   bottom: 0px;
   left: 0px;
-  right: -17px;
+  // Hides vertical scroll bar
+  right: -30px;
+  margin-left: -30px;
   overflow-y: scroll;
-  padding-bottom: 2.5em;
 }
 
 h1 {
@@ -49,8 +47,8 @@ hr {
   border: 0;
   border-radius: 2px;
   height: 5px;
-  margin-top: 0px;
-  margin-bottom: 2.5em;
+  margin-top: 2.5em;
+  margin-bottom: 0;
 }
 
 // Sloppy way to achieve content-box animation
@@ -72,29 +70,6 @@ hr {
 
 .row {
   padding: .2em .5em;
-}
-
-// Div animation
-
-.fade-enter {
-  z-index: -1;
-  transform: translateY(-105%);
-}
-
-.fade-enter-active {
-  z-index: 0;
-  transform: translateY(0%);
-  transition: all 1s;
-}
-
-.fade-leave {
-  z-index: 0;
-}
-
-.fade-leave-active {
-  z-index: -1;
-  transform: translateY(-105%);
-  transition: all 1s;
 }
 
 .btn-group-sm {
@@ -136,6 +111,29 @@ input[type='text'] {
   border: 1px solid $almostblack;
   margin: .5em auto;
   padding: .25em;
+}
+
+// Div animation
+
+.fade-enter {
+  z-index: -1;
+  transform: translateY(-105%);
+}
+
+.fade-enter-active {
+  z-index: 0;
+  transform: translateY(0%);
+  transition: all 1s;
+}
+
+.fade-leave {
+  z-index: 0;
+}
+
+.fade-leave-active {
+  z-index: -1;
+  transform: translateY(-105%);
+  transition: all 1s;
 }
 
 // Desktop

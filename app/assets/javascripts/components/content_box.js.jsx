@@ -4,7 +4,7 @@ function ContentBox(props) {
       <div className='spacer'>
       </div>
       <div className='container content-box'>
-      {props.children}
+        { props.children }
       </div>
     </div>
   )
