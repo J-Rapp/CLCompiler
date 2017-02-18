@@ -117,7 +117,7 @@ class WelcomePage extends React.Component {
       ])
       this.setState({contentBoxes: newBoxes});
       // Scroll to new box after render
-      $('#app').animate({scrollTop: $('#search-animation').height()}, 1000, 'linear');
+      $('#app').animate({scrollTop: $('#search-animation').height()}, 1000);
     } else {
       // Update an already existing box
       newBoxes[indexOf] = <ContentBox key={key}>{children}</ContentBox>
