@@ -117,9 +117,7 @@ class WelcomePage extends React.Component {
       ])
       this.setState({contentBoxes: newBoxes});
       // Scroll to new box after render
-      // Can this be done when the component joins CSSTransitionGroup?
-      const height = $('#search-animation').height()
-      $('#app').animate({scrollTop: height}, 1000);
+      $('#app').animate({scrollTop: $('#search-animation').height()}, 1000);
     } else {
       // Update an already existing box
       newBoxes[indexOf] = <ContentBox key={key}>{children}</ContentBox>

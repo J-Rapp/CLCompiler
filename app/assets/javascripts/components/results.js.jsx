@@ -18,6 +18,13 @@ class Results extends React.Component {
     })
   }
 
+  // Called when the WelcomePage re-renders and passes props down
+  componentWillReceiveProps(props) {
+    this.setState({
+      results: props.results
+    })
+  }
+
   // Animates results the first time they appear
   componentDidMount() {
     const searchHeight = $('#search-animation').height()

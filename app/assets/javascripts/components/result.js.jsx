@@ -4,7 +4,8 @@ function Result(props) {
       <div className='col-xs-12'>
         <a href={props.url} target='_blank'>
           {props.title}
-        </a> - {props.price}
+        </a><br/>
+        {props.price}
       </div>
     </div>
   )
