@@ -8,11 +8,13 @@ class SearchForm extends React.Component {
       excludesTerms: '',
       minPrice: '',
       maxPrice: '',
-      resultsIn: false
+      fetchingResults: false,
+      errors: false
     }
     this.handleDeselect = this.handleDeselect.bind(this)
     this.handleChange = this.handleChange.bind(this)
-    this.handleSubmitForm = this.handleSubmitForm.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.getSubdomains = this.getSubdomains.bind(this)
   }
 
   getToken() {
@@ -25,7 +27,7 @@ class SearchForm extends React.Component {
   }
 
   getSubdomains() {
-    return selectedAreas.map((area) => {
+    return this.state.selectedAreas.map((area) => {
       return area.subdomain
     })
   }
@@ -51,7 +53,7 @@ class SearchForm extends React.Component {
     })
   }
 
-  handleSubmitForm() {
+  handleSubmit(event) {
     event.preventDefault()
     const searchForm = this
     const params = this.state
@@ -63,7 +65,7 @@ class SearchForm extends React.Component {
       url: 'search',
       data: {
         authenticity_token: params.token,
-        subdomains: params.subdomains,
+        subdomains: searchForm.getSubdomains(),
         search: {
           includes: params.includesTerms,
           excludes: params.excludesTerms,
@@ -73,17 +75,16 @@ class SearchForm extends React.Component {
       }
     }).done(function(data){
       searchForm.setState({
-        fetchingResults: false,
-        resultsIn: true,
-        craigslistResults: data
+        fetchingResults: false
+      }, function() {
+        // Lift results up to WelcomePage
+        this.props.populateResults(data)
       })
-      $('html, body').animate({
-        scrollTop: $('#start-results').offset().top + 'px'
-      }, 1500)
     }).fail(function(data){
       searchForm.setState({
-        // TODO: populate errors
-        errors: null
+        // TODO: populate actual errors
+        errors: true,
+        fetchingResults: false
       })
     })
   }
@@ -110,7 +111,7 @@ class SearchForm extends React.Component {
 
   render(){
     return (
-      <form onSubmit={ this.handleSubmitForm }>
+      <form onSubmit={ this.handleSubmit }>
         <div className='row text-center'>
           <div className='col-xs-12'>
             <h2>
@@ -156,6 +157,7 @@ class SearchForm extends React.Component {
         <div className='row text-center'>
           <div className='col-xs-12'>
             { this.state.fetchingResults ? 'Fetching results...' : <input type='submit' className='key-btn'></input> }
+            { this.state.errors ? 'An error occurred' : null }
           </div>
         </div>
       </form>
