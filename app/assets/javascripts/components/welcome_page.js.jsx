@@ -30,7 +30,6 @@ class WelcomePage extends React.Component {
     }
     this.changePlace = this.changePlace.bind(this)
     this.addBox = this.addBox.bind(this)
-    this.toggleArea = this.toggleArea.bind(this)
   }
 
   // Delivers subdomain array to controller params for search creation
@@ -50,7 +49,7 @@ class WelcomePage extends React.Component {
     )
   }
 
-  // Adds content box from this.state.contentBoxes
+  // Adds or updates content box from this.state.contentBoxes
   addBox(key, children) {
     let newBoxes = this.state.contentBoxes
     const indexOf = newBoxes.findIndex(box => box.key === key)
@@ -74,39 +73,24 @@ class WelcomePage extends React.Component {
           this.addBox(
             'districtBox',
             <DistrictBox
+              districts={ this.state.districts }
               selectedRegion={ this.state.selectedRegion }
-              districts={ this.state.districts } />)
+              selectDistrict={ this.changePlace } />
+          )
         })
         break;
       case('district'):
         this.setState({
-          selectedDistrict: object
+          selectedDistrict: button.state.object
+        }, function() {
+          this.addBox(
+            'areaBox',
+            <AreaBox
+              selectedDistrict={ this.state.selectedDistrict }
+              areas={ this.state.areas } />
+          )
         })
         break;
-    }
-  }
-
-  // Adds and Removes Area IDs from `this.state.selectedAreaIDs` Array
-  toggleArea(area) {
-    let stateArray = this.state.selectedAreaIDs
-    let areaID = area.props.id
-
-    if (stateArray.length === 0) {
-      this.addBox('formBox', this.renderSearchForm())
-    }
-
-    // Removing
-    if (area.props.isSelected && stateArray.contains(areaID)) {
-      let i = stateArray.indexOf(areaID)
-      stateArray.splice(i, 1)
-      this.setState({
-        selectedAreaIDs: stateArray
-      })
-    // Adding
-    } else if (stateArray.length < 5) {
-      this.setState({
-        selectedAreaIDs: stateArray.concat([areaID])
-      })
     }
   }
 
