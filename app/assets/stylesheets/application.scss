@@ -13,28 +13,21 @@ html, body {
   background-color: $lightgrey;
 
   // Hides horizontal scroll bar for #app
+  position: relative;
   overflow: hidden;
 }
 
 
 #app {
+  padding-bottom: 2.5em;
   position: absolute;
   top: 0px;
   bottom: 0px;
   left: 0px;
-  padding-bottom: 2.5em;
   // Hides vertical scroll bar
-  right: -40px;
-  margin-left: -20px;
+  right: -30px;
+  margin-left: -30px;
   overflow-y: scroll;
-}
-
-#search-animation {
-  // position: absolute;
-  // bottom: 0px;
-  // left: 0px;
-  // right: 0px;
-  // overflow-y: scroll;
 }
 
 h1 {
