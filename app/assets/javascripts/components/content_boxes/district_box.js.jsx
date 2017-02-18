@@ -30,7 +30,7 @@ class DistrictBox extends React.Component {
     })
   }
 
-  // Needed when box is re-assigned by WelcomePage
+  // Called when the WelcomePage re-renders and passes props down
   componentWillReceiveProps(props) {
     this.setState({
       selectedRegion: props.selectedRegion 

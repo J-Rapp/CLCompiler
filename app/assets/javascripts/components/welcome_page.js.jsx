@@ -23,13 +23,14 @@ class WelcomePage extends React.Component {
       areas: props.areas,
       selectedRegion: null,
       selectedDistrict: null,
-      selectedAreaIDs: [],
+      selectedAreas: [],
       fetchingResults: false,
       craigslistResults: {},
       errors: null
     }
-    this.changePlace = this.changePlace.bind(this)
-    this.addBox = this.addBox.bind(this)
+    this.dynamicButtonSelection = this.dynamicButtonSelection.bind(this)
+    this.createOrUpdateBox = this.createOrUpdateBox.bind(this)
+    this.handleDeselect = this.handleDeselect.bind(this)
   }
 
   // Delivers subdomain array to controller params for search creation
@@ -41,16 +42,16 @@ class WelcomePage extends React.Component {
 
   // Adds first animated box after page load
   componentDidMount() {
-    this.addBox(
+    this.createOrUpdateBox(
       'regionBox',
       <RegionBox 
         regions={ this.state.regions }
-        selectRegion={ this.changePlace } />
+        selectRegion={ this.dynamicButtonSelection } />
     )
   }
 
   // Adds or updates content box from this.state.contentBoxes
-  addBox(key, children) {
+  createOrUpdateBox(key, children) {
     let newBoxes = this.state.contentBoxes
     const indexOf = newBoxes.findIndex(box => box.key === key)
     if (indexOf === -1) {
@@ -63,19 +64,23 @@ class WelcomePage extends React.Component {
     this.setState({contentBoxes: newBoxes});
   }
 
-  // Updates `this.state.selectedRegion` and `this.state.selectedDistrict`
-  changePlace(button) {
+  handleDeselect(areaButton) {
+    console.log(areaButton)
+  }
+
+  // Updates `selectedRegion`, `selectedDistrict`, and `selectedAreas`
+  dynamicButtonSelection(button, selectedAreas) {
     switch(button.state.type) {
       case('region'):
         this.setState({
           selectedRegion: button.state.object
         }, function() {
-          this.addBox(
+          this.createOrUpdateBox(
             'districtBox',
             <DistrictBox
               districts={ this.state.districts }
               selectedRegion={ this.state.selectedRegion }
-              selectDistrict={ this.changePlace } />
+              selectDistrict={ this.dynamicButtonSelection } />
           )
         })
         break;
@@ -83,11 +88,24 @@ class WelcomePage extends React.Component {
         this.setState({
           selectedDistrict: button.state.object
         }, function() {
-          this.addBox(
+          this.createOrUpdateBox(
             'areaBox',
             <AreaBox
               selectedDistrict={ this.state.selectedDistrict }
-              areas={ this.state.areas } />
+              areas={ this.state.areas }
+              selectArea={ this.dynamicButtonSelection } />
+          )
+        })
+        break;
+      case('area'):
+        this.setState({
+          selectedAreas: selectedAreas
+        }, function() {
+          this.createOrUpdateBox(
+            'formBox',
+            <SearchForm
+              selectedAreas={ this.state.selectedAreas }
+              handleDeselect={ this.state.handleDeselect } />
           )
         })
         break;
@@ -109,6 +127,7 @@ class WelcomePage extends React.Component {
   }
 
   render() {
+    // console.log(this.state.selectedAreas)
     return (
       <div>
         <ReactCSSTransitionGroup 

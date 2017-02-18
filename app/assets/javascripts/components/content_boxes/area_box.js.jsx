@@ -9,35 +9,31 @@ class AreaBox extends React.Component {
     this.handleSelect = this.handleSelect.bind(this)
   }
 
+  // Adds and Removes Areas from `this.state.selectedAreas` Array
   handleSelect(button) {
-    console.log(button)
-  }
-
-  // Adds and Removes Area IDs from `this.state.selectedAreaIDs` Array
-  toggleArea(area) {
-    let stateArray = this.state.selectedAreaIDs
-    let areaID = area.props.id
-
-    if (stateArray.length === 0) {
-      this.addBox('formBox', this.renderSearchForm())
-    }
+    let stateArray = this.state.selectedAreas
+    const area = button.state.object
+    const isSelected = button.state.isSelected
 
     // Removing
-    if (area.props.isSelected && stateArray.contains(areaID)) {
-      let i = stateArray.indexOf(areaID)
+    if (isSelected && stateArray.contains(area)) {
+      const i = stateArray.indexOf(area)
       stateArray.splice(i, 1)
-      this.setState({
-        selectedAreaIDs: stateArray
-      })
     // Adding
     } else if (stateArray.length < 5) {
-      this.setState({
-        selectedAreaIDs: stateArray.concat([areaID])
-      })
+      stateArray = stateArray.concat([area])
     }
+
+    this.setState({
+      selectedAreas: stateArray
+    }, function() {
+      // Lift selectedAreas up to WelcomePage
+      this.props.selectArea(button, this.state.selectedAreas)
+    })
+    
   }
 
-  // Needed when box is re-assigned by WelcomePage
+  // Called when the WelcomePage re-renders and passes props down
   componentWillReceiveProps(props) {
     this.setState({
       selectedDistrict: props.selectedDistrict
@@ -47,12 +43,12 @@ class AreaBox extends React.Component {
   renderAreas() {
     return this.state.areas.map((area) => {
       if (area.district_id === this.state.selectedDistrict.id) {
-        let isSelected = this.state.selectedAreas.contains(area)
+        const isSelected = this.state.selectedAreas.contains(area)
         return <Button 
                  key={area.id}
                  type='area'
                  object={area}
-                 select={this.handleSelect}
+                 handleSelect={this.handleSelect}
                  isSelected={isSelected}
                />
       }

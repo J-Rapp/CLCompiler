@@ -9,8 +9,7 @@ class RegionBox extends React.Component {
   }
 
   handleSelect(button) {
-    const region = button.state.object
-    this.setState({selectedRegion: region})
+    this.setState({selectedRegion: button.state.object})
     this.props.selectRegion(button)
   }
 
