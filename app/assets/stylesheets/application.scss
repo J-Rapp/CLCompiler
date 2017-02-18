@@ -83,29 +83,6 @@ hr {
   padding: .2em .5em;
 }
 
-// Div animation
-
-.fade-enter {
-  z-index: -1;
-  transform: translateY(-105%);
-}
-
-.fade-enter-active {
-  z-index: 0;
-  transform: translateY(0%);
-  transition: all 1s;
-}
-
-.fade-leave {
-  z-index: 0;
-}
-
-.fade-leave-active {
-  z-index: -1;
-  transform: translateY(-105%);
-  transition: all 1s;
-}
-
 .btn-group-sm {
   .btn {
     border-radius: 0px;
@@ -145,6 +122,29 @@ input[type='text'] {
   border: 1px solid $almostblack;
   margin: .5em auto;
   padding: .25em;
+}
+
+// Div animation
+
+.fade-enter {
+  z-index: -1;
+  transform: translateY(-105%);
+}
+
+.fade-enter-active {
+  z-index: 0;
+  transform: translateY(0%);
+  transition: all 1s linear;
+}
+
+.fade-leave {
+  z-index: 0;
+}
+
+.fade-leave-active {
+  z-index: -1;
+  transform: translateY(-105%);
+  transition: all 1s linear;
 }
 
 // Desktop

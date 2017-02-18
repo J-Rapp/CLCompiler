@@ -30,7 +30,7 @@ class Results extends React.Component {
     const searchHeight = $('#search-animation').height()
     $('#app').animate({
       scrollTop: searchHeight
-    }, 1000)
+    }, 1000, 'linear')
   }
 
   render() {
